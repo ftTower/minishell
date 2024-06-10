@@ -1,0 +1,13 @@
+{
+	"files.associations": {
+		"exemple.h": "c",
+		"solibft.h": "c",
+		"soprintf.h": "c",
+		"all.h": "c",
+		"pswp_sort.h": "c",
+		"types.h": "c",
+		"stdlib.h": "c",
+		"stdarg.h": "c",
+		"parsing.h": "c"
+	}
+}
