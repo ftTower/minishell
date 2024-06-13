@@ -16,6 +16,6 @@
 int	minishell(t_solib *solib)
 {
 	solib->print("MINISHELL\n");
-	parsing(solib);
+	pre_parsing(solib);
 	return (0);
 }

@@ -14,10 +14,7 @@
 #include <sotypes/soprintf.h>
 
 
-//! il faudrait que parsing sappelle pre_parsing et quelle retourne un t_mini_param
-// voir parsing.h
-
-int	parsing(t_solib *solib)
+t_mini_param	pre_parsing(t_solib *solib)
 {
 	t_mini_param param;
 	solib->print("%Cd6f27c( \
@@ -26,6 +23,5 @@ int	parsing(t_solib *solib)
 	Aruments : \n%C38eb4b(%S) \
 	Envp is init : %b\n)",
 	solib->env->name, solib->env->argc, solib->env->argv, solib->env->envp);
-	parser(solib, &param);
-	return (0);
+	return (pre_parser(solib, &param));
 }
