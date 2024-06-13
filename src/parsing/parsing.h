@@ -15,6 +15,21 @@
 
 # include <minishell/all.h>
 
+typedef enum e_value
+{
+	YES,
+	NO,
+	FULL,
+}	t_value;
+
+typedef struct s_mini_param
+{
+	t_value display;
+	t_value output;
+	t_value debug;
+}	t_mini_param;
+
+
 int	parsing(t_solib *solib);
 int	parser(t_solib *solib);
 
