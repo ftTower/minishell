@@ -14,14 +14,14 @@
 #include <sotypes/soprintf.h>
 
 
-t_mini_param	pre_parsing(t_solib *solib)
+t_mini_param	pre_parsing(t_mini *mini)
 {
 	t_mini_param param;
-	solib->print("%Cd6f27c( \
+	mini->print("%Cd6f27c( \
 	Program name : %Cc238eb(%s)\n \
 	Number of argument : %Cebba38(%d)\n \
 	Aruments : \n%C38eb4b(%S) \
 	Envp is init : %b\n)",
-	solib->env->name, solib->env->argc, solib->env->argv, solib->env->envp);
-	return (pre_parser(solib, &param));
+	mini->env->name, mini->env->argc, mini->env->argv, mini->env->envp);
+	return (pre_parser(mini, &param));
 }

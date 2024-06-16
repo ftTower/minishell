@@ -13,9 +13,22 @@
 #include <minishell/all.h>
 #include <sotypes/soprintf.h>
 
+int	mini_update()
+{
+	return (0);
+}
+
+int	update()
+{
+	return (0);
+}
+
 int	minishell(t_solib *solib)
 {
-	solib->print("MINISHELL\n");
-	pre_parsing(solib);
+	t_mini	*mini;
+
+	mini = minit(solib);
+	mini->print("MINISHELL\n");
+	pre_parsing(mini);
 	return (0);
 }

@@ -8,6 +8,7 @@
 		"types.h": "c",
 		"stdlib.h": "c",
 		"stdarg.h": "c",
-		"parsing.h": "c"
+		"parsing.h": "c",
+		"cstdlib": "c"
 	}
 }

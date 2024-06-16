@@ -15,6 +15,7 @@
 
 # include <minishell/types.h>
 # include <minishell.h>
+# include <minishell/gears.h>
 # include <minishell/parsing.h>
 
 #endif

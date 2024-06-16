@@ -16,10 +16,8 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_solib		*solib;
 
-	solib = sonew_libft(sonew_types(argc, argv, envp));
+	solib = sonew_types(argc, argv, envp);
 	if (!solib)
 		solib->close(solib, EXIT_FAILURE);
-	if (!solib->libft)
-		return (solib->close(solib, EXIT_FAILURE));
 	return (solib->close(solib, minishell(solib)));
 }

@@ -15,7 +15,39 @@
 
 # include <unistd.h>
 # include <stdlib.h>
+# include <stdbool.h>
 # include <sotypes.h>
 # include <solibft.h>
+
+typedef struct s_mini		t_mini;
+typedef struct s_mini_param	t_mini_param;
+
+typedef enum e_value
+{
+	YES,
+	NO,
+	FULL,
+	ERROR,
+} t_value;
+
+typedef struct s_mini_param
+{
+	bool	no_param;
+	t_value display;
+	t_value output;
+	t_value debug;
+} t_mini_param;
+
+typedef struct s_mini
+{
+	int			loop;
+	t_solib		*solib;
+	t_solibft	*libft;
+	t_soenv		*env;
+	int			(*print)(const char *str, ...);
+	void		*(*malloc)(t_mini *so, size_t size);
+	int			(*free)(t_mini *solib, void *ptr);
+	int			(*close)(t_mini *so, int state);
+} t_mini;
 
 #endif

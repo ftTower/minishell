@@ -11,6 +11,7 @@
 # **************************************************************************** #
 
 include $(CURDIR)/src/parsing/parsing.mk
+include $(CURDIR)/src/gears/gears.mk
 
 SRC_DIR		=	$(CURDIR)/src
 
@@ -19,10 +20,13 @@ SRC_HEADER	=	types.h all.h
 SRC_FILES	=	minishell.c
 
 DIR			+= $(PARSING_DIR)
+DIR			+= $(GEARS_DIR)
 
 SRC_HEADER	+= $(PARSING_HEAD)
+SRC_HEADER	+= $(GEARS_HEAD)
 
 SRC_FILES	+= $(PARSING)
+SRC_FILES	+= $(GEARS)
 
 HEADERS		=	$(addprefix $(SRC_DIR)/, $(SRC_HEADER))
 SRC			=	$(addprefix $(SRC_DIR)/, $(SRC_FILES))
