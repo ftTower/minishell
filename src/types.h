@@ -15,6 +15,9 @@
 
 # include <unistd.h>
 # include <stdlib.h>
+# include <stdio.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 # include <stdbool.h>
 # include <sotypes.h>
 # include <solibft.h>
@@ -51,3 +54,4 @@ typedef struct s_mini
 } t_mini;
 
 #endif
+

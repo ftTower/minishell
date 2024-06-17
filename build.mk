@@ -19,6 +19,7 @@ NAME		= minishell
 #❖═══Compilation════❖
 CC			= cc
 CFLAG		= -Wall -Wextra -Werror -I./$(BUILD_INCLUDES) -g3 -gdwarf-4
+LDFLAGS 	= -lreadline
 AR			= ar rc
 LIB			= ranlib
 
