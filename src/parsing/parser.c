@@ -33,57 +33,50 @@ void	print_t_value(t_mini *mini, t_value value, char *name)
 
 void	print_mini_param(t_mini *mini, t_mini_param param)
 {
+	mini->print("\n");
 	print_t_value(mini, param.display, "display");
 	print_t_value(mini, param.output, "output");
 	print_t_value(mini, param.debug, "debug");
 }
 
-
-//* retourn a handle param la valeur apres le egal
-//? verifie "=..."
-
-t_value get_param_value(t_mini *mini, char *value_param, char *err_msg)
+bool	find_keyword(t_mini *mini ,char *find_in, char *to_find)
 {
-	mini->print("reading value of [%s] param\n", value_param);
-	if (!value_param)
-		return (mini->print("%s", err_msg), exit(EXIT_FAILURE), ERROR);
-	else if (mini->libft->strncmp(value_param, "yes", 3))
-		return (YES);
-	else if (mini->libft->strncmp(value_param, "no", 2))
-		return (NO);
-	else if (mini->libft->strncmp(value_param, "full", 4))
-		return (FULL);
-	else
-		return (mini->print("%s", err_msg), exit(EXIT_FAILURE), ERROR);
+	long index;
+
+	if (!find_in || !to_find)
+		return (false);
+	index = -1;
+	while(find_in[++index])
+		if (!mini->libft->strncmp(find_in + index, to_find, mini->libft->strlen(to_find)))
+			return (true);
+	return (false);
 }
 
-//* rempli t_mini_param a laide de chaque argv
-// --display=yes
-// --output=no
-// --debug=yes
-//? verifie "...="
-//? verifie "--"
 
-void handle_param(t_mini *mini, char *current_param,
-				  t_mini_param *mini_param)
+// bool	find_keyword_list(t_mini *mini, char *find_in, char *to_find)
+// {
+// 	if (open())
+// }
+
+
+//! logique simple cherche dans largv a trouver des mots cles
+
+// * a terme cherchera en second lieu les valeurs (yes/no/full/...)
+
+// * a terme find_keyword_list ira open un fichier contenant des possibilites
+// * de keyword (similaire/diminue)
+
+void	handle_param(t_mini *mini, t_mini_param *mini_param, char *current_param, long index)
 {
-	char *err_msg;
-
-	err_msg = "Failure when parsing minishell parameters, think to check in the readme to understand how to customize me ";
-		mini->print("[%s] - ",current_param);
-	if (!current_param || current_param[0] != '-' || current_param[1] != '-')
-		return (mini->print("Additional parameters must begin with --\n"), (void)0);
-	else if (mini->libft->strncmp(current_param + 2, "display=", 8))
-		mini_param->display = get_param_value(mini, current_param + 10, err_msg);
-	else if (mini->libft->strncmp(current_param + 2, "output=", 7))
-		mini_param->output = get_param_value(mini, current_param + 9, err_msg);
-	else if (mini->libft->strncmp(current_param + 2, "debug=", 7))
-		mini_param->output = get_param_value(mini, current_param + 9, err_msg);
+	mini->print("[%d][%Cff004d(%s)] : %Cff0000(found) ", index, current_param);
+	if (find_keyword(mini, current_param, "display"))
+		mini->print("display\n");
+	else if (find_keyword(mini, current_param, "output"))
+		mini->print("output\n");
+	else if (find_keyword(mini, current_param, "debug"))
+		mini->print("debug\n");
 	else
-	{
-		mini->print("[%s] : %s\n",current_param, err_msg);
-		return ;
-	}
+		mini->print(" nothing cool\n");
 	mini_param->no_param = false;
 }
 
@@ -94,18 +87,22 @@ t_mini_param pre_parser(t_mini *mini, t_mini_param *mini_param)
 	long index;
 
 	index = -1;
-	mini->print("pre parser\n");
+	mini->print("==========pre parser==============\n\n");
 	mini_param->no_param = true;
-	mini_param->display = NO;
-	mini_param->output = NO;
-	mini_param->debug = NO;
+	mini_param->display = UNSET;
+	mini_param->output = UNSET;
+	mini_param->debug = UNSET;
 	if (mini->env->argc)
 	{
 		while (++index < mini->env->argc)
-			handle_param(mini, mini->env->argv[index], mini_param);
+			handle_param(mini, mini_param, mini->env->argv[index], index);
 		print_mini_param(mini, *mini_param);
 	}
 	else
-		mini->print("No configuration detected, running basic version of Minishell");
-	return (*mini_param);
+	{
+		mini->print("No configuration detected, running basic version of Minishell\n");
+		// sleep(2);
+		// mini->print("\033c");
+	}
+	return (mini->print("===============================\n"), *mini_param);
 }

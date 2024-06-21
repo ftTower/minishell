@@ -31,6 +31,7 @@ typedef enum e_value
 	NO,
 	FULL,
 	ERROR,
+	UNSET,
 } t_value;
 
 typedef struct s_mini_param
