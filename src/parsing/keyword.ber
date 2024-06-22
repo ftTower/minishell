@@ -1,0 +1,33 @@
+ce fichier va servir a fournir une base de mot cle pour le preparsing, pour linstant 
+une fonction cherche un mot cle precis.
+a terme il openra le fichier et sil ne trouve pas de correspondance exact, test avec 
+des diminutifs
+
+FULL FULL
+FULL FUL
+FULL FU
+FULL ULL
+
+YES YES
+YES YE
+YES YS
+YES ES
+
+NO NO
+
+DISPLAY DISPLAY
+DISPLAY DISPLA
+DISPLAY DISPL
+DISPLAY DISP
+DISPLAY DIS
+DISPLAY SPLAY
+DISPLAY DSP
+DISPLAY DSPL
+
+OUTPUT OUTPUT
+OUTPUT OTP
+OUTPUT OUTPU
+OUTPUT OUTPT
+OUTPUT OUTP
+OUTPUT OTPU
+OUTPUT OUT

@@ -14,12 +14,12 @@
 #define PARSING_H
 
 #include <minishell/all.h>
+#include <fcntl.h>
 
 t_mini_param pre_parsing(t_mini *mini);
 t_mini_param pre_parser(t_mini *mini, t_mini_param *param);
 
-void handle_param(t_mini *mini, char *current_param,
-				  t_mini_param *mini_param);
+void	handle_param(t_mini *mini, t_mini_param *mini_param ,char *current_param, long index);
 
 //! printer
 void	print_mini_param(t_mini *mini, t_mini_param param);
