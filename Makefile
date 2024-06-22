@@ -57,7 +57,7 @@ check :
 #❖═══Dependencies═══❖
 dependencies: $(BUILD_INCLUDES)
 	@mkdir -p $(LIBS_DIR)
-#	@for dep in $(DEPENDENCIES); do \
+	@for dep in $(DEPENDENCIES); do \
 		name=$$(echo $$dep | cut -d ':' -f 1); \
 		url=$$(echo $$dep | awk -F':' '{print substr($$0, index($$0, ":") + 1)}'); \
 		if [ ! -d $(LIBS_DIR)/$$name ]; then \
