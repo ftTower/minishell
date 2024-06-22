@@ -11,17 +11,70 @@
 /* ************************************************************************** */
 
 #include <minishell/all.h>
-#include <solibft/all.h>
 #include <sotypes/soprintf.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-#include <readline/rltypedefs.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+
+void line_handler(char *line) {
+    if (line) {
+        printf("You changed this into: '%s'\n", line);
+        add_history(line);
+        free(line); // Libérer la mémoire allouée par readline
+    }
+	soprintf("mini");
+}
+
+int	update(t_mini *mini, char *buffer)
+{
+	if (!mini->libft->strncmp(buffer, "exit", 4))
+		return (mini->close(mini, EXIT_SUCCESS));
+	if (!mini->libft->strncmp(buffer, "error", 5))
+		return (mini->close(mini, EXIT_FAILURE));
+	return (0);
+}
+
+int	mini_update(t_mini *mini)
+{
+	//start
+	//loop a chaque char d'ecrit renvoie dans update le line buffer et le caractere ecrit
+	mini->print("loop : %d\n", mini->loop);
+	mini->print("minishell");
+	rl_callback_handler_install(" >", line_handler);
+	while (mini->loop)
+	{
+		rl_callback_read_char();
+		if (update(mini, rl_line_buffer))
+			return (1);
+	}
+	//minishell exit faire une fonction ou autre 
+	return (0);
+}
+
+int minishell(t_solib *solib) {
+    t_mini *mini;
+
+    mini = minit(solib);
+    pre_parsing(mini);
+
+    // Lier la fonction de complétion
+	//rl_bind_key('\t', rl_insert);
+    //rl_attempted_completion_function = command_completion;
+
+    // Lier toutes les touches imprimables à handle_char
+    /*for (int i = 32; i < 127; ++i) {
+        rl_bind_key(i, handle_char);
+    }*/
+
+    // Initialiser readline avec un prompt et une fonction de callback
+    //rl_callback_handler_install(" >", line_handler);
+
+    // Boucle de lecture des caractères
+    /*while (1) {
+        rl_callback_read_char(); // Lit et traite un caractère de stdin
+    }*/
+    return (mini_update(mini));
+}
 
 // Liste des commandes pour la validation et l'autocomplétion
-const char *commands[] = {
+/*const char *commands[] = {
     "ls", "cd", "echo", "exit", "mkdir", "rmdir", "touch", "rm", "clear", NULL
 };
 
@@ -96,9 +149,9 @@ int minishell(t_solib *solib) {
     rl_attempted_completion_function = command_completion;
 
     // Lier toutes les touches imprimables à handle_char
-    /*for (int i = 32; i < 127; ++i) {
+    for (int i = 32; i < 127; ++i) {
         rl_bind_key(i, handle_char);
-    }*/
+    }
 
     // Initialiser readline avec un prompt et une fonction de callback
 	mini->print("minishell");
@@ -109,7 +162,7 @@ int minishell(t_solib *solib) {
         rl_callback_read_char(); // Lit et traite un caractère de stdin
     }
     return (0);
-}
+}*/
 
 /*
 void line_handler(char *line) {

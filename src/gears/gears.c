@@ -56,11 +56,13 @@ t_mini	*minit(t_solib *solib)
 	mini = (t_mini *)solib->malloc(solib, sizeof(t_mini));
 	if (!mini)
 		solib->close(solib, EXIT_FAILURE);
+	mini->loop = 1;
 	mini->solib = solib;
 	mini->libft =  solib->libft;
 	mini->print =  solib->print;
 	mini->env =  solib->env;
 	mini->malloc =  mini_malloc;
 	mini->free =  mini_free;
+	mini->close = mini_close_update;
 	return (mini);
 }
