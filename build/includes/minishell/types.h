@@ -18,6 +18,7 @@
 # include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+#include <readline/rltypedefs.h>
 # include <stdbool.h>
 # include <sotypes.h>
 # include <solibft.h>
@@ -48,9 +49,9 @@ typedef struct s_mini
 	t_solibft	*libft;
 	t_soenv		*env;
 	int			(*print)(const char *str, ...);
-	void		*(*malloc)(t_mini *so, size_t size);
+	void		*(*malloc)(t_mini *mini, size_t size);
 	int			(*free)(t_mini *solib, void *ptr);
-	int			(*close)(t_mini *so, int state);
+	int			(*close)(t_mini *mini, int state);
 } t_mini;
 
 #endif

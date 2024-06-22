@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include <minishell/all.h>
+#include <solibft/all.h>
 #include <sotypes/soprintf.h>
 #include <readline/readline.h>
 #include <readline/history.h>
@@ -21,7 +22,7 @@
 
 // Liste des commandes pour la validation et l'autocomplétion
 const char *commands[] = {
-    "ls", "cd", "echo", "exit", "mkdir", "rmdir", "touch", "rm", NULL
+    "ls", "cd", "echo", "exit", "mkdir", "rmdir", "touch", "rm", "clear", NULL
 };
 
 // Couleurs ANSI pour le prompt
@@ -42,9 +43,11 @@ int is_valid_command(const char *cmd) {
 // Fonction de callback pour traiter chaque ligne saisie
 void line_handler(char *line) {
     if (line) {
+		rl_insert_text("BG du 86 :");
         printf("You changed this into: '%s'\n", line);
         add_history(line);
         free(line); // Libérer la mémoire allouée par readline
+		printf("MINISHELL TES MORT :");
     }
 }
 
@@ -73,34 +76,10 @@ char **command_completion(const char *text, int start, int end) {
     return rl_completion_matches(text, command_generator);
 }
 
-// Variable pour stocker la couleur actuelle du prompt
-char *current_color = COLOR_RESET;
-
-// Fonction de mise à jour du prompt en fonction de la validité de la commande
-void update_prompt() {
-    char *line = rl_line_buffer;
-    if (is_valid_command(line)) {
-        if (strcmp(current_color, COLOR_RED) != 0) {
-            rl_replace_line(line, 0);
-            rl_redisplay();
-            printf("%s", COLOR_GREEN);
-            current_color = COLOR_GREEN;
-        }
-    } else {
-        if (strcmp(current_color, COLOR_GREEN) != 0) {
-            rl_replace_line(line, 0);
-            rl_redisplay();
-            printf("%s", COLOR_RED);
-            current_color = COLOR_RED;
-        }
-    }
-}
-
 // Fonction de callback pour traiter chaque caractère tapé
 int handle_char(int count, int key) {
     (void)count; // Utilisé pour un cas spécial de répétition
     rl_insert_text((char *)&key);
-    update_prompt();
     return 0;
 }
 
@@ -113,15 +92,17 @@ int minishell(t_solib *solib) {
     pre_parsing(mini);
 
     // Lier la fonction de complétion
+	//rl_bind_key('\t', rl_insert);
     rl_attempted_completion_function = command_completion;
 
     // Lier toutes les touches imprimables à handle_char
-    for (int i = 32; i < 127; ++i) {
+    /*for (int i = 32; i < 127; ++i) {
         rl_bind_key(i, handle_char);
-    }
+    }*/
 
     // Initialiser readline avec un prompt et une fonction de callback
-    rl_callback_handler_install("minishell > ", line_handler);
+	mini->print("minishell");
+    rl_callback_handler_install(" >", line_handler);
 
     // Boucle de lecture des caractères
     while (1) {

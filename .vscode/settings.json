@@ -9,6 +9,8 @@
 		"stdlib.h": "c",
 		"stdarg.h": "c",
 		"parsing.h": "c",
-		"cstdlib": "c"
+		"cstdlib": "c",
+		"rltypedefs.h": "c",
+		"readline.h": "c"
 	}
 }
