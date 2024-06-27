@@ -12,10 +12,65 @@
 
 #include <minishell/all.h>
 #include <sotypes/soprintf.h>
+#include <solibft/sostring.h>
+
+// void error_catcher()
+
+void cell_supervisor(t_cell *final_cell, char *cell)
+{
+    size_t index;
+    size_t double_quote;
+    size_t single_quote;
+
+    index = 0;
+    double_quote = 0;
+    single_quote = 0;
+    while(cell[index])
+    {
+        if (cell[index] == '"')
+            double_quote++;
+        else if (cell[index] == 39) // single quote
+            single_quote++;   
+    }
+    if (double_quote % 2 != 0)
+        final_cell->error_code = MISSING_DOUBLE_QUOTE;
+    else if (double_quote % 2 != 0)
+        final_cell->error_code = MISSING_SINGLE_QUOTE;
+    else
+        final_cell->error_code = NO_PROBLEMO;
+
+}
+
+void tokenizer(t_cell *final_cell , char **cell)
+{
+    long index;
+
+    index = -1;
+    while(cell[++index])
+        cell_supervisor(final_cell, cell[index]);
+}
+
+void parsing_handler(char **cell)
+{
+    t_cell final_cell;
+    if (!cell)
+        return ; //! exit a gerer
+
+    tokenizer(&final_cell, cell);
+// error_catcher()
+}
 
 void line_handler(char *line) {
+    char **cells;
+    long index;
     if (line) {
         printf("You changed this into: '%s'\n", line);
+        // cells = ft_split(solib ,line, ';');
+        if (!cells)
+            return ; //! exit a gerer
+        index = -1;
+        while(cells[++index])
+            // parsing_handler(ft_split(solib, cells[index], '|');
         add_history(line);
         free(line); // Libérer la mémoire allouée par readline
     }

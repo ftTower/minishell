@@ -43,6 +43,22 @@ typedef struct s_mini_param
 	t_value debug;
 } t_mini_param;
 
+typedef enum e_error
+{
+	NO_PROBLEMO,
+	MISSING_DOUBLE_QUOTE,
+	MISSING_SINGLE_QUOTE,
+} t_error;
+
+typedef struct s_cell
+{
+	size_t pos;
+	int in_fd;
+	int out_fd;
+	char **cmd_line;
+	t_error error_code;
+}	t_cell;
+
 typedef struct s_mini
 {
 	int			loop;
