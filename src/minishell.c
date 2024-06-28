@@ -12,52 +12,110 @@
 
 #include <minishell/all.h>
 #include <sotypes/soprintf.h>
-#include <solibft/sostring.h>
+// #include <solibft/sostring.h>
 
 // void error_catcher()
 
-void cell_supervisor(t_cell *final_cell, char *cell)
+int	is_c(char c_s, char c)
 {
-    size_t index;
-    size_t double_quote;
-    size_t single_quote;
-
-    index = 0;
-    double_quote = 0;
-    single_quote = 0;
-    while(cell[index])
-    {
-        if (cell[index] == '"')
-            double_quote++;
-        else if (cell[index] == 39) // single quote
-            single_quote++;   
-    }
-    if (double_quote % 2 != 0)
-        final_cell->error_code = MISSING_DOUBLE_QUOTE;
-    else if (double_quote % 2 != 0)
-        final_cell->error_code = MISSING_SINGLE_QUOTE;
-    else
-        final_cell->error_code = NO_PROBLEMO;
-
+	return (c_s == c);
 }
 
-void tokenizer(t_cell *final_cell , char **cell)
+unsigned int	count_word(char const *s, char c)
 {
-    long index;
+	size_t			i;
+	unsigned int	count;
 
-    index = -1;
-    while(cell[++index])
-        cell_supervisor(final_cell, cell[index]);
+	i = 0;
+	count = 0;
+	while (s[i] && s[i + 1])
+	{
+		if (is_c(s[i], c) && !is_c(s[i + 1], c))
+			count += 1;
+		else if (i == 0 && !is_c(s[i], c))
+			count += 1;
+		i++;
+	}
+	return (count);
+}
+
+char	*mal_str(char const *s, char c, int *ptr)
+{
+	size_t	len;
+	char	*dup;
+
+	len = 0;
+	while (is_c(s[*ptr], c) && s[*ptr])
+		(*ptr)++;
+	while (!is_c(s[*ptr], c) && s[*ptr])
+	{
+		(*ptr)++;
+		len++;
+	}
+	dup = (char *)malloc(sizeof(char) * (len + 1));
+	if (!dup)
+		return (NULL);
+	(*ptr) -= len;
+	len = 0;
+	while (!is_c(s[*ptr], c) && s[*ptr])
+	{
+		dup[len] = s[*ptr];
+		(*ptr)++;
+		len++;
+	}
+	dup[len] = '\0';
+	return (dup);
+}
+
+char	**tab_tab_split(const char *s, char c)
+{
+	char	**tab;
+	int		i;
+	int		pos;
+	int		count;
+
+	i = 0;
+	pos = 0;
+	count = count_word(s, c);
+	tab = (char **)malloc(sizeof(char *) * (count + 1));
+	if (!tab)
+		return (NULL);
+	while (i < count)
+	{
+		pos = 0;
+		tab[i] = mal_str(s, c, &pos);
+		s += pos;
+		i++;
+	}
+	tab[i] = 0;
+	return (tab);
+}
+
+char	**ft_split(char const *s, char c)
+{
+	char	**tab_split;
+
+	if (!s)
+		return (NULL);
+	tab_split = tab_tab_split(s, c);
+	return (tab_split);
+}
+
+void print_double_tab(char **tab)
+{
+    size_t index;
+
+    index = 0;
+    while(tab[index])
+        printf("%s\n", tab[index++]);
+    printf("\n\n");
 }
 
 void parsing_handler(char **cell)
 {
-    t_cell final_cell;
     if (!cell)
         return ; //! exit a gerer
-
-    tokenizer(&final_cell, cell);
-// error_catcher()
+    print_double_tab(cell);
 }
 
 void line_handler(char *line) {
@@ -65,12 +123,12 @@ void line_handler(char *line) {
     long index;
     if (line) {
         printf("You changed this into: '%s'\n", line);
-        // cells = ft_split(solib ,line, ';');
+        cells = ft_split(line, ';');
         if (!cells)
             return ; //! exit a gerer
         index = -1;
         while(cells[++index])
-            // parsing_handler(ft_split(solib, cells[index], '|');
+            parsing_handler(ft_split(cells[index], '|'));
         add_history(line);
         free(line); // Libérer la mémoire allouée par readline
     }

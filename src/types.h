@@ -43,20 +43,47 @@ typedef struct s_mini_param
 	t_value debug;
 } t_mini_param;
 
-typedef enum e_error
+typedef enum e_char_type
 {
-	NO_PROBLEMO,
-	MISSING_DOUBLE_QUOTE,
-	MISSING_SINGLE_QUOTE,
-} t_error;
+	UNSET,
+	IN_FD,
+	OU_FD,
+	CMD,
+	PARA,
+}	t_char_type;
+
+typedef struct s_char
+{
+	char c;
+	t_char_type type;
+	size_t pos;
+	
+	bool useless;
+	bool quoted;
+	
+	struct s_char *next;
+}	t_char;
+
+typedef struct s_mini_cell
+{
+	size_t pos;
+
+	int in_fd;
+	char in_fd_path;
+	
+	int out_fd;
+	char out_fd_path;
+
+	t_char *work_line;
+	char   *line;
+
+}	t_mini_cell;
 
 typedef struct s_cell
 {
 	size_t pos;
-	int in_fd;
-	int out_fd;
 	char **cmd_line;
-	t_error error_code;
+	t_mini_cell *cells;
 }	t_cell;
 
 typedef struct s_mini
