@@ -16,8 +16,10 @@ int mini_close_update(t_mini *mini, int state)
 {
 	if (mini)
 		mini->loop = 0;
+	
 	if (state)
 		mini_close(mini, state);
+	mini_close(mini, state);
 	return (state);
 }
 
@@ -28,6 +30,7 @@ int mini_close(t_mini *mini, int state)
 		mini->free(mini, mini);
 	if (state)
 		exit(mini->solib->close(mini->solib, state));
+	exit(mini->solib->close(mini->solib, state));
 	return (state);
 }
 
@@ -57,6 +60,7 @@ t_mini	*minit(t_solib *solib)
 	if (!mini)
 		solib->close(solib, EXIT_FAILURE);
 	mini->loop = 1;
+	mini->starting = 0;
 	mini->solib = solib;
 	mini->libft =  solib->libft;
 	mini->print =  solib->print;

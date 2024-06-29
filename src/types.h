@@ -15,7 +15,6 @@
 
 # include <unistd.h>
 # include <stdlib.h>
-# include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 #include <readline/rltypedefs.h>
@@ -45,7 +44,7 @@ typedef struct s_mini_param
 
 typedef enum e_char_type
 {
-	UNSET,
+	UNDEFINED,
 	IN_FD,
 	OU_FD,
 	CMD,
@@ -89,12 +88,13 @@ typedef struct s_cell
 typedef struct s_mini
 {
 	int			loop;
+	int			starting;
 	t_solib		*solib;
 	t_solibft	*libft;
 	t_soenv		*env;
 	int			(*print)(const char *str, ...);
 	void		*(*malloc)(t_mini *mini, size_t size);
-	int			(*free)(t_mini *solib, void *ptr);
+	int			(*free)(t_mini *mini, void *ptr);
 	int			(*close)(t_mini *mini, int state);
 } t_mini;
 
