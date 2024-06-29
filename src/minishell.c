@@ -13,7 +13,16 @@
 #include <minishell/all.h>
 #include <sotypes/soprintf.h>
 
-void line_handler(char *line) {
+
+void parsing_handler(t_mini *mini, char **cell)
+{
+    if (!cell)
+        return ; //! exit a gerer
+    mini->print("\n%S", cell);
+}
+
+void line_handler(char *line) // pas touche a ca !
+{
     if (line) {
         add_history(line);
 		free(line);
@@ -21,13 +30,19 @@ void line_handler(char *line) {
 	rl_set_prompt("");
 }
 
-void mini_line_handler(t_mini *mini, char *line) {
-	(void)mini;
-    if (line)
-		soprintf("\n\nmini_line_handler You changed this into: '%s'\n\n", line);
+void mini_line_handler(t_mini *mini, char *line)
+{
+	char	**cells;
+    long	index;
+
+    if (line) {
+        printf("You changed this into: '%s'\n", line);
+        cells = mini->libft->split(mini->solib, line, ';');
+        index = -1;
+        while(cells[++index])
+            parsing_handler(mini, mini->libft->split(mini->solib, cells[index], '|'));
+    }
 	soprintf(" >> mini");
-	rl_set_prompt("> ");
-	rl_redisplay();
 }
 
 int	char_update(t_mini *mini, char **words, char *line, char c)
@@ -43,34 +58,29 @@ int	char_update(t_mini *mini, char **words, char *line, char c)
 int	mini_start(t_mini *mini)
 {
 	int lenght_buffer;
-	int tmp_lenght;
-	int tmp2_lenght;
-	int	lenght_old;
+	int lenght_buffer2;
 	char	*old_buffer;
 
 	old_buffer = NULL;
-	lenght_buffer = 1;
-	lenght_old = 1;
-	mini->print(" -- mini");
+	soprintf(" >> mini");
 	rl_callback_handler_install("> ", line_handler);
 	while (mini->loop)
 	{
-		tmp_lenght = lenght_buffer;
-		tmp2_lenght = lenght_old;
 		old_buffer = mini->libft->strdup(mini->solib, rl_line_buffer);
-		lenght_old = mini->libft->strlen(rl_line_buffer);
-		rl_callback_read_char();
 		lenght_buffer = mini->libft->strlen(rl_line_buffer);
+		rl_callback_read_char();
+		lenght_buffer2 = mini->libft->strlen(rl_line_buffer);
+		//printf("lenght : %d -- %d\n", lenght_buffer, lenght_buffer2);
 		char_update(mini, mini->libft->split(mini->solib, rl_line_buffer, ' '), rl_line_buffer, rl_line_buffer[lenght_buffer - 1]);
-		mini->print("lenght buffer : %d -- lenght old : %d --  lenght tmp : %d -- lenght tmp : %d \n", lenght_buffer, lenght_old, tmp_lenght, tmp2_lenght);
-		if (!lenght_buffer && (lenght_old == tmp_lenght ) && tmp2_lenght != 1) // enter has pressed
+		if (!lenght_buffer2 && lenght_buffer > 0) // enter has pressed
 		{
 			mini_line_handler(mini, old_buffer);
-			
+			lenght_buffer = 0;
+			rl_set_prompt("> ");
+			rl_redisplay();
 		}
 		mini->free(mini, old_buffer);
 	}
-	//minishell exit faire une fonction ou autre 
 	return (0);
 }
 
