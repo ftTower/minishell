@@ -12,6 +12,7 @@
 
 include $(CURDIR)/src/parsing/parsing.mk
 include $(CURDIR)/src/gears/gears.mk
+include $(CURDIR)/src/cells/cells.mk
 
 SRC_DIR		=	$(CURDIR)/src
 
@@ -21,12 +22,15 @@ SRC_FILES	=	minishell.c
 
 DIR			+= $(PARSING_DIR)
 DIR			+= $(GEARS_DIR)
+DIR			+= $(CELLS_DIR)
 
 SRC_HEADER	+= $(PARSING_HEAD)
 SRC_HEADER	+= $(GEARS_HEAD)
+SRC_HEADER	+= $(CELLS_HEAD)
 
 SRC_FILES	+= $(PARSING)
 SRC_FILES	+= $(GEARS)
+SRC_FILES	+= $(CELLS)
 
 HEADERS		=	$(addprefix $(SRC_DIR)/, $(SRC_HEADER))
 SRC			=	$(addprefix $(SRC_DIR)/, $(SRC_FILES))

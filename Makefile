@@ -44,7 +44,7 @@ val :
 	@make re
 	@clear
 	@echo "------------------------------------"
-	valgrind --leak-check=full --track-fds=yes --show-leak-kinds=all --trace-children=yes --track-origins=yes ./$(NAME) $(filter-out $@, $(MAKECMDGOALS))
+	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --trace-children=yes --track-origins=yes --suppressions=supp.supp ./$(NAME)
 	@echo "------------------------------------"
 
 check : 

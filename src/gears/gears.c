@@ -26,8 +26,6 @@ int mini_close_update(t_mini *mini, int state)
 
 int mini_close(t_mini *mini, int state)
 {
-	if (mini)
-		mini->free(mini, mini);
 	if (state)
 		exit(mini->solib->close(mini->solib, state));
 	exit(mini->solib->close(mini->solib, state));

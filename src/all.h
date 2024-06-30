@@ -17,5 +17,6 @@
 # include <minishell.h>
 # include <minishell/gears.h>
 # include <minishell/parsing.h>
+# include <minishell/cells.h>
 
 #endif

@@ -13,7 +13,7 @@
 GEARS_DIR		=	gears
 
 GEARS_HEADER	=	gears.h
-GEARS_FILE		=	gears.c
+GEARS_FILE		=	gears.c gears_utils.c
 
 GEARS			=	$(addprefix $(GEARS_DIR)/, $(GEARS_FILE))
 GEARS_HEAD		=	$(addprefix $(GEARS_DIR)/, $(GEARS_HEADER))

@@ -1,26 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipe.h                                             :+:      :+:    :+:   */
+/*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/07 20:22:15 by marvin            #+#    #+#             */
-/*   Updated: 2024/04/07 20:22:15 by marvin           ###   ########.fr       */
+/*   Created: 2024/06/05 18:08:01 by marvin            #+#    #+#             */
+/*   Updated: 2024/06/05 18:08:01 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GEARS_H
-# define GEARS_H
+#include <minishell/all.h>
+#include <sotypes/soprintf.h>
 
-# include <minishell/all.h>
+void line_handler() // pas touche a ca ! okok... ;(
+{
+	return ;
+}
 
-t_mini			*minit(t_solib *solib);
-int				mini_close_update(t_mini *mini, int state);
-int				mini_close(t_mini *mini, int state);
-void			*mini_malloc(t_mini *mini, size_t size);
-int				mini_free(t_mini *mini, void *ptr);
-void			line_handler();
-void			mini_prompt();
-
-#endif
+void mini_prompt()
+{
+	rl_replace_line("", -1); // Efface la ligne courante
+	soprintf(" >> mini >");
+	rl_on_new_line(); // Remet le prompt sur une nouvelle ligne
+	rl_redisplay();	  // Redess
+}
