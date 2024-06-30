@@ -25,6 +25,8 @@
 typedef struct s_mini		t_mini;
 typedef struct s_mini_param	t_mini_param;
 
+// ls | cat -e ; cat | cat | cat ; echo "coucou"
+
 typedef enum e_value
 {
 	YES,
@@ -49,13 +51,14 @@ typedef enum e_char_type
 	OU_FD,
 	CMD,
 	PARA,
+	SPACE_CHAR,
 }	t_char_type;
 
 typedef struct s_char
 {
 	char c;
-	t_char_type type;
 	size_t pos;
+	t_char_type type;
 	
 	bool useless;
 	bool quoted;
@@ -65,24 +68,19 @@ typedef struct s_char
 
 typedef struct s_mini_cell
 {
-	size_t pos;
-
-	int in_fd;
-	char in_fd_path;
-	
-	int out_fd;
-	char out_fd_path;
-
-	t_char *work_line;
-	char   *line;
-
+	t_char *line;
+	size_t 	pos;
 }	t_mini_cell;
 
+//! cell exemple = "  ; ls | cat -e | cat | cat ;  "
 typedef struct s_cell
 {
 	size_t pos;
-	char **cmd_line;
-	t_mini_cell *cells;
+	size_t nb_mini_cells;
+
+	char **raw_mini_cells; //* mini cell exemple " | cat -e |  "
+	t_mini_cell *mini_cells;
+
 }	t_cell;
 
 typedef struct s_mini
