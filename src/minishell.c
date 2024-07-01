@@ -16,8 +16,6 @@
 #include <minishell/all.h>
 #include <sotypes/soprintf.h>
 
-
-
 void mini_line_handler(t_mini *mini, char *line)
 {
 	char **cells;
@@ -25,14 +23,14 @@ void mini_line_handler(t_mini *mini, char *line)
 	
 	if (line && *line)
 	{
-		mini->print("\n");
+		//mini->print("\n");
 		cells = mini->libft->split(mini->solib, line, ';');
 		index = -1;
 		while(cells[++index])
 			cells_handler(mini, cells[index]);
 		
 			
-		mini->print("\n");
+		//mini->print("\n");
 	}
 	mini->print("\n");
 	if (!mini->libft->strncmp(line, "exit", 4))

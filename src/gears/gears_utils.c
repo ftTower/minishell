@@ -21,7 +21,7 @@ void line_handler() // pas touche a ca ! okok... ;(
 void mini_prompt()
 {
 	rl_replace_line("", -1); // Efface la ligne courante
-	soprintf(" >> mini >");
+	soprintf("%C22d8db(mini )> ");
 	rl_on_new_line(); // Remet le prompt sur une nouvelle ligne
 	rl_redisplay();	  // Redess
 }
