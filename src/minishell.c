@@ -16,18 +16,22 @@
 #include <minishell/all.h>
 #include <sotypes/soprintf.h>
 
+
+
 void mini_line_handler(t_mini *mini, char *line)
 {
 	char **cells;
-	long index;
-
+	ssize_t index;
+	
 	if (line && *line)
 	{
 		mini->print("\n");
 		cells = mini->libft->split(mini->solib, line, ';');
 		index = -1;
-		while (cells[++index])
-			cell_handler(mini, mini->libft->split(mini->solib, cells[index], '|'), index);
+		while(cells[++index])
+			cells_handler(mini, cells[index]);
+		
+			
 		mini->print("\n");
 	}
 	mini->print("\n");

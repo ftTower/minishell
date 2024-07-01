@@ -44,45 +44,14 @@ typedef struct s_mini_param
 	t_value debug;
 } t_mini_param;
 
-typedef enum e_char_type
-{
-	UNDEFINED,
-	IN_FD,
-	OU_FD,
-	CMD,
-	PARA,
-	SPACE_CHAR,
-}	t_char_type;
 
-typedef struct s_char
-{
-	char c;
-	size_t pos;
-	t_char_type type;
-	
-	bool useless;
-	bool quoted;
-	
-	struct s_char *next;
-}	t_char;
 
-typedef struct s_mini_cell
-{
-	t_char *line;
-	size_t 	pos;
-}	t_mini_cell;
-
-//! cell exemple = "  ; ls | cat -e | cat | cat ;  "
+//  ; ls | cat -e | cat ;
 typedef struct s_cell
 {
-	size_t pos;
-	size_t nb_mini_cells;
-
-	char **raw_mini_cells; //* mini cell exemple " | cat -e |  "
-	t_mini_cell *mini_cells;
+	char *line;
 
 }	t_cell;
-
 typedef struct s_mini
 {
 	int			loop;

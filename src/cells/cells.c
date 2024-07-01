@@ -2,9 +2,12 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   hooks.c                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
+/*                                                    +:+ +:+
+	+:+     */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+
+	+#+        */
+/*                                                +#+#+#+#+#+
+	+#+           */
 /*   Created: 2024/06/05 18:08:01 by marvin            #+#    #+#             */
 /*   Updated: 2024/06/05 18:08:01 by marvin           ###   ########.fr       */
 /*                                                                            */
@@ -12,87 +15,59 @@
 
 #include <minishell/all.h>
 
-void print_t_char_line(t_mini *mini, t_char *line)
-{
-	t_char *current;
 
-	current = line;
-	while (current)
+void	print_double_tab(t_mini *mini, char **tab)
+{
+	ssize_t index;
+
+	index = -1;
+	while (tab[++index])
+		mini->print("%s\n", tab[index]);
+}
+
+bool	cells_empty_pipe(t_mini *mini, char *raw_line)
+{
+	ssize_t index;
+	bool empty;
+	char comp;
+
+	comp = ' ';
+	empty = true;
+	index = -1;
+	while (raw_line[++index])
 	{
-		print_t_char(mini, current->useless, "[");
-		if (current->type == UNDEFINED)
-			mini->print("%Cc5bebe(%c)", current->c);
-		else if (current->type == CMD)
-			mini->print("%Cff0000(%c)", current->c);
-		else if (current->type == SPACE_CHAR)
-			mini->print(" ");
-
-		print_t_char(mini, current->useless, "]");
-		current = current->next;
+		if (raw_line[index] != ' ')
+			comp = raw_line[index];
+		if (raw_line[index] != ' ' && raw_line[index] != '|')
+			empty = false;
+		else if (raw_line[index] == '|' && empty)
+			return (mini->print("found empty pipe\n"), true);
+		else if (raw_line[index] == '|')
+			empty = true;
 	}
-	mini->print("\n");
+	if (comp == '|')
+		return (mini->print("found empty pipe a the end\n"), true);
+	return (false);
 }
 
-void print_cell_line(t_mini *mini, t_cell *cell, size_t index)
+char	**cells_liner(t_mini *mini, char *raw_line)
 {
-	mini->print("| %d : ", cell->mini_cells[index].pos);
-	print_t_char_line(mini, cell->mini_cells[index].line);
+	char **ret;
+
+	ret = NULL;
+	if (!raw_line || !*raw_line || cells_empty_pipe(mini, raw_line))
+		return (mini->print("error in cells_liner\n"), NULL);
+	return (ret);
 }
 
-void cell_printer(t_mini *mini, t_cell *cell, bool finished_cell)
-{
-	size_t index;
-
-	index = 0;
-	if (!cell)
-		return (mini->print("fack no cell received\n"), (void)0);
-	if (!finished_cell)
-		mini->print("+=[%d]\t(%d mini cells)\n", cell->pos,
-					cell->nb_mini_cells);
-	while (index < cell->nb_mini_cells)
-		print_cell_line(mini, cell, index++);
-	mini->print("+==========================\n");
-	if (finished_cell)
-		mini->print("\n");
-}
-
-void cell_init(t_mini *mini, t_cell **cell, char **raw_mini_cells,
-			   size_t cell_pos)
-{
-	size_t nb_mini_cells;
-
-	*cell = mini->malloc(mini, sizeof(t_cell));
-	nb_mini_cells = 0;
-	while (raw_mini_cells[nb_mini_cells])
-		nb_mini_cells++;
-	(*cell)->nb_mini_cells = nb_mini_cells;
-	(*cell)->pos = cell_pos;
-	(*cell)->raw_mini_cells = raw_mini_cells;
-	(*cell)->mini_cells = mini->malloc(mini, sizeof(t_mini_cell) * nb_mini_cells);
-	nb_mini_cells = 0;
-	while (raw_mini_cells[nb_mini_cells])
-	{
-		(*cell)->mini_cells[nb_mini_cells].pos = nb_mini_cells;
-		(*cell)->mini_cells[nb_mini_cells].line = make_t_char_list(mini,
-																   raw_mini_cells[nb_mini_cells]);
-		nb_mini_cells++;
-	}
-}
-
-void cell_handler(t_mini *mini, char **raw_mini_cells, size_t cell_pos)
+void	cells_handler(t_mini *mini, char *raw_line)
 {
 	t_cell *cell;
 
-	cell = NULL;
-	// init
-	cell_init(mini, &cell, raw_mini_cells, cell_pos);
+	mini->print("\n> %s\n", raw_line);
+	cell = mini->malloc(mini, sizeof(t_cell));
 
-	cell_printer(mini, cell, false);
+	cells_liner(mini, raw_line);
 
-	// travaille les chaines / verifie erreur
 
-	// del_t_char( &cell->mini_cells->line, 2);
-	// type_t_char(&cell->mini_cells->line, 1, CMD);
-
-	cell_printer(mini, cell, true);
 }
