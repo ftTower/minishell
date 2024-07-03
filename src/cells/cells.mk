@@ -13,7 +13,7 @@
 CELLS_DIR		=	cells
 
 CELLS_HEADER	=	cells.h
-CELLS_FILE		=	cells.c error.c pipes.c words.c chars.c print.c utils.c
+CELLS_FILE		=	cells.c error.c pipes.c words.c chars.c fd.c print.c utils.c
 
 CELLS			=	$(addprefix $(CELLS_DIR)/, $(CELLS_FILE))
 CELLS_HEAD		=	$(addprefix $(CELLS_DIR)/, $(CELLS_HEADER))

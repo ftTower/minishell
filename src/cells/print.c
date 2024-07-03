@@ -6,7 +6,7 @@
 /*   By: tauer <tauer@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 01:09:03 by tauer             #+#    #+#             */
-/*   Updated: 2024/07/04 00:53:48 by tauer            ###   ########.fr       */
+/*   Updated: 2024/07/04 01:50:05 by tauer            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	print_t_word(t_mini *mini, t_word *word)
 			print_t_char(mini, current, RED);
 		current = current->next;
 	}
-	mini->print(" ");
+	mini->print("\t");
 }
 
 void	print_t_pipe(t_mini *mini, t_pipe *pipe)
