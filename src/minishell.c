@@ -29,7 +29,7 @@ void mini_line_handler(t_mini *mini, char *line)
 		while(cells[++index])
 			if (cells_handler(mini, cells[index], index))
 				break;
-		mini->print("\nParser stoppped at [cell no %d]\n", index);
+		mini->print("\nParser stoppped at [cell no %d]\n", index - 1);
 	}
 	mini->print("\n");
 	if (!mini->libft->strncmp(line, "exit", 4))

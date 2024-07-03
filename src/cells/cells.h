@@ -32,7 +32,7 @@ bool	cells_empty_pipe(t_mini *mini, char *raw_line);
 
 //print
 void	print_double_tab(t_mini *mini, char **tab);
-void	print_t_char(t_mini *mini, t_char *c, bool lignfeed);
+void	print_t_char(t_mini *mini, t_char *c, t_color color);
 void	print_t_word(t_mini *mini, t_word *word);
 void	print_t_pipe(t_mini *mini, t_pipe *pipe);
 

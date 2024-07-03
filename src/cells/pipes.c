@@ -6,7 +6,7 @@
 /*   By: tauer <tauer@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 01:06:57 by tauer             #+#    #+#             */
-/*   Updated: 2024/07/03 02:37:47 by tauer            ###   ########.fr       */
+/*   Updated: 2024/07/04 00:08:33 by tauer            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,5 @@ bool	pipe_maker(t_mini *mini, t_pipe *pipe, char **pipe_words)
 	index = -1;
 	while (pipe_words[++index])
 		word_add_back(mini, &pipe->words, pipe_words[index]);
-	print_t_pipe(mini, pipe);
 	return (false);
 }

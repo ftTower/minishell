@@ -28,7 +28,16 @@
 typedef struct s_mini t_mini;
 typedef struct s_mini_param t_mini_param;
 
-// ls | cat -e ; cat | cat | cat ; echo "coucou"
+typedef enum e_color
+{
+    ORANGE,
+    PURPLE,
+    YELLOW,
+    GREEN,
+	BLUE,
+    RED,
+	DEFAULT,
+} t_color;
 
 typedef enum e_value
 {
@@ -49,33 +58,46 @@ typedef struct s_mini_param
 
 typedef enum e_type
 {
-	CMD,
-	ARG,
-	PARA,
-	IN_FD,
-	OU_FD,
+	CMD_TYPE,
+	ARG_TYPE,
+	PARA_TYPE,
 
-	BUILT_IN,
-	BUILT_IN_PARA,
+
+	REPLACE_IN_FD_TYPE,
+	REPLACE_OUT_FD_TYPE,
+	CONCATE_OUT_FD_TYPE,
+	CONCATE_IN_FD_TYPE,
+
+	ERROR_TYPE,
+
+	BUILT_IN_TYPE,
+	BUILT_IN_PARA_TYPE,
 } t_type;
 
 typedef struct s_char
 {
 	char c;
+	size_t pos;
 	struct s_char *next;
 } t_char;
 
 typedef struct s_word
 {
 	t_char *c;
-	char *refined_word;
 	t_type type;
+	ssize_t pos;
+
+	char *refined_word;
 	struct s_word *next;
 } t_word;
 
 typedef struct s_pipe
 {
+	t_word *in_fd;
 	t_word *words;
+	t_word *ou_fd;
+
+	ssize_t pos;
 } t_pipe;
 
 //  ; ls | cat -e | cat ;
@@ -84,7 +106,7 @@ typedef struct s_cell
 	char **lines;
 
 	ssize_t nb_pipes;
-	size_t pos;
+	ssize_t pos;
 
 	t_pipe *pipes;
 
