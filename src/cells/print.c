@@ -6,7 +6,7 @@
 /*   By: tauer <tauer@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 01:09:03 by tauer             #+#    #+#             */
-/*   Updated: 2024/07/04 01:50:05 by tauer            ###   ########.fr       */
+/*   Updated: 2024/07/05 01:04:37 by tauer            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,19 @@ void print_t_char(t_mini *mini, t_char *c, t_color color)
         mini->print("%C5dade2(%c)", c->c);
     else
         mini->print("%Cffffff(%c)", c->c);
+}
+
+void	print_t_char_list(t_mini *mini, t_char *list)
+{
+	t_char	*current;
+
+	current = list;
+	while (current)
+	{
+		print_t_char(mini, current, BLUE);
+		current = current->next;
+	}
+	mini->print("\t");
 }
 
 void	print_t_word(t_mini *mini, t_word *word)

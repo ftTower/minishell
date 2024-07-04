@@ -16,6 +16,7 @@
 #ifndef TYPES_H
 # define TYPES_H
 
+# include <stdio.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <readline/rltypedefs.h>
@@ -93,6 +94,8 @@ typedef struct s_word
 
 typedef struct s_pipe
 {
+	t_char *raw_words;
+
 	t_word *in_fd;
 	t_word *words;
 	t_word *ou_fd;

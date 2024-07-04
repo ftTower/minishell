@@ -29,6 +29,7 @@ bool	word_parser(t_mini *mini, t_pipe *pipe, t_word *word, ssize_t word_pos);
 
 //chars
 bool	char_add_back(t_mini *mini, t_word *word, char c);
+bool	char_to_char_add_back(t_mini *mini, t_char **list, char c);
 
 //fds
 bool	fd_getter(t_mini *mini, t_char *current, t_pipe *pipe);
@@ -40,6 +41,7 @@ bool	cells_empty_pipe(t_mini *mini, char *raw_line);
 //print
 void	print_double_tab(t_mini *mini, char **tab);
 void	print_t_char(t_mini *mini, t_char *c, t_color color);
+void	print_t_char_list(t_mini *mini, t_char *list);
 void	print_t_word(t_mini *mini, t_word *word);
 void	print_t_pipe(t_mini *mini, t_pipe *pipe);
 
