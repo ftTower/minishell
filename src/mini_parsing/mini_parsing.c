@@ -21,6 +21,7 @@
 t_mini_param	pre_parsing(t_mini *mini)
 {
 	t_mini_param param;
+	
 	mini->print("%Cd6f27c( \
 	Program name : %Cc238eb(%s)\n \
 	Number of argument : %Cebba38(%d)\n \

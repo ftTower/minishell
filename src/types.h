@@ -115,6 +115,12 @@ typedef struct s_cell
 
 } t_cell;
 
+typedef struct s_envpl
+{
+	char *var;
+	struct s_envpl *next;
+}	t_envpl;
+
 typedef struct s_mini
 {
 	int loop;
@@ -122,6 +128,7 @@ typedef struct s_mini
 	t_solib *solib;
 	t_solibft *libft;
 	t_soenv *env;
+	t_envpl *envpl;
 	int (*print)(const char *str, ...);
 	void *(*malloc)(t_mini *mini, size_t size);
 	int (*free)(t_mini *mini, void *ptr);

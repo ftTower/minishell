@@ -16,6 +16,7 @@
 #include <minishell/all.h>
 #include <sotypes/soprintf.h>
 
+
 void mini_line_handler(t_mini *mini, char *line)
 {
 	if (line && *line)
