@@ -15,9 +15,14 @@
 
 # include <minishell/all.h>
 
+//envpl
+bool	copy_envp_to_list(t_mini *mini);
+bool	add_var_envpl(t_mini *mini, t_envpl **envpl, char *var);
+void	print_envpl(t_mini *mini);
+char	*get_envpl_var(t_mini *mini, char *name_var);
+
 //string builder gears
 bool	t_char_list_maker(t_mini *mini, t_char **list, char **pipe_words);
-
 
 //string builder redirect
 bool	redirect_unspacer(t_mini *mini, t_pipe *pipe);

@@ -10,22 +10,8 @@
 #                                                                              #
 # **************************************************************************** #
 
-include src/parsing/stringbuilder/stringbuilder.mk
-include src/parsing/cellmaker/cellmaker.mk
-include src/parsing/celldata/celldata.mk
-include src/parsing/envpl/envpl.mk
+ENVPL_DIR		=	envpl
 
-
-PARSING_DIR		=	parsing
-
-PARSING_HEADER	=	parsing.h
-PARSING_FILE	=	parsing.c parsing_error.c \
-					  parsing_print.c parsing_utils.c 
-
-PARSING_FILE	+=	$(STRINGBUILDER)
-PARSING_FILE	+=	$(CELLMAKER)
-PARSING_FILE	+=	$(CELLDATA)
-PARSING_FILE	+=	$(ENVPL)
-
-PARSING			=	$(addprefix $(PARSING_DIR)/, $(PARSING_FILE))
-PARSING_HEAD	=	$(addprefix $(PARSING_DIR)/, $(PARSING_HEADER))
+ENVPL_FILE		=	envpl.c
+ 
+ENVPL		=	$(addprefix $(ENVPL_DIR)/, $(ENVPL_FILE))

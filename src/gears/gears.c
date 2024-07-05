@@ -23,7 +23,6 @@ int mini_close_update(t_mini *mini, int state)
 	return (state);
 }
 
-
 int mini_close(t_mini *mini, int state)
 {
 	if (state)
@@ -40,43 +39,6 @@ void	*mini_malloc(t_mini *mini, size_t size)
 int	mini_free(t_mini *mini, void *ptr)
 {
 	return (mini->solib->free(mini->solib, ptr));
-}
-
-bool	add_var_envpl(t_mini *mini, t_envpl **envpl, char *var)
-{
-	t_envpl *new;
-
-	new = mini->malloc(mini, sizeof(t_envpl));
-	new->var = var;
-	new->next = *envpl;
-	*envpl = new;
-	return (false);
-}
-
-bool	copy_envp_to_list(t_mini *mini)
-{
-	ssize_t index;
-
-	index = -1;
-	mini->envpl = NULL;
-	while(mini->env->envp[++index])
-	{
-		// mini->print("before : %s\n", mini->env->envp[index]);	
-		add_var_envpl(mini, &mini->envpl, mini->env->envp[index]);
-	}
-	return (false);
-}
-
-void	print_envpl(t_mini *mini)
-{
-	t_envpl *current;
-
-	current = mini->envpl;
-	while(current)
-	{
-		mini->print("%s\n", current->var);
-		current = current->next;
-	}
 }
 
 t_mini	*minit(t_solib *solib)
@@ -105,6 +67,5 @@ t_mini	*minit(t_solib *solib)
 	mini->close = mini_close_update;
 	if (copy_envp_to_list(mini))
 		solib->close(solib, EXIT_FAILURE);
-	print_envpl(mini);
 	return (mini);
 }

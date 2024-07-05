@@ -21,6 +21,6 @@ int				mini_close(t_mini *mini, int state);
 void			*mini_malloc(t_mini *mini, size_t size);
 int				mini_free(t_mini *mini, void *ptr);
 void			line_handler();
-void			mini_prompt();
+void			mini_prompt(t_mini *mini);
 
 #endif

@@ -25,7 +25,7 @@ void mini_line_handler(t_mini *mini, char *line)
 	if (!mini->libft->strncmp(line, "exit", 4))
 		mini->loop = 0; // Condition de sortie de la boucle principale
 	else
-		mini_prompt();
+		mini_prompt(mini);
 }
 
 int line_update(t_mini *mini, char *line, int key)
@@ -51,7 +51,7 @@ void mini_special_keys(t_mini *mini, char *line, int key)
 		{
 			rl_delete_text(0 , 1);
 			rl_redisplay();
-			mini_prompt();
+			mini_prompt(mini);
 		}
 		else if (rl_point > 1)
 		{
@@ -68,7 +68,7 @@ void mini_start(t_mini *mini)
 	int	key;
 
 	rl_callback_handler_install("", line_handler);
-	mini_prompt();
+	mini_prompt(mini);
 	// Boucle principale
 	while (mini->loop)
 	{

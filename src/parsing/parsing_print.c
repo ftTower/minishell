@@ -6,7 +6,7 @@
 /*   By: tauer <tauer@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 01:09:03 by tauer             #+#    #+#             */
-/*   Updated: 2024/07/05 16:16:48 by tauer            ###   ########.fr       */
+/*   Updated: 2024/07/06 01:18:25 by tauer            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,18 @@ void	print_t_pipe(t_mini *mini, t_pipe *pipe)
 		current = current->next;
 	}
 	mini->print("\n");
+}
+
+void	print_envpl(t_mini *mini)
+{
+	t_envpl *current;
+
+	current = mini->envpl;
+	while(current)
+	{
+		mini->print("%s\n", current->var);
+		current = current->next;
+	}
 }
 
 void	print_double_tab(t_mini *mini, char **tab)

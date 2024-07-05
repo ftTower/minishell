@@ -87,7 +87,7 @@ t_mini_param pre_parser(t_mini *mini, t_mini_param *mini_param)
 	long index;
 
 	index = -1;
-	mini->print("==========pre parser==============\n\n");
+	mini->print("==========pre parser==============\n");
 	mini_param->no_param = true;
 	mini_param->display = UNSET;
 	mini_param->output = UNSET;
@@ -104,5 +104,5 @@ t_mini_param pre_parser(t_mini *mini, t_mini_param *mini_param)
 		// sleep(2);
 		// mini->print("\033c");
 	}
-	return (mini->print("===============================\n"), *mini_param);
+	return (mini->print("===============================\n\n"), *mini_param);
 }
