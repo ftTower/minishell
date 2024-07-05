@@ -10,20 +10,8 @@
 #                                                                              #
 # **************************************************************************** #
 
-include src/parsing/stringbuilder/stringbuilder.mk
-include src/parsing/cellmaker/cellmaker.mk
-include src/parsing/celldata/celldata.mk
+CELLMAKER_DIR		=	cellmaker
 
-
-PARSING_DIR		=	parsing
-
-PARSING_HEADER	=	parsing.h
-PARSING_FILE	=	parsing.c parsing_error.c \
-					  parsing_print.c parsing_utils.c 
-
-PARSING_FILE	+=	$(STRINGBUILDER)
-PARSING_FILE	+=	$(CELLMAKER)
-PARSING_FILE	+=	$(CELLDATA)
-
-PARSING			=	$(addprefix $(PARSING_DIR)/, $(PARSING_FILE))
-PARSING_HEAD	=	$(addprefix $(PARSING_DIR)/, $(PARSING_HEADER))
+CELLMAKER_FILE		=	cellmaker.c
+ 
+CELLMAKER			=	$(addprefix $(CELLMAKER_DIR)/, $(CELLMAKER_FILE))

@@ -1,22 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   all.h                                              :+:      :+:    :+:   */
+/*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almounib <almounib@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/11 21:32:42 by marvin            #+#    #+#             */
-/*   Updated: 2024/05/20 17:18:39 by almounib         ###   ########.fr       */
+/*   Created: 2024/06/05 18:08:01 by marvin            #+#    #+#             */
+/*   Updated: 2024/06/05 18:08:01 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ALL_H
-# define ALL_H
+#include <minishell/all.h>
 
-# include <minishell/types.h>
-# include <minishell.h>
-# include <minishell/gears.h>
-# include <minishell/mini_parsing.h>
-# include <minishell/parsing.h>
 
-#endif

@@ -55,9 +55,15 @@ $(BUILD_OBJ)/%.o: $(SRC_DIR)/%.c | $(BUILD_INCLUDES)
 
 #❖═════Creat═════❖
 $(NAME): $(DEPENDENCIES_RULES) $(OBJ)
-	${AR} $(LIBRARY) ${OBJ} $(LIBRARYS)
-	${LIB} $(LIBRARY)
-	$(CC) $(SRC_EXEMPLE) $(OBJ) -o $(NAME) $(CFLAG) $(LIBRARYS) $(LIBRARY) $(LDFLAGS)
+	@${AR} $(LIBRARY) ${OBJ} $(LIBRARYS)
+	@${LIB} $(LIBRARY)
+	@$(CC) $(SRC_EXEMPLE) $(OBJ) -o $(NAME) $(CFLAG) $(LIBRARYS) $(LIBRARY) $(LDFLAGS)
+	@echo 
+	@echo " ╔══❖═══════❖══╗"
+	@echo " ║  MINISHELL  ║"
+	@echo " ║             ║"
+	@echo " ║ compiled ✅ ║"
+	@echo " ╚══❖═══════❖══╝"
 
 $(BUILD_INCLUDES):
 	mkdir -p $(BUILD_DIR);

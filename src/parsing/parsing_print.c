@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print.c                                            :+:      :+:    :+:   */
+/*   parsing_print.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tauer <tauer@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 01:09:03 by tauer             #+#    #+#             */
-/*   Updated: 2024/07/05 01:04:37 by tauer            ###   ########.fr       */
+/*   Updated: 2024/07/05 16:16:48 by tauer            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,13 @@ void	print_t_char_list(t_mini *mini, t_char *list)
 	t_char	*current;
 
 	current = list;
+	mini->print("\n\t%Cff0000([)%Cf1c40f(LINE)%Cff0000(]) > ");
 	while (current)
 	{
 		print_t_char(mini, current, BLUE);
 		current = current->next;
 	}
-	mini->print("\t");
+	mini->print("\n");
 }
 
 void	print_t_word(t_mini *mini, t_word *word)

@@ -1,31 +1,56 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pswp.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: almounib <almounib@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/27 18:16:39 by marvin            #+#    #+#             */
-/*   Updated: 2024/05/16 15:15:49 by almounib         ###   ########.fr       */
+/*   hooks.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+
+	+:+     */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+
+	+#+        */
+/*                                                +#+#+#+#+#+
+	+#+           */
+/*   Created: 2024/06/05 18:08:01 by marvin            #+#    #+#             */
+/*   Updated: 2024/06/05 18:08:01 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell/all.h>
-#include <sotypes/soprintf.h>
 
 
-// l'ideal serait que vue que mini est deja instancier pre_parsing return un int 1 error 0 good
-// rajouter dans types.h et t_mini ton mini_param exemple t_mini_param *param; et l'associer directement avec pres parser
-// (si j'ai bien compris ton code)
+// typedef struct s_cell
+// {
+// 	char **lines;
+// 	t_pipe *pipes;
 
-t_mini_param	pre_parsing(t_mini *mini)
+// } t_cell;
+
+//  echo start > outfile ; ls | cat -e | wc -l ; echo finished
+// contient une seul cell ; ...|...|... ;
+
+bool	cells_handler(t_mini *mini, char *raw_line, size_t pos)
 {
-	t_mini_param param;
-	mini->print("%Cd6f27c( \
-	Program name : %Cc238eb(%s)\n \
-	Number of argument : %Cebba38(%d)\n \
-	Aruments : \n%C38eb4b(%S) \
-	Envp is init : %b\n)",
-	mini->env->name, mini->env->argc, mini->env->argv, mini->env->envp);
-	return (pre_parser(mini, &param));
+	t_cell *cell;
+
+	cell = mini->malloc(mini, sizeof(t_cell));
+	cell->pos = pos;
+	if (cellmaker_maker(mini, cell, raw_line))
+		return (true);
+	return (false);
+}
+
+bool	mini_parsing(t_mini *mini, char *line)
+{
+	char **cells;
+	ssize_t index;
+
+	if (line && *line)
+	{
+		mini->print("\n");
+		cells = mini->libft->split(mini->solib, line, ';');
+		index = -1;
+		while (cells[++index])
+			if (cells_handler(mini, cells[index], index))
+				break ;
+		//mini->print("\nParser stoppped at [cell no %d]\n", index - 1);
+	}
+	return (false);
 }

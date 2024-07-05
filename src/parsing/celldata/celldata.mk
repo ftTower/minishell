@@ -10,10 +10,8 @@
 #                                                                              #
 # **************************************************************************** #
 
-CELLS_DIR		=	cells
+CELLDATA_DIR		=	celldata
 
-CELLS_HEADER	=	cells.h
-CELLS_FILE		=	cells.c error.c pipes.c words.c chars.c fd.c print.c utils.c
-
-CELLS			=	$(addprefix $(CELLS_DIR)/, $(CELLS_FILE))
-CELLS_HEAD		=	$(addprefix $(CELLS_DIR)/, $(CELLS_HEADER))
+CELLDATA_FILE		=	celldata.c
+ 
+CELLDATA		=	$(addprefix $(CELLDATA_DIR)/, $(CELLDATA_FILE))

@@ -18,19 +18,8 @@
 
 void mini_line_handler(t_mini *mini, char *line)
 {
-	char **cells;
-	ssize_t index;
-	
 	if (line && *line)
-	{
-		mini->print("\n");
-		cells = mini->libft->split(mini->solib, line, ';');
-		index = -1;
-		while(cells[++index])
-			if (cells_handler(mini, cells[index], index))
-				break;
-		mini->print("\nParser stoppped at [cell no %d]\n", index - 1);
-	}
+		mini_parsing(mini, line);
 	mini->print("\n");
 	if (!mini->libft->strncmp(line, "exit", 4))
 		mini->loop = 0; // Condition de sortie de la boucle principale

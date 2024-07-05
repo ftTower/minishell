@@ -10,9 +10,9 @@
 #                                                                              #
 # **************************************************************************** #
 
-include $(CURDIR)/src/parsing/parsing.mk
+include $(CURDIR)/src/mini_parsing/mini_parsing.mk
 include $(CURDIR)/src/gears/gears.mk
-include $(CURDIR)/src/cells/cells.mk
+include $(CURDIR)/src/parsing/parsing.mk
 
 SRC_DIR		=	$(CURDIR)/src
 
@@ -20,17 +20,17 @@ LIB_HEADER	=	$(addprefix $(SRC_DIR)/, minishell.h)
 SRC_HEADER	=	types.h all.h
 SRC_FILES	=	minishell.c
 
-DIR			+= $(PARSING_DIR)
+DIR			+= $(MINI_PARSING_DIR)
 DIR			+= $(GEARS_DIR)
-DIR			+= $(CELLS_DIR)
+DIR			+= $(PARSING_DIR)
 
-SRC_HEADER	+= $(PARSING_HEAD)
+SRC_HEADER	+= $(MINI_PARSING_HEAD)
 SRC_HEADER	+= $(GEARS_HEAD)
-SRC_HEADER	+= $(CELLS_HEAD)
+SRC_HEADER	+= $(PARSING_HEAD)
 
-SRC_FILES	+= $(PARSING)
+SRC_FILES	+= $(MINI_PARSING)
 SRC_FILES	+= $(GEARS)
-SRC_FILES	+= $(CELLS)
+SRC_FILES	+= $(PARSING)
 
 HEADERS		=	$(addprefix $(SRC_DIR)/, $(SRC_HEADER))
 SRC			=	$(addprefix $(SRC_DIR)/, $(SRC_FILES))

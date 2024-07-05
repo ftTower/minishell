@@ -2,12 +2,9 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   hooks.c                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+
-	+:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+
-	+#+        */
-/*                                                +#+#+#+#+#+
-	+#+           */
+/*                                                    +:+ +:+         +:+     */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 18:08:01 by marvin            #+#    #+#             */
 /*   Updated: 2024/06/05 18:08:01 by marvin           ###   ########.fr       */
 /*                                                                            */
@@ -15,29 +12,22 @@
 
 #include <minishell/all.h>
 
-
-// typedef struct s_cell
-// {
-// 	char **lines;
-// 	t_pipe *pipes;
-
-// } t_cell;
-
-//  echo start > outfile ; ls | cat -e | wc -l ; echo finished
-
-
-bool	cell_parser(t_mini *mini, t_cell *cell)
+bool	cellmaker_pipe_maker(t_mini *mini, t_pipe *pipe, char **pipe_words)
 {
-	ssize_t index;
+	pipe->words = NULL;
+	pipe->raw_words = NULL;
+	if (string_builder(mini, pipe, pipe_words))
+		return (true);
+	
+	print_t_char_list(mini, pipe->raw_words);
 
-	index = -1;
-	while (++index < cell->nb_pipes)
-		if (pipe_parser(mini, &cell->pipes[index], index))
-			return (true);
+
+	// while (pipe_words[++index])
+	//	word_add_back(mini, &pipe->words, pipe_words[index]);
 	return (false);
 }
 
-bool	cell_maker(t_mini *mini, t_cell *cell, char *raw_line)
+bool	cellmaker_maker(t_mini *mini, t_cell *cell, char *raw_line)
 {
 	ssize_t size;
 
@@ -50,23 +40,9 @@ bool	cell_maker(t_mini *mini, t_cell *cell, char *raw_line)
 	cell->pipes = mini->malloc(mini, sizeof(t_pipe) * size);
 	size = -1;
 	while (cell->lines[++size])
-		if (pipe_maker(mini, &cell->pipes[size], mini->libft->split(mini->solib,
+		if (cellmaker_pipe_maker(mini, &cell->pipes[size], mini->libft->split(mini->solib,
 					cell->lines[size], ' ')))
 			return (true);
-	return (mini->print("\n[cell no : %d][%d pipes]\n", cell->pos,
-			cell->nb_pipes), false);
-}
-
-// contient une seul cell ; ...|...|... ;
-
-bool	cells_handler(t_mini *mini, char *raw_line, size_t pos)
-{
-	t_cell *cell;
-
-	mini->print("\n[line] > %s\n", raw_line);
-	cell = mini->malloc(mini, sizeof(t_cell));
-	cell->pos = pos;
-	if (cell_maker(mini, cell, raw_line) || cell_parser(mini, cell))
-		return (true);
 	return (false);
 }
+

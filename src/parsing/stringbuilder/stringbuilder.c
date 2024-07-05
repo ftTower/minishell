@@ -11,17 +11,12 @@
 /* ************************************************************************** */
 
 #include <minishell/all.h>
-#include <sotypes/soprintf.h>
 
-void line_handler() // pas touche a ca ! okok... ;(
+bool	string_builder(t_mini *mini, t_pipe *pipe, char **pipe_words)
 {
-	return ;
-}
-
-void mini_prompt()
-{
-	rl_replace_line("", -1); // Efface la ligne courante
-	//soprintf("%C22d8db(%s)%s", ft_get_dictionary("promt"), ft_get_dictionary("promt"));
-	rl_on_new_line(); // Remet le prompt sur une nouvelle ligne
-	rl_redisplay();	  // Redess
+	if (t_char_list_maker(mini, &pipe->raw_words, pipe_words)
+		|| redirect_unspacer(mini, pipe) || invalid_redirect(mini,
+			&pipe->raw_words))
+		return (mini->print("failed to build string\n"), true);
+	return (false);
 }
