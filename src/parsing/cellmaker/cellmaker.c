@@ -12,18 +12,15 @@
 
 #include <minishell/all.h>
 
-bool	cellmaker_pipe_maker(t_mini *mini, t_pipe *pipe, char **pipe_words)
+bool	cellmaker_pipe_maker(t_mini *mini, t_pipe *pipe, char **pipe_words, ssize_t pipe_pos)
 {
 	pipe->words = NULL;
 	pipe->raw_words = NULL;
+	pipe->pos = pipe_pos;
 	if (string_builder(mini, pipe, pipe_words))
 		return (true);
-	
-	print_t_char_list(mini, pipe->raw_words);
+	// mini->print("\n\t%Cff0000([)%Cf1c40f(PIPE)%Cff0000(]) > ");
 
-
-	// while (pipe_words[++index])
-	//	word_add_back(mini, &pipe->words, pipe_words[index]);
 	return (false);
 }
 
@@ -41,7 +38,7 @@ bool	cellmaker_maker(t_mini *mini, t_cell *cell, char *raw_line)
 	size = -1;
 	while (cell->lines[++size])
 		if (cellmaker_pipe_maker(mini, &cell->pipes[size], mini->libft->split(mini->solib,
-					cell->lines[size], ' ')))
+					cell->lines[size], ' '), size))
 			return (true);
 	return (false);
 }

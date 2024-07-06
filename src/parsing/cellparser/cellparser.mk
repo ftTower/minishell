@@ -10,8 +10,8 @@
 #                                                                              #
 # **************************************************************************** #
 
-CELLDATA_DIR		=	celldata
+CELLPARSER_DIR		=	cellparser
 
-CELLDATA_FILE		=	celldata.c
+CELLPARSER_FILE		=	cellparser.c
  
-CELLDATA		=	$(addprefix $(CELLDATA_DIR)/, $(CELLDATA_FILE))
+CELLPARSER		=	$(addprefix $(CELLPARSER_DIR)/, $(CELLPARSER_FILE))

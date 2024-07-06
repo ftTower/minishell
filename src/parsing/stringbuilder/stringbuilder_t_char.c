@@ -6,7 +6,7 @@
 /*   By: tauer <tauer@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 15:35:40 by tauer             #+#    #+#             */
-/*   Updated: 2024/07/05 15:35:42 by tauer            ###   ########.fr       */
+/*   Updated: 2024/07/06 02:26:28 by tauer            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,3 +70,4 @@ bool	char_t_char_del_pos(t_mini *mini, t_char **list, ssize_t pos)
 	mini->free(mini, tmp);
 	return (true);
 }
+

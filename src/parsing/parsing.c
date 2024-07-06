@@ -32,7 +32,7 @@ bool	cells_handler(t_mini *mini, char *raw_line, size_t pos)
 
 	cell = mini->malloc(mini, sizeof(t_cell));
 	cell->pos = pos;
-	if (cellmaker_maker(mini, cell, raw_line))
+	if (cellmaker_maker(mini, cell, raw_line) || cellparser_parser(mini, cell))
 		return (true);
 	return (false);
 }

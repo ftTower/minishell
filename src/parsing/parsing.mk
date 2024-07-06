@@ -12,7 +12,7 @@
 
 include src/parsing/stringbuilder/stringbuilder.mk
 include src/parsing/cellmaker/cellmaker.mk
-include src/parsing/celldata/celldata.mk
+include src/parsing/cellparser/cellparser.mk
 include src/parsing/envpl/envpl.mk
 
 
@@ -24,7 +24,7 @@ PARSING_FILE	=	parsing.c parsing_error.c \
 
 PARSING_FILE	+=	$(STRINGBUILDER)
 PARSING_FILE	+=	$(CELLMAKER)
-PARSING_FILE	+=	$(CELLDATA)
+PARSING_FILE	+=	$(CELLPARSER)
 PARSING_FILE	+=	$(ENVPL)
 
 PARSING			=	$(addprefix $(PARSING_DIR)/, $(PARSING_FILE))

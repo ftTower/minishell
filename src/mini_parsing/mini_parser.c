@@ -101,8 +101,6 @@ t_mini_param pre_parser(t_mini *mini, t_mini_param *mini_param)
 	else
 	{
 		mini->print("No configuration detected, running basic version of Minishell\n");
-		// sleep(2);
-		// mini->print("\033c");
 	}
 	return (mini->print("===============================\n\n"), *mini_param);
 }

@@ -15,6 +15,9 @@
 
 # include <minishell/all.h>
 
+//cell parser
+bool	cellparser_parser(t_mini *mini, t_cell *cell);
+
 //envpl
 bool	copy_envp_to_list(t_mini *mini);
 bool	add_var_envpl(t_mini *mini, t_envpl **envpl, char *var);
@@ -23,6 +26,7 @@ char	*get_envpl_var(t_mini *mini, char *name_var);
 
 //string builder gears
 bool	t_char_list_maker(t_mini *mini, t_char **list, char **pipe_words);
+char	*string_constructor(t_mini *mini, t_char *list);
 
 //string builder redirect
 bool	redirect_unspacer(t_mini *mini, t_pipe *pipe);
@@ -39,6 +43,7 @@ bool	cellmaker_maker(t_mini *mini, t_cell *cell, char *raw_line);
 // pipes
 bool	pipe_maker(t_mini *mini, t_pipe *pipe, char **pipe_words);
 bool	pipe_parser(t_mini *mini, t_pipe *pipe, ssize_t pipe_pos);
+
 
 //words
 bool	word_add_back(t_mini *mini, t_word **words_list, char *word);
