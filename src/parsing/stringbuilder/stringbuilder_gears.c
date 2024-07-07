@@ -41,7 +41,7 @@ char	*string_constructor(t_mini *mini, t_char *list)
 	t_char *current;
 	ssize_t index;
 
-	index = -1;
+	index = 0;
 	current = list;
 	if (!list)
 		return (NULL);
@@ -52,10 +52,10 @@ char	*string_constructor(t_mini *mini, t_char *list)
 	}
 	ret = mini->malloc(mini, sizeof(char) * (index + 1));
 	current = list;
-	index = -1;
+	index = 0;
 	while (current)
 	{
-		ret[++index] = current->c;
+		ret[index++] = current->c;
 		current = current->next;
 	}
 	return (ret[index] = '\0', ret);
