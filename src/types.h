@@ -96,9 +96,8 @@ typedef struct s_pipe
 {
 	t_char *raw_words;
 
-	t_word *in_fd;
+	t_word *fds;
 	t_word *words;
-	t_word *ou_fd;
 
 	ssize_t pos;
 } t_pipe;
