@@ -15,9 +15,7 @@
 
 #include <minishell/all.h>
 
-
-
-bool	pipe_parser(t_mini *mini, t_pipe *pipe, ssize_t pipe_pos)
+bool	split_t_char_list(t_mini *mini, t_pipe *pipe, ssize_t pipe_pos)
 {
 	char *raw_words;
 	char **words;
@@ -43,13 +41,26 @@ bool	pipe_parser(t_mini *mini, t_pipe *pipe, ssize_t pipe_pos)
 	return (false);
 }
 
+bool	t_word_parse_cmd(t_mini *mini, t_word *word)
+{
+	word->refined_word = string_constructor(mini, word->c);
+	return (false);
+}
+
+bool	t_word_parse_type(t_mini *mini, t_word *word)
+{
+	if (t_word_parse_cmd(mini, word))
+		return (false);
+	return (true);
+}
+
 bool	cellparser_parser(t_mini *mini, t_cell *cell)
 {
 	ssize_t index;
 
 	index = -1;
 	while (++index < cell->nb_pipes)
-		if (pipe_parser(mini, &cell->pipes[index], index))
+		if (split_t_char_list(mini, &cell->pipes[index], index))
 			return (true);
 	return (false);
 }

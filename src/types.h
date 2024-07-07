@@ -103,16 +103,25 @@ typedef struct s_pipe
 	ssize_t pos;
 } t_pipe;
 
+typedef struct s_pipex
+{
+	char *in_fd;
+	char **args;
+	char *out_fd;
+
+	struct s_pipex *next;
+}	t_pipex;
+
 //  ; ls | cat -e | cat ;
 typedef struct s_cell
 {
 	char **lines;
 
+	t_pipe *pipes;
 	ssize_t nb_pipes;
 	ssize_t pos;
 
-	t_pipe *pipes;
-
+	t_pipex *final_line;
 } t_cell;
 
 typedef struct s_envpl

@@ -15,6 +15,8 @@
 bool	cellmaker_pipe_maker(t_mini *mini, t_pipe *pipe, char **pipe_words, ssize_t pipe_pos)
 {
 	pipe->words = NULL;
+	pipe->in_fd = NULL;
+	pipe->ou_fd = NULL;
 	pipe->raw_words = NULL;
 	pipe->pos = pipe_pos;
 	if (string_builder(mini, pipe, pipe_words))
