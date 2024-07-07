@@ -40,6 +40,16 @@ bool	split_t_char_list(t_mini *mini, t_pipe *pipe, ssize_t pipe_pos)
 	return (false);
 }
 
+void	free_tab(char **tab)
+{
+	ssize_t index;
+
+	index = -1;
+	while(tab[++index])
+		free(tab[index]);
+	free(tab);
+}
+
 bool	t_word_parse_cmd(t_mini *mini, t_word *word)
 {
 	char *path;
@@ -48,16 +58,18 @@ bool	t_word_parse_cmd(t_mini *mini, t_word *word)
 	ssize_t index;
 
 	path = get_envpl_var(mini, "PATH=");
-	parse_path = mini->libft->split(mini->solib, path, ':');
+	if (!path)
+		return (false);
+	parse_path = mini->libft->split(NULL, path, ':');
 	index = -1;
 	while(parse_path[++index])
 	{
-		current_path = mini->libft->strjoin(mini->solib, mini->libft->strjoin(mini->solib, parse_path[index], "/"), word->refined_word);
+		current_path = mini->libft->strjoin(NULL, mini->libft->strjoin(NULL, parse_path[index], "/"), word->refined_word);
 		if (!access(current_path, X_OK | F_OK))
-			return (mini->free(mini, current_path), mini->free(mini, parse_path),word->type = CMD_TYPE, true);
-		mini->free(mini, current_path);
+			return ( free_tab(parse_path),free(current_path),word->type = CMD_TYPE, true);
+		free(current_path);
 	}
-	return (mini->free(mini, parse_path), false);
+	return (free_tab(parse_path),false);
 }
 
 bool	t_word_parse_type(t_mini *mini, t_word *word)
