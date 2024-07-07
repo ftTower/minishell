@@ -80,12 +80,12 @@ void	print_t_word_list(t_mini *mini, t_word *word)
 void	print_t_pipe(t_mini *mini, t_pipe *pipe)
 {
 	mini->print("\n\t╭─%Cff0000([)%C5dade2(PIPE %C0ff1e7(%d))%Cff0000(])\
-	\n\t|\n\t├─%Cff0000([)%Cf1c40f(IN_FD)%Cff0000(]) ",
+	\n\t├───%Cff0000([)%Cf1c40f(IN_FD)%Cff0000(]) ",
 				pipe->pos);
 	print_t_word_list(mini, pipe->in_fd);
-	mini->print("\n\t├─%Cff0000([)%Cf1c40f(WORDS)%Cff0000(]) ");
+	mini->print("\n\t├───%Cff0000([)%Cf1c40f(WORDS)%Cff0000(]) ");
 	print_t_word_list(mini, pipe->words);
-	mini->print("\n\t╰─%Cff0000([)%Cf1c40f(OU_FD)%Cff0000(]) ");
+	mini->print("\n\t╰───%Cff0000([)%Cf1c40f(OU_FD)%Cff0000(]) ");
 	print_t_word_list(mini, pipe->ou_fd);
 	mini->print("\n");
 }

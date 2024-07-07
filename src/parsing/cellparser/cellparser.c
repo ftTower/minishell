@@ -60,11 +60,11 @@ bool	t_word_parse_cmd(t_mini *mini, t_word *word)
 	path = get_envpl_var(mini, "PATH=");
 	if (!path)
 		return (false);
-	parse_path = mini->libft->split(NULL, path, ':');
+	parse_path = mini->libft->split(mini->solib, path, ':');
 	index = -1;
 	while(parse_path[++index])
 	{
-		current_path = mini->libft->strjoin(NULL, mini->libft->strjoin(NULL, parse_path[index], "/"), word->refined_word);
+		current_path = mini->libft->strjoin(mini->solib, mini->libft->strjoin(mini->solib, parse_path[index], "/"), word->refined_word);
 		if (!access(current_path, X_OK | F_OK))
 			return ( free_tab(parse_path),free(current_path),word->type = CMD_TYPE, true);
 		free(current_path);
@@ -87,6 +87,8 @@ bool	t_pipe_parse_type(t_mini *mini, t_pipe *pipe)
 	while(current)
 	{
 		t_word_parse_type(mini, current);
+		if (current->type == CMD_TYPE && current->next && current->next->c->c == '-')
+			current->next->type = PARA_TYPE;
 		current = current->next;
 	}
 	print_t_pipe(mini, pipe);
