@@ -10,24 +10,8 @@
 #                                                                              #
 # **************************************************************************** #
 
-include src/parsing/stringbuilder/stringbuilder.mk
-include src/parsing/cellmaker/cellmaker.mk
-include src/parsing/cellparser/cellparser.mk
-include src/parsing/celltranslator/celltranslator.mk
-include src/parsing/envpl/envpl.mk
+CELLTRANSLATOR_DIR		=	celltranslator
 
-
-PARSING_DIR		=	parsing
-
-PARSING_HEADER	=	parsing.h
-PARSING_FILE	=	parsing.c parsing_error.c \
-					  parsing_print.c parsing_utils.c 
-
-PARSING_FILE	+=	$(STRINGBUILDER)
-PARSING_FILE	+=	$(CELLMAKER)
-PARSING_FILE	+=	$(CELLPARSER)
-PARSING_FILE	+=	$(CELLTRANSLATOR)
-PARSING_FILE	+=	$(ENVPL)
-
-PARSING			=	$(addprefix $(PARSING_DIR)/, $(PARSING_FILE))
-PARSING_HEAD	=	$(addprefix $(PARSING_DIR)/, $(PARSING_HEADER))
+CELLTRANSLATOR_FILE		=	celltranslator.c
+ 
+CELLTRANSLATOR			=	$(addprefix $(CELLTRANSLATOR_DIR)/, $(CELLTRANSLATOR_FILE))

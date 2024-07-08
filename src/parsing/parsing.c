@@ -32,7 +32,8 @@ bool	cells_handler(t_mini *mini, char *raw_line, size_t pos)
 
 	cell = mini->malloc(mini, sizeof(t_cell));
 	cell->pos = pos;
-	if (cellmaker_maker(mini, cell, raw_line) || cellparser_parser(mini, cell))
+	if (cellmaker_maker(mini, cell, raw_line) || cellparser_parser(mini, cell)
+		|| celltranslator_translator(mini, cell))
 		return (true);
 	return (false);
 }
@@ -50,7 +51,7 @@ bool	mini_parsing(t_mini *mini, char *line)
 		while (cells[++index])
 			if (cells_handler(mini, cells[index], index))
 				break ;
-		//mini->print("\nParser stoppped at [cell no %d]\n", index - 1);
+		// mini->print("\nParser stoppped at [cell no %d]\n", index - 1);
 	}
 	return (false);
 }

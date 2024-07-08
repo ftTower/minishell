@@ -91,13 +91,22 @@ bool	t_word_parse_redirect(t_word *word)
 	return (false);
 }
 
+bool	t_word_parse_para(t_word *word)
+{
+	if (!word->c || word->c->c != '-' || !word->c->next)
+		return (false);
+	return (word->type = PARA_TYPE, true);
+}
+
 bool	t_word_parse_type(t_mini *mini, t_word *word)
 {
 	word->refined_word = string_constructor(mini, word->c);
-	if (t_word_parse_redirect(word) || t_word_parse_cmd(mini, word))
+	if (t_word_parse_para(word) || t_word_parse_redirect(word)
+		|| t_word_parse_cmd(mini, word))
 		return (false);
-	return (true);
+	return (word->type = ARG_TYPE, true);
 }
+
 bool	t_pipe_parse_type(t_mini *mini, t_pipe *pipe)
 {
 	t_word *current;
@@ -106,12 +115,14 @@ bool	t_pipe_parse_type(t_mini *mini, t_pipe *pipe)
 	while (current)
 	{
 		t_word_parse_type(mini, current);
-		if (current->type == CMD_TYPE && current->next
-			&& current->next->c->c == '-')
-			current->next->type = PARA_TYPE;
 		current = current->next;
 	}
-	print_t_pipe(mini, pipe);
+	current = pipe->fds;
+	while (current)
+	{
+		t_word_parse_type(mini, current);
+		current = current->next;
+	}
 	return (false);
 }
 

@@ -29,6 +29,8 @@
 typedef struct s_mini t_mini;
 typedef struct s_mini_param t_mini_param;
 
+// echo start | cat -e >test  | ls -la | cat -e
+
 typedef enum e_color
 {
     ORANGE,
@@ -36,6 +38,7 @@ typedef enum e_color
     YELLOW,
     GREEN,
 	BLUE,
+	LIGHT_BLUE,
     RED,
 	DEFAULT,
 } t_color;

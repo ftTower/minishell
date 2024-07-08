@@ -6,7 +6,7 @@
 /*   By: tauer <tauer@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 01:09:03 by tauer             #+#    #+#             */
-/*   Updated: 2024/07/07 23:42:39 by tauer            ###   ########.fr       */
+/*   Updated: 2024/07/08 00:34:37 by tauer            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,11 @@ void	print_t_char(t_mini *mini, t_char *c, t_color color)
 	else if (color == GREEN)
 		mini->print("%C2ecc71(%c)", c->c);
 	else if (color == RED)
-		mini->print("%Cff0000(%c)", c->c);
+		mini->print("%Ccb4335(%c)", c->c);
 	else if (color == BLUE)
 		mini->print("%C5dade2(%c)", c->c);
+	else if (color == LIGHT_BLUE)
+		mini->print("%C0ff1e7(%c)", c->c);
 	else
 		mini->print("%Cffffff(%c)", c->c);
 }
@@ -51,13 +53,19 @@ void	print_t_word(t_mini *mini, t_word *word)
 	while (current)
 	{
 		if (word->type == CMD_TYPE)
-			print_t_char(mini, current, GREEN);
+			print_t_char(mini, current, LIGHT_BLUE);
 		else if (word->type == PARA_TYPE)
-			print_t_char(mini, current, YELLOW);
+			print_t_char(mini, current, PURPLE);
 		else if (word->type == ARG_TYPE)
 			print_t_char(mini, current, BLUE);
-		else
+		else if (word->type == REPLACE_IN_FD_TYPE
+			|| word->type == CONCATE_IN_FD_TYPE)
+			print_t_char(mini, current, GREEN);
+		else if (word->type == REPLACE_OUT_FD_TYPE
+			|| word->type == CONCATE_OUT_FD_TYPE)
 			print_t_char(mini, current, RED);
+		else
+			print_t_char(mini, current, DEFAULT);
 		current = current->next;
 	}
 	mini->print(" ");

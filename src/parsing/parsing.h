@@ -15,6 +15,9 @@
 
 # include <minishell/all.h>
 
+//cell translator
+bool	celltranslator_translator(t_mini *mini, t_cell *cell);
+
 //cell parser
 bool	cellparser_parser(t_mini *mini, t_cell *cell);
 
