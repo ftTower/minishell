@@ -22,9 +22,11 @@ bool	word_add_back(t_mini *mini, t_word **words_list, char *word)
 	new->c = NULL;
 	new->next = NULL;
 	new->type = ERROR_TYPE;
+	new->refined_word = word;
 	index = -1;
 	while (word[++index])
 		char_add_back(mini, new, word[index]);
+	t_word_parse_type(mini, new);
 	if (!(*words_list))
 		*words_list = new;
 	else

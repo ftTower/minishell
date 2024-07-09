@@ -71,10 +71,11 @@ typedef enum e_type
 	CONCATE_OUT_FD_TYPE,
 	CONCATE_IN_FD_TYPE,
 
-	ERROR_TYPE,
-
 	BUILT_IN_TYPE,
 	BUILT_IN_PARA_TYPE,
+
+	SEPARATOR_TYPE,
+	ERROR_TYPE,
 } t_type;
 
 typedef struct s_char
@@ -102,6 +103,7 @@ typedef struct s_pipe
 	t_word *words;
 
 	ssize_t pos;
+	bool	used;
 } t_pipe;
 
 typedef struct s_pipex

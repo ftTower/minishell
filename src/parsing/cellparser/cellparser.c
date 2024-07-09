@@ -25,7 +25,7 @@ bool	t_pipe_organizer(t_mini *mini, t_pipe *pipe, ssize_t pipe_pos)
 	words = NULL;
 	index = -1;
 	pipe->pos = pipe_pos;
-	raw_words = string_constructor(mini, pipe->raw_words);
+	raw_words = t_char_list_to_str(mini, pipe->raw_words);
 	words = mini->libft->split(mini->solib, raw_words, ' ');
 	mini->free(mini, raw_words);
 	while (words[++index])
@@ -44,8 +44,7 @@ bool	cell_parser(t_mini *mini, t_cell *cell)
 
 	index = -1;
 	while (++index < cell->nb_pipes)
-		if (t_pipe_organizer(mini, &cell->pipes[index], index)
-			|| t_pipe_parse_type(mini, &cell->pipes[index]))
+		if (t_pipe_organizer(mini, &cell->pipes[index], index))
 			return (true);
 	return (false);
 }

@@ -62,8 +62,11 @@ bool	t_word_parse_para(t_word *word)
 
 bool	t_word_parse_type(t_mini *mini, t_word *word)
 {
-	word->refined_word = string_constructor(mini, word->c);
-	if (t_word_parse_para(word) || t_word_parse_redirect(word)
+	if (!word && !word->c)
+		return (word->type = ERROR_TYPE, true);
+	else if (word->c->c == ';' && !word->c->next)
+		return (word->type = SEPARATOR_TYPE, true);
+	else if (t_word_parse_para(word) || t_word_parse_redirect(word)
 		|| t_word_parse_cmd(mini, word))
 		return (false);
 	return (word->type = ARG_TYPE, true);

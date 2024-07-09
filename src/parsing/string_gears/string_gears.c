@@ -12,7 +12,7 @@
 
 #include <minishell/all.h>
 
-char	*string_constructor(t_mini *mini, t_char *list)
+char	*t_char_list_to_str(t_mini *mini, t_char *list)
 {
 	char *ret;
 	t_char *current;

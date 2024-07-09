@@ -31,54 +31,91 @@ bool	t_word_list_has_type(t_word *words, t_type type)
 
 char	*string_constructor_t_word_list(t_mini *mini, t_word *word)
 {
-	t_word *current;
-	char *new_word;
 	char *ret;
+	t_word *current_word;
+	t_char *current_char;
+	ssize_t index;
 
-	new_word = NULL;
-	ret = NULL;
-	current = word;
-	while (current)
+	index = 0;
+	current_word = word;
+	while(current_word)
 	{
-		new_word = string_constructor(mini, current->c);
-		ret = mini->libft->strjoin(mini->solib, ret, new_word);
-		mini->print("%s\n", new_word);
-		ret = mini->libft->strjoin(mini->solib, ret, ";");
-		free(new_word);
+		current_char = current_word->c;
+		while(current_char)
+		{
+			++index;
+			current_char = current_char->next;
+		}
+		current_word = current_word->next;
+	}
+	ret = mini->malloc(mini, sizeof(char) * (index + 1));
+	index = 0;
+	current_word = word;
+	while(current_word)
+	{
+		current_char = current_word->c;
+		while(current_char)
+		{
+			ret[index++] = current_char->c;
+			current_char = current_char->next;
+		}
+		current_word = current_word->next;
+	}
+	return (ret[index] = '\0', ret);
+}
+
+t_pipex *new_t_pipex(t_mini *mini)
+{
+	t_pipex *new;
+
+	new = mini->malloc(mini, sizeof(t_pipex));
+	new->args = NULL;
+	new->in_fd = NULL;
+	new->next = NULL;
+	new->out_fd = NULL;
+	return (new);
+}
+
+bool	t_word_list_add_back(t_mini *mini, t_word **dst, t_word *src)
+{
+	t_word *current;
+
+	current = src;
+	while(current)
+	{
+		word_add_back(mini, dst, current->refined_word);
+		if (current->next)
+			word_add_back(mini, dst, " ");
 		current = current->next;
 	}
-	return (ret);
+
+	return (false);
 }
 
 t_pipex	*cell_pipex_builder(t_mini *mini, t_cell *cell)
 {
 	t_pipex *ret;
+
+	char *tmp;
 	t_word *cmd_line;
-	t_word *current;
+
 	ssize_t index;
 
-	ret = mini->malloc(mini, sizeof(t_pipex));
-	ret->args = NULL;
-	ret->in_fd = NULL;
-	ret->next = NULL;
-	ret->out_fd = NULL;
+	ret = new_t_pipex(mini);
+	tmp = NULL;
 	index = -1;
 	cmd_line = NULL;
 	while(++index < cell->nb_pipes)
 	{
-		current = cell->pipes[index].words;
-		while(current)
+		if (!cell->pipes[index].used)
 		{
-			word_add_back(mini, &cmd_line, current->refined_word);
-			current = current->next;
+			cell->pipes[index].used = true;
+			t_word_list_add_back(mini, &cmd_line, cell->pipes[index].words);
+			word_add_back(mini, &cmd_line, ";");
 		}
 	}
-	current = cmd_line;
-	while(current)
-	{
-		print_t_word(mini, current);
-		current = current->next;
-	}
+	tmp = string_constructor_t_word_list(mini, cmd_line);
+	ret->args = mini->libft->split(mini->solib, tmp, ';');
 	return (ret);
 }
 
@@ -89,8 +126,10 @@ void	print_t_pipex(t_mini *mini, t_pipex *pipex)
 	index = -1;
 	if (!pipex || !pipex->args)
 		return ;
+	mini->print("\n[T_PIPEX]\n\t{ARGS} : ");
 	while (pipex->args[++index])
-		mini->print("%s\n", pipex->args[index]);
+		mini->print("[%s] ", pipex->args[index]);
+	mini->print("\n\t{INFD} : %s\n\t{OUTFD} : %s\n", pipex->in_fd, pipex->out_fd);
 }
 
 bool	cell_translator(t_mini *mini, t_cell *cell)

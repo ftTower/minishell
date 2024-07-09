@@ -29,7 +29,7 @@ char	*get_envpl_var(t_mini *mini, char *name_var);
 
 //string builder gears
 bool	strr_to_t_char_list(t_mini *mini, t_char **dst, char **src);
-char	*string_constructor(t_mini *mini, t_char *list);
+char	*t_char_list_to_str(t_mini *mini, t_char *list);
 
 //string builder redirect
 bool	redirect_unspacer(t_mini *mini, t_char **list);
@@ -53,6 +53,7 @@ bool	word_copy_back(t_mini *mini, t_word **words_list, t_word *word);
 bool	word_add_back(t_mini *mini, t_word **words_list, char *word);
 bool	word_char_indexer(t_word *word);
 bool	word_parser(t_mini *mini, t_pipe *pipe, t_word *word, ssize_t word_pos);
+bool	t_word_parse_type(t_mini *mini, t_word *word);
 
 //chars
 bool	char_add_back(t_mini *mini, t_word *word, char c);
@@ -71,6 +72,7 @@ void	print_double_tab(t_mini *mini, char **tab);
 void	print_t_char(t_mini *mini, t_char *c, t_color color);
 void	print_t_char_list(t_mini *mini, t_char *list);
 void	print_t_word(t_mini *mini, t_word *word);
+void	print_t_word_list(t_mini *mini, t_word *word);
 void	print_t_pipe(t_mini *mini, t_pipe *pipe);
 void	print_t_cell(t_mini *mini, t_cell *cell);
 
