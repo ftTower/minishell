@@ -14,7 +14,6 @@
 # define MINI_PARSING_H
 
 #include <minishell/all.h>
-#include <fcntl.h>
 
 t_mini_param pre_parsing(t_mini *mini);
 t_mini_param pre_parser(t_mini *mini, t_mini_param *param);

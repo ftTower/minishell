@@ -22,9 +22,10 @@
 # include <solibft.h>
 # include <sotypes.h>
 # include <stdbool.h>
-# include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <fcntl.h>
+# include <sys/wait.h>
 
 typedef struct s_mini t_mini;
 typedef struct s_mini_param t_mini_param;

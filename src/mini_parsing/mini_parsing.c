@@ -11,12 +11,6 @@
 /* ************************************************************************** */
 
 #include <minishell/all.h>
-#include <sotypes/soprintf.h>
-
-
-// l'ideal serait que vue que mini est deja instancier pre_parsing return un int 1 error 0 good
-// rajouter dans types.h et t_mini ton mini_param exemple t_mini_param *param; et l'associer directement avec pres parser
-// (si j'ai bien compris ton code)
 
 t_mini_param	pre_parsing(t_mini *mini)
 {

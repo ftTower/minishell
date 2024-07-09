@@ -18,5 +18,6 @@
 # include <minishell/gears.h>
 # include <minishell/mini_parsing.h>
 # include <minishell/parsing.h>
+# include <minishell/pipex.h>
 
 #endif
