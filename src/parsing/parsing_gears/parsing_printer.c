@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_print.c                                    :+:      :+:    :+:   */
+/*   parsing_printer.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tauer <tauer@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/03 01:09:03 by tauer             #+#    #+#             */
-/*   Updated: 2024/07/08 00:34:37 by tauer            ###   ########.fr       */
+/*   Created: 2024/07/09 02:37:02 by tauer             #+#    #+#             */
+/*   Updated: 2024/07/09 02:40:06 by tauer            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,19 +30,6 @@ void	print_t_char(t_mini *mini, t_char *c, t_color color)
 		mini->print("%C0ff1e7(%c)", c->c);
 	else
 		mini->print("%Cffffff(%c)", c->c);
-}
-
-void	print_t_char_list(t_mini *mini, t_char *list)
-{
-	t_char	*current;
-
-	current = list;
-	while (current)
-	{
-		print_t_char(mini, current, BLUE);
-		current = current->next;
-	}
-	mini->print("\n");
 }
 
 void	print_t_word(t_mini *mini, t_word *word)
@@ -96,9 +83,20 @@ void	print_t_pipe(t_mini *mini, t_pipe *pipe)
 	mini->print("\n");
 }
 
+void	print_t_cell(t_mini *mini, t_cell *cell)
+{
+	ssize_t	index;
+
+	mini->print("\n\t  %Cff0000([)%Cf1c40f(CELL %Cff0000(%d))%Cff0000(])\n",
+		cell->pos);
+	index = -1;
+	while (++index < cell->nb_pipes)
+		print_t_pipe(mini, &cell->pipes[index]);
+}
+
 void	print_envpl(t_mini *mini)
 {
-	t_envpl	*current;
+	t_envpl *current;
 
 	current = mini->envpl;
 	while (current)
@@ -106,15 +104,4 @@ void	print_envpl(t_mini *mini)
 		mini->print("%s\n", current->var);
 		current = current->next;
 	}
-}
-
-void	print_double_tab(t_mini *mini, char **tab)
-{
-	ssize_t	index;
-
-	index = -1;
-	if (!tab)
-		return ;
-	while (tab[++index])
-		mini->print("%s\n", tab[index]);
 }

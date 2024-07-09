@@ -10,8 +10,8 @@
 #                                                                              #
 # **************************************************************************** #
 
-CELLMAKER_DIR		=	cellmaker
+PARSING_GEARS_DIR		=	parsing_gears
 
-CELLMAKER_FILE		=	cellmaker.c miniformater.c
+PARSING_GEARS_FILE		=  	parsing_utils.c  parsing_error.c parsing_printer.c
  
-CELLMAKER			=	$(addprefix $(CELLMAKER_DIR)/, $(CELLMAKER_FILE))
+PARSING_GEARS			=	$(addprefix $(PARSING_GEARS_DIR)/, $(PARSING_GEARS_FILE))

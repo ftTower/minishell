@@ -10,9 +10,8 @@
 #                                                                              #
 # **************************************************************************** #
 
-STRINGBUILDER_DIR		=	stringbuilder
+LIST_GEARS_DIR		=	list_gears
 
-STRINGBUILDER_FILE		=	stringbuilder.c stringbuilder_redirect.c stringbuilder_t_char.c \
-							stringbuilder_gears.c stringbuilder_t_word.c
+LIST_GEARS_FILE		=	t_word_list.c t_char_list.c
  
-STRINGBUILDER			=	$(addprefix $(STRINGBUILDER_DIR)/, $(STRINGBUILDER_FILE))
+LIST_GEARS		=	$(addprefix $(LIST_GEARS_DIR)/, $(LIST_GEARS_FILE))

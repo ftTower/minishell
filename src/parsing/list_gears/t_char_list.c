@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   stringbuilder_t_char.c                             :+:      :+:    :+:   */
+/*   t_char_list.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tauer <tauer@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/05 15:35:40 by tauer             #+#    #+#             */
-/*   Updated: 2024/07/06 02:26:28 by tauer            ###   ########.fr       */
+/*   Created: 2024/07/09 01:43:38 by tauer             #+#    #+#             */
+/*   Updated: 2024/07/09 02:10:44 by tauer            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,30 +44,24 @@ bool	char_t_char_add_back(t_mini *mini, t_char **list, char c)
 	return (current->next = new, false);
 }
 
-bool	char_t_char_del_pos(t_mini *mini, t_char **list, ssize_t pos)
+bool	strr_to_t_char_list(t_mini *mini, t_char **dst, char **src)
 {
-	t_char	*current;
-	t_char	*tmp;
-	ssize_t	index;
+	ssize_t index;
+	ssize_t char_index;
 
-	if (!(*list) || pos < 0)
-		return (false);
-	if (pos == 0)
+	index = -1;
+	while (src[++index])
 	{
-		tmp = (*list);
-		(*list) = (*list)->next;
-		mini->free(mini, tmp);
-		return (true);
+		char_index = -1;
+		while (src[index][++char_index])
+		{
+			if ((src[index][char_index] == '<' || src[index][char_index] == '>')
+				&& (char_index > 0 && (src[index][char_index - 1] != '<'
+						&& src[index][char_index - 1] != '>')))
+				char_t_char_add_back(mini, dst, ' ');
+			char_t_char_add_back(mini, dst, src[index][char_index]);
+		}
+		char_t_char_add_back(mini, dst, ' ');
 	}
-	index = 0;
-	current = (*list);
-	while (current->next && ++index < pos)
-		current = current->next;
-	if (!current->next)
-		return (false);
-	tmp = current->next;
-	current->next = current->next->next;
-	mini->free(mini, tmp);
-	return (true);
+	return (false);
 }
-

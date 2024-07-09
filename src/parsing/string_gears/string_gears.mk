@@ -10,8 +10,8 @@
 #                                                                              #
 # **************************************************************************** #
 
-CELLMAKER_DIR		=	cellmaker
+STRING_GEARS_DIR		=	string_gears
 
-CELLMAKER_FILE		=	cellmaker.c miniformater.c
+STRING_GEARS_FILE		=  string_gears.c 
  
-CELLMAKER			=	$(addprefix $(CELLMAKER_DIR)/, $(CELLMAKER_FILE))
+STRING_GEARS			=	$(addprefix $(STRING_GEARS_DIR)/, $(STRING_GEARS_FILE))

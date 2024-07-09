@@ -16,13 +16,13 @@
 #ifndef TYPES_H
 # define TYPES_H
 
-# include <stdio.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <readline/rltypedefs.h>
 # include <solibft.h>
 # include <sotypes.h>
 # include <stdbool.h>
+# include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
 
@@ -33,13 +33,13 @@ typedef struct s_mini_param t_mini_param;
 
 typedef enum e_color
 {
-    ORANGE,
-    PURPLE,
-    YELLOW,
-    GREEN,
+	ORANGE,
+	PURPLE,
+	YELLOW,
+	GREEN,
 	BLUE,
 	LIGHT_BLUE,
-    RED,
+	RED,
 	DEFAULT,
 } t_color;
 
@@ -65,7 +65,6 @@ typedef enum e_type
 	CMD_TYPE,
 	ARG_TYPE,
 	PARA_TYPE,
-
 
 	REPLACE_IN_FD_TYPE,
 	REPLACE_OUT_FD_TYPE,
@@ -112,13 +111,11 @@ typedef struct s_pipex
 	char *out_fd;
 
 	struct s_pipex *next;
-}	t_pipex;
+} t_pipex;
 
 //  ; ls | cat -e | cat ;
 typedef struct s_cell
 {
-	char **lines;
-
 	t_pipe *pipes;
 	ssize_t nb_pipes;
 	ssize_t pos;
@@ -130,7 +127,7 @@ typedef struct s_envpl
 {
 	char *var;
 	struct s_envpl *next;
-}	t_envpl;
+} t_envpl;
 
 typedef struct s_mini
 {
