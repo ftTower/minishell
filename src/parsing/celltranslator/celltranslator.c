@@ -109,9 +109,16 @@ t_pipex	*cell_pipex_builder(t_mini *mini, t_cell *cell)
 	{
 		if (!cell->pipes[index].used)
 		{
-			cell->pipes[index].used = true;
-			t_word_list_add_back(mini, &cmd_line, cell->pipes[index].words);
-			word_add_back(mini, &cmd_line, ";");
+				cell->pipes[index].used = true;
+				if (!cmd_line && cell->pipes[index].fds)
+					ret->in_fd = string_constructor_t_word_list(mini, cell->pipes[index].fds);
+				t_word_list_add_back(mini, &cmd_line, cell->pipes[index].words);
+				// if (cell->pipes[index + 1] && t_word_list_has_type(cell->pipes[index].fds, ) )
+				// {
+				// 	ret->out_fd = string_constructor_t_word_list(mini, cell->pipes[index + 1].fds);
+				// 	break;	
+				// }
+				word_add_back(mini, &cmd_line, ";");
 		}
 	}
 	tmp = string_constructor_t_word_list(mini, cmd_line);
@@ -126,10 +133,10 @@ void	print_t_pipex(t_mini *mini, t_pipex *pipex)
 	index = -1;
 	if (!pipex || !pipex->args)
 		return ;
-	mini->print("\n[T_PIPEX]\n\t{ARGS} : ");
+	mini->print("\n[T_PIPEX_LINE]\n\t[%s] ", pipex->in_fd);
 	while (pipex->args[++index])
 		mini->print("[%s] ", pipex->args[index]);
-	mini->print("\n\t{INFD} : %s\n\t{OUTFD} : %s\n", pipex->in_fd, pipex->out_fd);
+	mini->print("[%s]\n", pipex->out_fd);
 }
 
 bool	cell_translator(t_mini *mini, t_cell *cell)

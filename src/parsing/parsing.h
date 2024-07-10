@@ -54,6 +54,7 @@ bool	word_add_back(t_mini *mini, t_word **words_list, char *word);
 bool	word_char_indexer(t_word *word);
 bool	word_parser(t_mini *mini, t_pipe *pipe, t_word *word, ssize_t word_pos);
 bool	t_word_parse_type(t_mini *mini, t_word *word);
+bool	t_word_list_has_type(t_word *words, t_type type);
 
 //chars
 bool	char_add_back(t_mini *mini, t_word *word, char c);
