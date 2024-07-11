@@ -110,7 +110,7 @@ t_pipex	*cell_pipex_builder(t_mini *mini, t_cell *cell)
 		if (!cell->pipes[index].used)
 		{
 				cell->pipes[index].used = true;
-				if (!cmd_line && cell->pipes[index].fds)
+				if (!cmd_line && (t_word_list_has_type(cell->pipes[index].fds, REPLACE_IN_FD_TYPE) || t_word_list_has_type(cell->pipes[index].fds, CONCATE_IN_FD_TYPE)))
 					ret->in_fd = string_constructor_t_word_list(mini, cell->pipes[index].fds);
 				t_word_list_add_back(mini, &cmd_line, cell->pipes[index].words);
 				// if (cell->pipes[index + 1] && t_word_list_has_type(cell->pipes[index].fds, ) )
