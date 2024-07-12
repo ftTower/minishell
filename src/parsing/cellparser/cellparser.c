@@ -100,12 +100,14 @@ bool	fd_parser(t_mini *mini, t_word **dst)
 		next = current->next;
 		if ((current->type == REPLACE_IN_FD_TYPE || current->type == CONCATE_IN_FD_TYPE) && (t_word_list_has_type(current->next, REPLACE_IN_FD_TYPE) || t_word_list_has_type(current->next, CONCATE_IN_FD_TYPE)))
 		{
-				open_fd(mini, current);
+				if (open_fd(mini, current))
+					return (true);
 				delete_word_in_list(mini, dst, current);
 		}
 		else if ((current->type == REPLACE_OUT_FD_TYPE || current->type == CONCATE_OUT_FD_TYPE) && (t_word_list_has_type(current->next, REPLACE_OUT_FD_TYPE) || t_word_list_has_type(current->next, CONCATE_OUT_FD_TYPE)))
 		{
-				open_fd(mini, current);
+				if (open_fd(mini, current))
+					return (true);
 				delete_word_in_list(mini, dst, current);
 		}
 		current = next;
@@ -118,11 +120,11 @@ bool	t_cell_connect_fd(t_mini *mini, t_cell *cell)
 	ssize_t index;
 
 	index = -1;
-	while(++index + 1< cell->nb_pipes)
+	while(++index + 1 < cell->nb_pipes)
 	{
 		if (!t_word_list_has_type(cell->pipes[index].fds, REPLACE_OUT_FD_TYPE) && !t_word_list_has_type(cell->pipes[index].fds, CONCATE_OUT_FD_TYPE) && (t_word_list_has_type(cell->pipes[index + 1].fds, REPLACE_IN_FD_TYPE) || t_word_list_has_type(cell->pipes[index + 1].fds, CONCATE_IN_FD_TYPE)))
 			word_add_back(mini, &cell->pipes[index].fds, ">/dev/null");
-		else if ((t_word_list_has_type(cell->pipes[index].fds, REPLACE_OUT_FD_TYPE) || t_word_list_has_type(cell->pipes[index].fds, CONCATE_OUT_FD_TYPE)))
+		else if ((t_word_list_has_type(cell->pipes[index].fds, REPLACE_OUT_FD_TYPE) || t_word_list_has_type(cell->pipes[index].fds, CONCATE_OUT_FD_TYPE)) && (!t_word_list_has_type(cell->pipes[index + 1].fds, REPLACE_IN_FD_TYPE) && !t_word_list_has_type(cell->pipes[index + 1].fds, CONCATE_IN_FD_TYPE)))
 			word_add_back(mini, &cell->pipes[index + 1].fds, "</dev/null");
 	}
 	return (false);
