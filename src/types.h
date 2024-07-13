@@ -116,6 +116,7 @@ typedef struct s_pipex
 } t_pipex;
 
 //  ; ls | cat -e | cat ;
+
 typedef struct s_cell
 {
 	t_pipe *pipes;
