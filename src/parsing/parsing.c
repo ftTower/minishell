@@ -51,6 +51,7 @@ bool	mini_parsing(t_mini *mini, char *line)
 		while (cells[++index])
 			if (cells_handler(mini, cells[index], index))
 				break ;
+			//add a error_catcher
 		// mini->print("\nParser stoppped at [cell no %d]\n", index - 1);
 	}
 	return (false);

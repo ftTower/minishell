@@ -83,15 +83,48 @@ void	print_t_pipe(t_mini *mini, t_pipe *pipe)
 	mini->print("\n");
 }
 
+void	print_t_pipex(t_mini *mini, t_pipex *pipex, ssize_t pos)
+{
+	ssize_t index;
+
+	index = -1;
+	if (!pipex || !pipex->args)
+		return ;
+	mini->print("[ %Cf1c40f(%d) ]  %C2ecc71(%s) ",pos, pipex->in_fd);
+	while (pipex->args[++index])
+		mini->print("%s ", pipex->args[index]);
+	mini->print("%Ccb4335(%s)\n", pipex->out_fd);
+}
+
+void	print_t_pipex_list(t_mini *mini, t_pipex *pipex)
+{
+	t_pipex	*current;
+	ssize_t	index;
+
+	index = -1;
+	mini->print("\n\t╭─%Cff0000([)%Cf1c40f(%C5dade2(PIPEX LINE))%Cff0000(])\n\t|\n");
+	current = pipex;
+	while (current)
+	{
+		if (current->next)
+			mini->print("\t├──");
+		else
+			mini->print("\t╰──");
+		print_t_pipex(mini, current, ++index);
+		current = current->next;
+	}
+}
+
 void	print_t_cell(t_mini *mini, t_cell *cell)
 {
-	ssize_t	index;
+	// ssize_t	index;
 
 	mini->print("\n\t  %Cff0000([)%Cf1c40f(CELL %Cff0000(%d))%Cff0000(])\n",
 		cell->pos);
-	index = -1;
-	while (++index < cell->nb_pipes)
-		print_t_pipe(mini, &cell->pipes[index]);
+	// index = -1;
+	// while (++index < cell->nb_pipes)
+	// 	print_t_pipe(mini, &cell->pipes[index]);
+	print_t_pipex_list(mini, cell->final_line);
 }
 
 void	print_envpl(t_mini *mini)
