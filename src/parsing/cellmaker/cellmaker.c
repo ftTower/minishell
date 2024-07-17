@@ -21,6 +21,7 @@ bool	cell_pipe_maker(t_mini *mini, t_pipe *pipe, char **pipe_words,
 	pipe->words = NULL;
 	pipe->fds = NULL;
 	pipe->raw_words = NULL;
+	pipe->used = false;
 	pipe->pos = pipe_pos;
 	if (mini_formater(mini, pipe, pipe_words))
 		return (true);

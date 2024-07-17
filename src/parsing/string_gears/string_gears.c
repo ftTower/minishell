@@ -12,7 +12,7 @@
 
 #include <minishell/all.h>
 
-char	*string_constructor(t_mini *mini, t_char *list)
+char	*t_char_list_to_str(t_mini *mini, t_char *list)
 {
 	char *ret;
 	t_char *current;
@@ -34,6 +34,65 @@ char	*string_constructor(t_mini *mini, t_char *list)
 	{
 		ret[index++] = current->c;
 		current = current->next;
+	}
+	return (ret[index] = '\0', ret);
+}
+
+char	*t_word_to_str(t_mini *mini, t_word *word)
+{
+	char *ret;
+	t_char *current_char;
+	ssize_t index;
+
+	index = 0;
+	current_char = word->c;
+	while(current_char)
+	{
+		++index;
+		current_char = current_char->next;
+	}
+	ret = mini->malloc(mini, sizeof(char) * (index + 1));
+	index = 0;
+	current_char = word->c;
+	while(current_char)
+	{
+		ret[index++] = current_char->c;
+		current_char = current_char->next;
+	}
+	return (ret[index] = '\0', ret);
+}
+
+char	*t_word_list_to_str(t_mini *mini, t_word *word)
+{
+	char *ret;
+	t_word *current_word;
+	t_char *current_char;
+	ssize_t index;
+
+	index = 0;
+	current_word = word;
+	while(current_word)
+	{
+		current_char = current_word->c;
+		while(current_char)
+		{
+			++index;
+			current_char = current_char->next;
+		}
+		current_word = current_word->next;
+	}
+	ret = mini->malloc(mini, sizeof(char) * (index + 1));
+	index = 0;
+	current_word = word;
+	while(current_word)
+	{
+		current_char = current_word->c;
+		while(current_char)
+		{
+			ret[index++] = current_char->c;
+			current_char = current_char->next;
+		}
+		current_word = current_word->next;
 	}
 	return (ret[index] = '\0', ret);
 }

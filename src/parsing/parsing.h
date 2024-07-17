@@ -15,71 +15,81 @@
 
 # include <minishell/all.h>
 
-//cell translator
-bool	cell_translator(t_mini *mini, t_cell *cell);
-
-//cell parser
-bool	cell_parser(t_mini *mini, t_cell *cell);
-
-//envpl
-bool	copy_envp_to_list(t_mini *mini);
-bool	add_var_envpl(t_mini *mini, t_envpl **envpl, char *var);
-void	print_envpl(t_mini *mini);
-char	*get_envpl_var(t_mini *mini, char *name_var);
-
-//string builder gears
-bool	strr_to_t_char_list(t_mini *mini, t_char **dst, char **src);
-char	*string_constructor(t_mini *mini, t_char *list);
-
-//string builder redirect
-bool	redirect_unspacer(t_mini *mini, t_char **list);
-bool	invalid_redirect(t_mini *mini, t_char **list);
-
-//string builder
-bool	string_formater(t_mini *mini, t_pipe *pipe, char **pipe_words);
-
-// cells
-bool cells_handler(t_mini *mini, char *line, size_t pos);
-bool   mini_parsing(t_mini *mini, char *line);
+//!cell maker
+//? cell_maker
+bool	cell_pipe_maker(t_mini *mini, t_pipe *pipe, char **pipe_words,
+		ssize_t pipe_pos);
 bool	cell_maker(t_mini *mini, t_cell *cell, char *raw_line);
-
-// pipes
-bool	pipe_maker(t_mini *mini, t_pipe *pipe, char **pipe_words);
-bool	pipe_parser(t_mini *mini, t_pipe *pipe, ssize_t pipe_pos);
-
-
-//words
-bool	word_copy_back(t_mini *mini, t_word **words_list, t_word *word);
-bool	word_add_back(t_mini *mini, t_word **words_list, char *word);
-bool	word_char_indexer(t_word *word);
-bool	word_parser(t_mini *mini, t_pipe *pipe, t_word *word, ssize_t word_pos);
-
-//chars
+//? miniformater   
+bool	redirect_unspacer(t_mini *mini, t_char **dst);
+bool	mini_formater(t_mini *mini, t_pipe *pipe, char **pipe_words);
+//!cell parser
+//? cell_fd
+bool	open_fd(t_mini *mini, t_word *word);
+bool	fd_parser(t_mini *mini, t_word **dst);
+bool	t_cell_connect_fd(t_mini *mini, t_cell *cell);
+//? cell_parser
+bool	t_pipe_parser(t_mini *mini, t_pipe *pipe, ssize_t pipe_pos);
+bool	cell_parser(t_mini *mini, t_cell *cell);
+//? type_parse
+bool	t_word_parse_cmd(t_mini *mini, t_word *word);
+bool	t_word_parse_redirect(t_word *word);
+bool	t_word_parse_para(t_word *word);
+bool	t_word_parse_type(t_mini *mini, t_word *word);
+bool	t_pipe_parse_type(t_mini *mini, t_pipe *pipe);
+//!cell translator
+//?cell_translator
+void	t_pipex_fill_in_fd(t_mini *mini, t_cell *cell, t_pipex *ret, ssize_t index);
+bool	t_pipex_fill_out_ft(t_mini *mini, t_cell *cell, t_pipex *ret, ssize_t index);
+t_pipex	*t_pipex_fill(t_mini *mini, t_cell *cell, t_pipex *ret);
+bool	is_unused_t_pipe_in_cell(t_cell *cell);
+bool	cell_translator(t_mini *mini, t_cell *cell);
+//!envpl
+//?envpl
+char	*get_envpl_var(t_mini *mini, char *name_var);
+bool	add_var_envpl(t_mini *mini, t_envpl **envpl, char *var);
+bool	copy_envp_to_list(t_mini *mini);
+//!list_gears
+//?t_char_list
 bool	char_add_back(t_mini *mini, t_word *word, char c);
 bool	char_t_char_add_back(t_mini *mini, t_char **list, char c);
-bool	char_t_char_del_pos(t_mini *mini, t_char **list, ssize_t pos);
-
-//fds
-bool	fd_getter(t_mini *mini, t_char *current, t_pipe *pipe);
-bool	fd_watcher(t_mini *mini, t_word *word, t_pipe *pipe);
-
-//error 
-bool	cells_empty_char(t_mini *mini, char *raw_line, char c);
-
-//print
-void	print_double_tab(t_mini *mini, char **tab);
-void	print_t_char(t_mini *mini, t_char *c, t_color color);
+bool	strr_to_t_char_list(t_mini *mini, t_char **dst, char **src);
+//?t_pipex
+bool	t_pipex_add_back(t_pipex **dst, t_pipex *src);
+t_pipex *new_t_pipex(t_mini *mini);
+//?t_word_list
+bool	word_add_back(t_mini *mini, t_word **words_list, char *word);
+bool	t_word_list_add_back(t_mini *mini, t_word **dst, t_word *src);
+bool	delete_word_in_list(t_mini *mini, t_word **words_list, t_word *word);
+bool	t_word_list_has_type(t_word *words, t_type type);
+t_word *t_word_list_get_type(t_word **dst, t_type to_get);
+//!parsing gears
+//?parsing_debug
 void	print_t_char_list(t_mini *mini, t_char *list);
+void	print_double_tab(t_mini *mini, char **tab);
+//?parsing_error
+bool	cells_empty_char(t_mini *mini, char *raw_line, char c);
+bool	invalid_redirect(t_mini *mini, t_char **list);
+//?parsing_printer
+void	print_t_char(t_mini *mini, t_char *c, t_color color);
 void	print_t_word(t_mini *mini, t_word *word);
+void	print_t_word_list(t_mini *mini, t_word *word);
 void	print_t_pipe(t_mini *mini, t_pipe *pipe);
+void	print_t_pipex(t_mini *mini, t_pipex *pipex, ssize_t pos);
+void	print_t_pipex_list(t_mini *mini, t_pipex *pipex);
 void	print_t_cell(t_mini *mini, t_cell *cell);
-
-//utils
+void	print_envpl(t_mini *mini);
+//?parsing_utils
 bool	strtlen(char **tab, ssize_t *ret);
-
-
-bool	mini_formater(t_mini *mini, t_pipe *pipe, char **pipe_words);
-bool	t_pipe_parse_type(t_mini *mini, t_pipe *pipe);
 void	free_tab(char **tab);
+//!string_gears
+//?string_gears
+char	*t_char_list_to_str(t_mini *mini, t_char *list);
+char	*t_word_to_str(t_mini *mini, t_word *word);
+char	*t_word_list_to_str(t_mini *mini, t_word *word);
+
+//!parsing
+bool	mini_parsing(t_mini *mini, char *line);
+
 
 #endif
