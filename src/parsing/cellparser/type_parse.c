@@ -6,7 +6,7 @@
 /*   By: tauer <tauer@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 02:23:45 by tauer             #+#    #+#             */
-/*   Updated: 2024/07/21 15:23:47 by tauer            ###   ########.fr       */
+/*   Updated: 2024/07/21 15:31:33 by tauer            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ bool	t_word_parse_type(t_mini *mini, t_word *word)
 	else if (word->c->c == ';' && !word->c->next)
 		return (word->type = SEPARATOR_TYPE, true);
 	else if (t_word_parse_para(word) || t_word_parse_redirect(word)
-		|| t_word_parse_cmd(mini, word) || t_word_parse_built_in(mini, word))
+		|| t_word_parse_built_in(mini, word) || t_word_parse_cmd(mini, word))
 		return (false);
 	return (word->type = ARG_TYPE, true);
 }
