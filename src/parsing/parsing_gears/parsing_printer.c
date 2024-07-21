@@ -6,7 +6,7 @@
 /*   By: tauer <tauer@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 02:37:02 by tauer             #+#    #+#             */
-/*   Updated: 2024/07/09 02:40:06 by tauer            ###   ########.fr       */
+/*   Updated: 2024/07/21 15:22:15 by tauer            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ void	print_t_word(t_mini *mini, t_word *word)
 	{
 		if (word->type == CMD_TYPE)
 			print_t_char(mini, current, LIGHT_BLUE);
+		else if (word->type == BUILT_IN_TYPE)
+			print_t_char(mini, current, YELLOW);
 		else if (word->type == PARA_TYPE)
 			print_t_char(mini, current, PURPLE);
 		else if (word->type == ARG_TYPE)
@@ -117,13 +119,13 @@ void	print_t_pipex_list(t_mini *mini, t_pipex *pipex)
 
 void	print_t_cell(t_mini *mini, t_cell *cell)
 {
-	// ssize_t	index;
+	ssize_t	index;
 
 	mini->print("\n\t  %Cff0000([)%Cf1c40f(CELL %Cff0000(%d))%Cff0000(])\n",
 		cell->pos);
-	// index = -1;
-	// while (++index < cell->nb_pipes)
-	// 	print_t_pipe(mini, &cell->pipes[index]);
+	index = -1;
+	while (++index < cell->nb_pipes)
+		print_t_pipe(mini, &cell->pipes[index]);
 	print_t_pipex_list(mini, cell->final_line);
 }
 

@@ -6,7 +6,7 @@
 /*   By: tauer <tauer@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 02:23:45 by tauer             #+#    #+#             */
-/*   Updated: 2024/07/09 03:00:08 by tauer            ###   ########.fr       */
+/*   Updated: 2024/07/21 15:23:47 by tauer            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,20 @@ bool	t_word_parse_para(t_word *word)
 	return (word->type = PARA_TYPE, true);
 }
 
+bool	t_word_parse_built_in(t_mini *mini, t_word *word)
+{
+	if (!word || !word->refined_word)
+		return (false);
+	else if (!mini->libft->strncmp(word->refined_word, "cd", 2)
+		|| !mini->libft->strncmp(word->refined_word, "pwd", 3)
+		|| !mini->libft->strncmp(word->refined_word, "export", 6)
+		|| !mini->libft->strncmp(word->refined_word, "unset", 5
+			|| !mini->libft->strncmp(word->refined_word, "env", 3)
+			|| !mini->libft->strncmp(word->refined_word, "exit", 4)))
+		return (word->type = BUILT_IN_TYPE, true);
+	return (false);
+}
+
 bool	t_word_parse_type(t_mini *mini, t_word *word)
 {
 	if (!word && !word->c)
@@ -67,7 +81,7 @@ bool	t_word_parse_type(t_mini *mini, t_word *word)
 	else if (word->c->c == ';' && !word->c->next)
 		return (word->type = SEPARATOR_TYPE, true);
 	else if (t_word_parse_para(word) || t_word_parse_redirect(word)
-		|| t_word_parse_cmd(mini, word))
+		|| t_word_parse_cmd(mini, word) || t_word_parse_built_in(mini, word))
 		return (false);
 	return (word->type = ARG_TYPE, true);
 }
