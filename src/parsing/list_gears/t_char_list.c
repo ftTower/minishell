@@ -6,7 +6,7 @@
 /*   By: tauer <tauer@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 01:43:38 by tauer             #+#    #+#             */
-/*   Updated: 2024/07/26 15:27:39 by tauer            ###   ########.fr       */
+/*   Updated: 2024/07/26 22:34:40 by tauer            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	t_char_set_pos(t_char *list)
 	}
 }
 
-bool	t_char_del_pos(t_mini *mini, t_char **dst, size_t pos)
+bool	t_char_del_pos(t_char **dst, size_t pos)
 {
 	t_char	*current;
 	t_char	*previous;
@@ -94,7 +94,6 @@ bool	t_char_del_pos(t_mini *mini, t_char **dst, size_t pos)
 				previous->next = current->next;
 			else
 				(*dst) = current->next;
-			mini->free(mini, current);
 			t_char_set_pos((*dst));
 			return (false);
 		}

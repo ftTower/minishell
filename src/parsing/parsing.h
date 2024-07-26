@@ -60,7 +60,7 @@ bool	char_add_back(t_mini *mini, t_word *word, char c);
 bool	char_t_char_add_back(t_mini *mini, t_char **list, char c);
 bool	strr_to_t_char_list(t_mini *mini, t_char **dst, char **src);
 void	t_char_set_pos(t_char *list);
-bool	t_char_del_pos(t_mini *mini, t_char **dst, size_t pos);
+bool	t_char_del_pos(t_char **dst, size_t pos);
 bool	t_char_add_pos(t_mini *mini, t_char **dst, size_t pos, char c);
 //?t_pipex
 bool	t_pipex_add_back(t_pipex **dst, t_pipex *src);
