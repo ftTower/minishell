@@ -6,7 +6,7 @@
 /*   By: tauer <tauer@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 02:13:56 by tauer             #+#    #+#             */
-/*   Updated: 2024/07/21 17:28:25 by tauer            ###   ########.fr       */
+/*   Updated: 2024/07/26 13:48:36 by tauer            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,17 @@ char *variable_content_getter(t_mini *mini, t_char **dst)
 
 bool	variable_setter(t_mini *mini, t_char **dst)
 {
+	t_char *current;
+	
+	current = (*dst);
+	while(current && current->c != '$')
+		current = current->next;
+	while(current && current->c != ' ')
+	{
+		t_char_del_pos(mini, dst, current->pos);
+		current = current->next;
+	}
+
 	mini->print("((%s))\n", variable_content_getter(mini, dst));
 	return (false);
 }
@@ -69,7 +80,7 @@ bool	variable_handler(t_mini *mini, t_char **dst)
 		if (current->c == '$' && !current->next)
 			return (mini->print("empty $variable\n"), true);
 		else if (current->c == '$' && current->next)
-			variable_setter(mini, &current);
+			variable_setter(mini, dst);
 		current = current->next;
 	}
 	return (false);

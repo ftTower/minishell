@@ -6,7 +6,7 @@
 /*   By: tauer <tauer@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 01:43:38 by tauer             #+#    #+#             */
-/*   Updated: 2024/07/09 02:10:44 by tauer            ###   ########.fr       */
+/*   Updated: 2024/07/26 13:43:58 by tauer            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ bool	char_t_char_add_back(t_mini *mini, t_char **list, char c)
 
 bool	strr_to_t_char_list(t_mini *mini, t_char **dst, char **src)
 {
-	ssize_t index;
-	ssize_t char_index;
+	ssize_t	index;
+	ssize_t	char_index;
 
 	index = -1;
 	while (src[++index])
@@ -64,4 +64,42 @@ bool	strr_to_t_char_list(t_mini *mini, t_char **dst, char **src)
 		char_t_char_add_back(mini, dst, ' ');
 	}
 	return (false);
+}
+
+void	t_char_set_pos(t_char *list)
+{
+	ssize_t	index;
+
+	index = 0;
+	while (list)
+	{
+		list->pos = index++;
+		list = list->next;
+	}
+}
+
+bool	t_char_del_pos(t_mini *mini, t_char **dst, size_t pos)
+{
+	t_char	*current;
+	t_char	*previous;
+
+	t_char_set_pos((*dst));
+	current = (*dst);
+	previous = NULL;
+	while (current)
+	{
+		if (current->pos == pos)
+		{
+			if (previous)
+				previous->next = current->next;
+			else
+				(*dst) = current->next;
+			mini->free(mini, current);
+			t_char_set_pos((*dst));
+			return (false);
+		}
+		previous = current;
+		current = current->next;
+	}
+	return (true);
 }
