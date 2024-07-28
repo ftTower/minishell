@@ -54,13 +54,15 @@ bool	cell_translator(t_mini *mini, t_cell *cell);
 char	*get_envpl_var(t_mini *mini, char *name_var);
 bool	add_var_envpl(t_mini *mini, t_envpl **envpl, char *var);
 bool	copy_envp_to_list(t_mini *mini);
+void	variable_content_setter(t_mini *mini, t_char **dst, char *content);
+char	*variable_content_getter(t_mini *mini, t_char **dst);
 //! list_gears
 //?t_char_list
 bool	char_add_back(t_mini *mini, t_word *word, char c);
 bool	char_t_char_add_back(t_mini *mini, t_char **list, char c);
 bool	strr_to_t_char_list(t_mini *mini, t_char **dst, char **src);
 void	t_char_set_pos(t_char *list);
-bool	t_char_del_pos(t_char **dst, size_t pos);
+bool	t_char_del_pos( t_char **dst, size_t pos_to_del);
 bool	t_char_add_pos(t_mini *mini, t_char **dst, size_t pos, char c);
 //?t_pipex
 bool	t_pipex_add_back(t_pipex **dst, t_pipex *src);
