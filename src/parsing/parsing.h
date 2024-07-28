@@ -31,6 +31,9 @@ bool	mini_formater(t_mini *mini, t_pipe *pipe, char **pipe_words);
 bool	open_fd(t_mini *mini, t_word *word);
 bool	fd_parser(t_mini *mini, t_word **dst);
 bool	t_cell_connect_fd(t_mini *mini, t_cell *cell);
+//? cell_variable
+bool	t_word_variable_handler(t_mini *mini, t_word *word);
+bool	t_pipe_variable_handler(t_mini *mini, t_pipe *pipe);
 //? cell_parser
 bool	t_pipe_parser(t_mini *mini, t_pipe *pipe, ssize_t pipe_pos);
 bool	cell_parser(t_mini *mini, t_cell *cell);
