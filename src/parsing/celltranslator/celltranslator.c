@@ -47,6 +47,26 @@ bool	t_pipex_fill_out_ft(t_mini *mini, t_cell *cell, t_pipex *ret,
 	return (false);
 }
 
+t_word *format_before_pipex(t_word *cmd_line)
+{
+	t_word *current;
+	t_char *current_char;
+
+	current = cmd_line;
+	while (current)
+	{	
+		current_char = current->c;
+		while (current_char)
+		{
+			if (current_char->c == '|')
+				current_char->c = ' ';
+			current_char = current_char->next;
+		}
+		current = current->next;
+	}
+	return (cmd_line);
+}
+
 t_pipex	*t_pipex_fill(t_mini *mini, t_cell *cell, t_pipex *ret)
 {
 	char	*tmp;
@@ -69,7 +89,7 @@ t_pipex	*t_pipex_fill(t_mini *mini, t_cell *cell, t_pipex *ret)
 				word_add_back(mini, &cmd_line, ";");
 		}
 	}
-	return (tmp = t_word_list_to_str(mini, cmd_line),
+	return (tmp = t_word_list_to_str(mini, format_before_pipex(cmd_line)),
 		ret->args = mini->libft->split(mini->solib, tmp, ';'), ret);
 }
 
@@ -86,9 +106,11 @@ bool	is_unused_t_pipe_in_cell(t_cell *cell)
 	return (false);
 }
 
+
 bool	cell_translator(t_mini *mini, t_cell *cell)
 {
 	cell->final_line = NULL;
+
 	while (is_unused_t_pipe_in_cell(cell))
 		t_pipex_add_back(&cell->final_line, t_pipex_fill(mini, cell,
 				new_t_pipex(mini)));

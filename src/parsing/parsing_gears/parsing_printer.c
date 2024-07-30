@@ -6,7 +6,7 @@
 /*   By: tauer <tauer@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 02:37:02 by tauer             #+#    #+#             */
-/*   Updated: 2024/07/21 15:22:15 by tauer            ###   ########.fr       */
+/*   Updated: 2024/07/31 00:08:27 by tauer            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 void	print_t_char(t_mini *mini, t_char *c, t_color color)
 {
-	if (color == ORANGE)
+	if (c->c == '|')
+		mini->print(" ");
+	else if (color == ORANGE)
 		mini->print("%Ce67e22(%c)", c->c);
 	else if (color == PURPLE)
 		mini->print("%Cc238eb(%c)", c->c);

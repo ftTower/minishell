@@ -6,7 +6,7 @@
 /*   By: tauer <tauer@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 02:23:45 by tauer             #+#    #+#             */
-/*   Updated: 2024/07/28 01:56:02 by tauer            ###   ########.fr       */
+/*   Updated: 2024/07/31 00:14:29 by tauer            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,9 @@ bool	t_word_parse_cmd(t_mini *mini, t_word *word)
 				mini->libft->strjoin(mini->solib, parse_path[index], "/"),
 				word->refined_word);
 		if (!access(current_path, X_OK | F_OK))
-			return (free_tab(parse_path), free(current_path),
-				word->type = CMD_TYPE, true);
+			return (word->type = CMD_TYPE, true);
 	}
-	return (free_tab(parse_path), false);
+	return (false);
 }
 
 bool	t_word_parse_redirect(t_word *word)
