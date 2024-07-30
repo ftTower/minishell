@@ -6,7 +6,7 @@
 /*   By: tauer <tauer@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 02:23:45 by tauer             #+#    #+#             */
-/*   Updated: 2024/07/31 00:14:29 by tauer            ###   ########.fr       */
+/*   Updated: 2024/07/31 00:42:13 by tauer            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ bool	t_word_parse_built_in(t_mini *mini, t_word *word)
 
 bool	t_word_parse_type(t_mini *mini, t_word *word)
 {
-	if (!word || !word->c )
+	if (!word || !word->c)
 		return (word->type = ERROR_TYPE, true);
 	else if (word->c->c == ';' && !word->c->next)
 		return (word->type = SEPARATOR_TYPE, true);

@@ -21,6 +21,8 @@ char	*get_envpl_var(t_mini *mini, char *name_var)
 	t_envpl *current;
 
 	current = mini->envpl;
+	if (!name_var)
+		return (NULL);
 	while (current)
 	{
 		if (!mini->libft->strncmp(current->var, name_var,
