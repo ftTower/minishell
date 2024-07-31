@@ -16,6 +16,7 @@
 #ifndef TYPES_H
 # define TYPES_H
 
+# include <fcntl.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <readline/rltypedefs.h>
@@ -23,9 +24,8 @@
 # include <sotypes.h>
 # include <stdbool.h>
 # include <stdlib.h>
-# include <unistd.h>
-# include <fcntl.h>
 # include <sys/wait.h>
+# include <unistd.h>
 
 typedef struct s_mini t_mini;
 typedef struct s_mini_param t_mini_param;
@@ -104,7 +104,7 @@ typedef struct s_pipe
 	t_word *words;
 
 	ssize_t pos;
-	bool	used;
+	bool used;
 } t_pipe;
 
 typedef struct s_pipex

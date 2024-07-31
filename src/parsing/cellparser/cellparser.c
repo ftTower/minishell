@@ -15,7 +15,6 @@
 
 #include <minishell/all.h>
 
-
 bool	t_pipe_parser(t_mini *mini, t_pipe *pipe, ssize_t pipe_pos)
 {
 	char *raw_words;

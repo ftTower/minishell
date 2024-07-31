@@ -2,9 +2,12 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
+/*                                                    +:+ +:+        
+	+:+     */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+      
+	+#+        */
+/*                                                +#+#+#+#+#+  
+	+#+           */
 /*   Created: 2024/04/07 20:22:09 by marvin            #+#    #+#             */
 /*   Updated: 2024/04/07 20:22:09 by marvin           ###   ########.fr       */
 /*                                                                            */
@@ -12,9 +15,10 @@
 
 #include <minishell/all.h>
 
+
 int	ft_strarrfree(t_solib *solib, char **strarr)
 {
-	int	k;
+	int k;
 
 	k = -1;
 	while (strarr[++k])
@@ -25,16 +29,16 @@ int	ft_strarrfree(t_solib *solib, char **strarr)
 
 static char	*strarr_prefixchr(t_solib *solib, char **strarr, char *target)
 {
-	while (*strarr && solib->libft->strncmp(
-			target, *strarr, solib->libft->strlen(target)))
+	while (*strarr && solib->libft->strncmp(target, *strarr,
+			solib->libft->strlen(target)))
 		strarr++;
 	return (*strarr);
 }
 
 static char	*get_cmd(t_solib *solib, char **paths, char *cmd)
 {
-	char	*temp;
-	char	*out;
+	char *temp;
+	char *out;
 
 	if (access(cmd, 0) == 0)
 		return (cmd);
@@ -56,13 +60,23 @@ static char	*get_cmd(t_solib *solib, char **paths, char *cmd)
 	return (0);
 }
 
+void	echon(t_mini *mini, char *str)
+{
+	mini->print("%s", str);
+}
+
+void	pwd(t_mini *mini)
+{
+	mini->print("%s\n", get_envpl_var(mini, "PWD="));
+}
+
 int	str_exec(t_solib *solib, char *str)
 {
-	static char	**paths = 0;
-	char		*path;
-	char		**argv;
-	char		*cmd;
-	int			ret;
+	static char **paths = 0;
+	char *path;
+	char **argv;
+	char *cmd;
+	int ret;
 
 	path = strarr_prefixchr(solib, solib->env->envp, "PATH");
 	if (!path)
