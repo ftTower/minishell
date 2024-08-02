@@ -6,59 +6,85 @@
 /*   By: tauer <tauer@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 16:59:39 by tauer             #+#    #+#             */
-/*   Updated: 2024/08/01 00:45:10 by tauer            ###   ########.fr       */
+/*   Updated: 2024/08/03 01:47:16 by tauer            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell/all.h>
 
-bool	is_empty_var(char *str)
+ssize_t	count_var(char *str)
 {
-	ssize_t index;
+	ssize_t	index;
+	ssize_t	ret;
 
+	ret = 0;
 	index = -1;
 	while (str[++index])
-	{
-		if (str[index] == '$' && (str[index + 1] == '\0' || str[index + 1] == '$' || str[index + 1] == ' ' ))
-			return (true);
-	}
+		if (str[index] == '$' && str[index + 1] && str[index + 1] != ' ')
+			ret++;
+	return (printf("count_var : %ld\n", ret), ret);
+}
+
+ssize_t	len_var(char *str)
+{
+	ssize_t	index;
+	ssize_t	ret;
+
+	index = -1;
+	ret = 0;
+	while (str[++index])
+		if (index == 0 || str[index] != '$')
+			ret++;
+	return (ret);
+}
+
+bool	fill_var(char *src, char *dst)
+{
+	ssize_t	index;
+
+	index = -1;
+	printf("[%s] - ", src);
+	while (src[++index] && src[index] && (index == 0 || src[index] != '$'))
+		dst[index] = src[index];
+	dst[++index] = '\0';
+	printf("[%s]\n", dst);
 	return (false);
 }
 
-bool	t_word_variable_handler(t_mini *mini, t_word *word)
+char	**split_var(char *str)
 {
-	char	**splitted;
-	char	**splitted_quote;
-	char	*word_content;
 	ssize_t	index;
-	ssize_t	index_quote;
+	ssize_t	tab_index;
+	ssize_t	char_index;
+	char	**ret;
+	char	*buf;
 
-	if (is_empty_var(word->refined_word))
-		return (word->refined_word = "", false);
-	// if (word->refined_word[0] == '$' && !get_envpl_var(mini, word->refined_word
-	// 		+ 1))
-	// 	return (word->refined_word = "", false);
-	splitted = mini->libft->split(mini->solib, word->refined_word, '$');
-	// print_double_tab(mini, splitted);
-	word_content = "";
+	ret = malloc(sizeof(char *) * (count_var(str) + 1));
+	if (!ret)
+		return (NULL);
 	index = -1;
-	while (splitted[++index])
+	tab_index = 0;
+	while (str[++index])
 	{
-		index_quote = -1;
-		splitted_quote = mini->libft->split(mini->solib, splitted[index], '"');
-		while (splitted_quote[++index_quote])
+		printf("%s\n", str + index);
+		if (str[index] == '$')
 		{
-			if (get_envpl_var(mini, splitted_quote[index_quote]))
-				mini->libft->strmcat(mini->solib, &word_content,
-					get_envpl_var(mini, splitted_quote[index_quote]));
-			else
-				mini->libft->strmcat(mini->solib, &word_content,
-					splitted_quote[index_quote]);
+			
+			printf("dollar : %ld len_var[%ld]\n", index, len_var(str + index) + 1);
+			buf = malloc(sizeof(char) * (len_var(str + index) + 1));
+			if (!buf)
+				return (NULL);
+			char_index = 0;
+			while (str[index] && str[index + 1] != '$')
+				buf[char_index++] = str[index++];
+			buf[char_index] = '\0';
+			ret[tab_index++] = buf;
+			if (!str[index])
+				break;
 		}
 	}
-	if (word_content && *word_content)
-		word->refined_word = word_content;
-	return (false);
+	ret[tab_index] = NULL;
+	return (printf("================\n"), ret);
 }
 
 bool	t_pipe_variable_handler(t_mini *mini, t_pipe *pipe)
@@ -68,9 +94,8 @@ bool	t_pipe_variable_handler(t_mini *mini, t_pipe *pipe)
 	current = pipe->words;
 	while (current)
 	{
-		if (t_word_variable_handler(mini, current))
-			return (true);
-		mini->print("ici");
+		print_double_tab(mini, split_var(current->refined_word));
+		mini->print("\n");
 		current = current->next;
 	}
 	return (false);
