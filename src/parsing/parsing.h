@@ -23,6 +23,9 @@
 bool	cell_pipe_maker(t_mini *mini, t_pipe *pipe, char **pipe_words,
 		ssize_t pipe_pos);
 bool	cell_maker(t_mini *mini, t_cell *cell, char *raw_line);
+//? miniformat quotes
+bool	handle_in_quotes(t_mini *mini, t_char **list);
+bool	t_char_list_format_quotes(t_mini *mini, t_char **list);
 //? miniformater
 bool	redirect_unspacer(t_mini *mini, t_char **dst);
 bool	mini_formater(t_mini *mini, t_pipe *pipe, char **pipe_words);
@@ -65,8 +68,8 @@ bool	char_add_back(t_mini *mini, t_word *word, char c);
 bool	char_t_char_add_back(t_mini *mini, t_char **list, char c);
 bool	strr_to_t_char_list(t_mini *mini, t_char **dst, char **src);
 void	t_char_set_pos(t_char *list);
-bool	t_char_del_pos( t_char **dst, size_t pos_to_del);
 bool	t_char_add_pos(t_mini *mini, t_char **dst, size_t pos, char c);
+bool	t_char_del_pos(t_mini *mini, t_char **list, size_t pos_to_del);
 //?t_pipex
 bool	t_pipex_add_back(t_pipex **dst, t_pipex *src);
 t_pipex	*new_t_pipex(t_mini *mini);

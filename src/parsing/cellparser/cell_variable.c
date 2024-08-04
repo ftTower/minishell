@@ -6,7 +6,7 @@
 /*   By: tauer <tauer@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 16:59:39 by tauer             #+#    #+#             */
-/*   Updated: 2024/08/04 01:51:37 by tauer            ###   ########.fr       */
+/*   Updated: 2024/08/05 01:22:45 by tauer            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ ssize_t	len_var(char *str)
 
 	index = -1;
 	ret = 0;
-	while(str[++index] && (str[index] == '$'))
+	while (str[++index] && (str[index] == '$'))
 		ret++;
 	while (str[++index] && str[index] != '$')
 		ret++;
@@ -45,7 +45,7 @@ char	*get_var(t_mini *mini, char *str, ssize_t *index)
 {
 	char	*ret;
 	ssize_t	len;
-	ssize_t cpy_index;
+	ssize_t	cpy_index;
 
 	len = len_var(str + *index) + 1;
 	ret = mini->malloc(mini, sizeof(char) * (len + 1));
@@ -65,7 +65,11 @@ char	**split_var(t_mini *mini, char *str)
 	ssize_t	index;
 	ssize_t	tab_index;
 	char	**ret;
-
+	
+	if (!str)
+		return (NULL);
+	else if (str[0] == '$' && !str[1])
+		return (NULL);
 	ret = mini->malloc(mini, sizeof(char *) * (count_var(str) + 1));
 	if (!ret)
 		return (NULL);
@@ -74,23 +78,34 @@ char	**split_var(t_mini *mini, char *str)
 	while (str[index])
 		ret[tab_index++] = get_var(mini, str, &index);
 	ret[tab_index] = NULL;
-	return ( ret);
+	return (ret);
 }
 
 void	strmcat_var(t_mini *mini, t_word *word, char **word_splitted_var)
 {
-	ssize_t index;
-	char *ret;
+	ssize_t	index;
+	char	*ret;
 
 	index = -1;
 	ret = "";
-	while(word_splitted_var[++index])
+	if (!word_splitted_var)
+		return (word->refined_word = "", (void)0);
+	print_double_tab(mini, word_splitted_var);
+	while (word_splitted_var[++index])
 	{
-		// printf("%s\n", word_splitted_var[index]);
-		if (word_splitted_var[index][0] != '$')
+		if (!word_splitted_var[index][0])
+			continue ;
+		else if (word_splitted_var[index][0] == '\\' && word_splitted_var[index
+			+ 1] && word_splitted_var[index + 1][0] && word_splitted_var[index
+			+ 1][0] == '$' && word_splitted_var[index + 1][1])
+			mini->libft->strmcat(mini->solib, &ret, word_splitted_var[index++
+				+ 1]);
+		else if (word_splitted_var[index][0] != '$')
 			mini->libft->strmcat(mini->solib, &ret, word_splitted_var[index]);
-		else if (get_envpl_var(mini, word_splitted_var[index] + 1))
-			mini->libft->strmcat(mini->solib, &ret, get_envpl_var(mini, word_splitted_var[index] + 1));
+		else if (word_splitted_var[index][1] && word_splitted_var[index][0] == '$' && get_envpl_var(mini,
+				word_splitted_var[index] + 1))
+			mini->libft->strmcat(mini->solib, &ret, get_envpl_var(mini,
+					word_splitted_var[index] + 1));
 	}
 	word->refined_word = ret;
 }
