@@ -6,7 +6,7 @@
 /*   By: tauer <tauer@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 01:43:38 by tauer             #+#    #+#             */
-/*   Updated: 2024/08/05 01:51:03 by tauer            ###   ########.fr       */
+/*   Updated: 2024/08/05 17:48:15 by tauer            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ bool	t_char_add_pos(t_mini *mini, t_char **dst, size_t pos, char c)
 	return (true);
 }
 
-bool	t_char_del_pos(t_mini *mini, t_char **list, size_t pos_to_del, bool update_pos)
+bool	t_char_del_pos(t_mini *mini, t_char **list, size_t pos_to_del)
 {
 	t_char	*current;
 	t_char	*tmp;
