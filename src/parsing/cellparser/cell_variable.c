@@ -6,7 +6,7 @@
 /*   By: tauer <tauer@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 16:59:39 by tauer             #+#    #+#             */
-/*   Updated: 2024/08/06 20:14:02 by tauer            ###   ########.fr       */
+/*   Updated: 2024/08/06 21:47:07 by tauer            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,12 +110,6 @@ void	strmcat_var(t_mini *mini, t_word *word, char **word_splitted_var)
 				word_splitted_var[index] + 1))
 			mini->libft->strmcat(mini->solib, &ret, get_envpl_var(mini,
 					word_splitted_var[index] + 1));
-		else if (word_splitted_var[index][1]
-			&& word_splitted_var[index][0] == '$' && get_hidden_envpl_var(mini,
-				word_splitted_var[index] + 1))
-			mini->libft->strmcat(mini->solib, &ret, get_hidden_envpl_var(mini,
-					word_splitted_var[index] + 1));
-					
 	}
 	word->refined_word = ret;
 }

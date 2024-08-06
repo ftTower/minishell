@@ -15,55 +15,19 @@
 
 #include <minishell/all.h>
 
-
-char	*get_progressiv_name_var(t_mini *mini, char *name_var,
-		size_t size_to_try)
+char	*get_content_var(t_mini *mini, char *name_var)
 {
-	char *ret;
-	if (!name_var || mini->libft->strlen(name_var) < size_to_try)
-		return (NULL);
-	ret = mini->malloc(mini, sizeof(char) * (size_to_try + 1));
-	mini->libft->strlcpy(ret, name_var, size_to_try + 1);
-	mini->print("%s %d\n", ret, size_to_try);
-	return (ret);
-}
+	t_envpl *current;
 
-char	*get_hidden_envpl_var(t_mini *mini, char *name_var)
-{
-	char *ret;
-	char *buffer;
-	size_t index;
-
-	index = 1;
-	mini->print("searching for hidden var [%s]\n", name_var);
-	if (!name_var)
-		return (NULL);
-	while (index < mini->libft->strlen(name_var))
+	current = mini->envpl;
+	while (current)
 	{
-		buffer = get_progressiv_name_var(mini, name_var, index);
-		ret = get_envpl_var(mini, buffer);
-		mini->print("%s\n", ret);
-		if (ret)
-			return (mini->print("found hidden var [%s] -> %s [%s]\n", name_var,
-					buffer, ret), ret);
-		mini->free(mini, buffer);
-		index++;
+		if (!mini->libft->strncmp(current->var, name_var,
+				mini->libft->strlen(name_var)))
+			return (current->var + mini->libft->strlen(name_var));
+		current = current->next;
 	}
 	return (NULL);
-}
-
-size_t	get_var_name_size(char *str)
-{
-	size_t index;
-
-	index = 0;
-	while (str[index])
-	{
-		if (str[index] == '=')
-			return (index - 1);
-		index++;
-	}
-	return (0);
 }
 
 char	*get_envpl_var(t_mini *mini, char *name_var)
@@ -73,15 +37,7 @@ char	*get_envpl_var(t_mini *mini, char *name_var)
 	current = mini->envpl;
 	if (!name_var)
 		return (NULL);
-	while (current)
-	{
-		// mini->print("%s [%d] %s[%d]\n", current->var, get_var_name_size(current->var), name_var, mini->libft->strlen(name_var));
-		if (!mini->libft->strncmp(current->var, name_var,
-				mini->libft->strlen(name_var)) && mini->libft->strlen(name_var) == get_var_name_size(current->var))
-			return (current->var + mini->libft->strlen(name_var));
-		current = current->next;
-	}
-	return (NULL);
+	return (get_content_var(mini, name_var));
 }
 
 bool	add_var_envpl(t_mini *mini, t_envpl **envpl, char *var)

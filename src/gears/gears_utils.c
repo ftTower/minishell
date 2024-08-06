@@ -37,7 +37,7 @@ void display_path(t_mini *mini)
 		"\033[48;5;226m",
 	};
 
-	path_content = get_envpl_var(mini, "PWD=");
+	path_content = get_envpl_var(mini, "PWD");
 	if (!path_content)
 		return (printf("\033[48;5;196mNO PATH\033[0m"), (void)NULL);
 	path = mini->libft->split(mini->solib,path_content ,'/');
@@ -63,10 +63,10 @@ void display_info(t_mini *mini)
 
 	info = get_envpl_var(mini, "USER=");
 	printf("\033[48;5;202m🧿 %s\033[0m-", info);
-	info = get_envpl_var(mini, "SHELL=");
-	printf("\033[48;5;202m[%s\033[0m", info);
-	info = get_envpl_var(mini, "SHLVL=");
-	printf("\033[48;5;202m: %s]\033[0m-", info);
+	info = get_envpl_var(mini, "SHELL");
+	printf("\033[48;5;202m[%s\033[0m", info + 1);
+	info = get_envpl_var(mini, "SHLVL");
+	printf("\033[48;5;202m: %s]\033[0m-", info + 1);
 }
 
 void display_prompt(t_mini *mini)
