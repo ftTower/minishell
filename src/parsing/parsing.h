@@ -58,6 +58,7 @@ bool	cell_translator(t_mini *mini, t_cell *cell);
 //! envpl
 //?envpl
 char	*get_envpl_var(t_mini *mini, char *name_var);
+char	*get_hidden_envpl_var(t_mini *mini, char *name_var);
 bool	add_var_envpl(t_mini *mini, t_envpl **envpl, char *var);
 bool	copy_envp_to_list(t_mini *mini);
 void	variable_content_setter(t_mini *mini, t_char **dst, char *content);

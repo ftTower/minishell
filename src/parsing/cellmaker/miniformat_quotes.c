@@ -6,7 +6,7 @@
 /*   By: tauer <tauer@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 23:37:13 by tauer             #+#    #+#             */
-/*   Updated: 2024/08/05 01:51:37 by tauer            ###   ########.fr       */
+/*   Updated: 2024/08/06 19:57:00 by tauer            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,16 +67,12 @@ bool	handle_in_quotes(t_mini *mini, t_char **list)
 t_char	*get_to_next_char(t_char *list, char c)
 {
 	t_char	*current;
-	t_char	*next;
 
 	current = list;
 	while (current)
 	{
-		if (current->c == c)
-		{
-			next = current->next;
-			return (next);
-		}
+		if (current->next && current->next->c == c)
+			return (current);
 		current = current->next;
 	}
 	return (NULL);
@@ -98,6 +94,8 @@ bool	remove_all_quotes(t_mini *mini, t_char **list)
 		{
 			t_char_del_pos(mini, list, current->pos);
 			current = get_to_next_char(*list, '"');
+			if (current && current->next && current->next->c == '"')
+				t_char_del_pos(mini, list, current->next->pos);
 		}
 		if (current)
 			current = current->next;

@@ -23,6 +23,7 @@ void line_handler() // pas touche a ca ! okok... ;(
 void display_path(t_mini *mini)
 {
 	char **path;
+	char *path_content;
 	ssize_t index;
 	ssize_t color_index;
 	const char	*colors[] = {
@@ -36,7 +37,10 @@ void display_path(t_mini *mini)
 		"\033[48;5;226m",
 	};
 
-	path = mini->libft->split(mini->solib,	get_envpl_var(mini, "PWD=") ,'/');
+	path_content = get_envpl_var(mini, "PWD=");
+	if (!path_content)
+		return (printf("\033[48;5;196mNO PATH\033[0m"), (void)NULL);
+	path = mini->libft->split(mini->solib,path_content ,'/');
 	if (!path)
 		return (printf("\033[48;5;196mNO PATH\033[0m"), (void)NULL);
 	index = -1;
