@@ -6,7 +6,7 @@
 /*   By: tauer <tauer@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 16:59:39 by tauer             #+#    #+#             */
-/*   Updated: 2024/08/07 15:42:13 by tauer            ###   ########.fr       */
+/*   Updated: 2024/08/08 01:01:44 by tauer            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ char	**split_var(t_mini *mini, char *str)
 	ssize_t	tab_index;
 	char	**ret;
 
-	mini->print("%s\n", str);
 	if (!str)
 		return (NULL);
 	else if (str[0] == '$' && !str[1])
@@ -76,7 +75,6 @@ char	**split_var(t_mini *mini, char *str)
 	ret = mini->malloc(mini, sizeof(char *) * (count_var(str) + 1));
 	if (!ret)
 		return (NULL);
-	mini->print("size : %d\n", count_var(str) + 1);
 	index = 0;
 	tab_index = 0;
 	while (str[index])
@@ -117,9 +115,7 @@ void	strmcat_var(t_mini *mini, t_word *word, char **word_splitted_var)
 			mini->libft->strmcat(mini->solib, &ret, word_splitted_var[index]);
 		else if (index > 0 && is_last_char(word_splitted_var[index - 1], '\\') && word_splitted_var[index][0] == '$' && word_splitted_var[index][1])
 		{
-			// mini->print("ici var %s %d\n", ret, mini->libft->strlen(ret) - 1);
 			ret = mini->libft->substr(mini->solib, ret, 0, mini->libft->strlen(ret) - 1);
-			// mini->print("suite var %s\n", ret);
 			mini->libft->strmcat(mini->solib, &ret, word_splitted_var[index]);
 		}
 		else if (word_splitted_var[index][1]

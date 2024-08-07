@@ -65,6 +65,8 @@ void	variable_content_setter(t_mini *mini, t_char **dst, char *content);
 char	*variable_content_getter(t_mini *mini, t_char **dst);
 //! list_gears
 //?t_char_list
+void	t_char_print_typequote(t_mini *mini, t_char *list);
+void	t_char_identify_typequote(t_char *list);
 bool	char_add_back(t_mini *mini, t_word *word, char c);
 bool	char_t_char_add_back(t_mini *mini, t_char **list, char c);
 bool	strr_to_t_char_list(t_mini *mini, t_char **dst, char **src);

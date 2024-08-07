@@ -85,6 +85,7 @@ typedef enum s_type_quotes
 	TYPEQUOTES_SINGLE_QUOTED,
 	TYPEQUOTES_DOUBLE_QUOTED,
 	TYPEQUOTES_BOTH_QUOTED,
+	TYPEQUOTES_TO_KEEP,
 }	t_type_quotes;
 typedef struct s_char
 {
