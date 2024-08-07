@@ -57,8 +57,11 @@ char	*extract_content_var(t_mini *mini, char *name_tofind_var)
 		if (name_tofind_var[index] == '|' || name_tofind_var[index] == '\\')
 			break;
 	ret = mini->libft->substr(mini->solib, name_tofind_var, 0, index);
+
 	// mini->print("extracted : %s\n", ret);
 	ret = get_envpl_var(mini, ret);
+	if (!ret)
+		return (name_tofind_var + index);
 	mini->libft->strmcat(mini->solib, &ret, name_tofind_var + index);
 	return (ret);
 }

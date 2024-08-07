@@ -79,10 +79,18 @@ typedef enum e_type
 	ERROR_TYPE,
 } t_type;
 
+typedef enum s_type_quotes
+{
+	TYPEQUOTES_UNQUOTED,
+	TYPEQUOTES_SINGLE_QUOTED,
+	TYPEQUOTES_DOUBLE_QUOTED,
+	TYPEQUOTES_BOTH_QUOTED,
+}	t_type_quotes;
 typedef struct s_char
 {
 	char c;
 	size_t pos;
+	t_type_quotes type_quotes;
 	struct s_char *next;
 } t_char;
 

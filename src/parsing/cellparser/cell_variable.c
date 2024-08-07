@@ -6,7 +6,7 @@
 /*   By: tauer <tauer@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 16:59:39 by tauer             #+#    #+#             */
-/*   Updated: 2024/08/07 15:02:00 by tauer            ###   ########.fr       */
+/*   Updated: 2024/08/07 15:42:13 by tauer            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,9 @@ void	strmcat_var(t_mini *mini, t_word *word, char **word_splitted_var)
 			mini->libft->strmcat(mini->solib, &ret, word_splitted_var[index]);
 		else if (index > 0 && is_last_char(word_splitted_var[index - 1], '\\') && word_splitted_var[index][0] == '$' && word_splitted_var[index][1])
 		{
+			// mini->print("ici var %s %d\n", ret, mini->libft->strlen(ret) - 1);
+			ret = mini->libft->substr(mini->solib, ret, 0, mini->libft->strlen(ret) - 1);
+			// mini->print("suite var %s\n", ret);
 			mini->libft->strmcat(mini->solib, &ret, word_splitted_var[index]);
 		}
 		else if (word_splitted_var[index][1]
@@ -125,11 +128,6 @@ void	strmcat_var(t_mini *mini, t_word *word, char **word_splitted_var)
 		{
 			mini->libft->strmcat(mini->solib, &ret, get_envpl_var(mini,
 					word_splitted_var[index] + 1));
-			if (is_last_char(ret, '\\'))
-			{
-				mini->print("ici %s\n", ret);	
-				// mini->libft->str 	
-			}
 		}
 		
 	}

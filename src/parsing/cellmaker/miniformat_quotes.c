@@ -6,7 +6,7 @@
 /*   By: tauer <tauer@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 23:37:13 by tauer             #+#    #+#             */
-/*   Updated: 2024/08/07 14:05:59 by tauer            ###   ########.fr       */
+/*   Updated: 2024/08/07 16:26:55 by tauer            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,13 @@ bool	handle_in_quotes(t_mini *mini, t_char **list)
 			t_char_del_pos(mini, list, current->pos);
 			current = (*list);
 		}
-		// else if (double_quote && current->c == '\\' && current->next
-		// 	&& current->next->c == '$')
-		// {
-		// 	t_char_del_pos(mini, list, current->pos);
-		// 	current = (*list);
-		// }
-		current = current->next;
+		else if (single_quote && current->c == '$' && current->next)
+		{
+			t_char_add_pos(mini, list, current->pos, '\\');
+			current = current->next;
+		}
+		if (current)
+			current = current->next;
 	}
 	return (false);
 }
@@ -81,14 +81,23 @@ t_char	*get_to_next_char(t_char *list, char c)
 bool	remove_all_quotes(t_mini *mini, t_char **list)
 {
 	t_char	*current;
+	bool	is_variable;
 
+	is_variable = false;
 	current = (*list);
 	while (current)
 	{
+		if (current->c == '$')
+			is_variable = true;
+		else if (current->c == ' ' || current->c == '\\')
+			is_variable = false;
 		if (current->c == (char)39)
 		{
+
 			t_char_del_pos(mini, list, current->pos);
-			current = get_to_next_char(*list, (char)39);
+			current = get_to_next_char(*list, 39);
+			if (current && current->next && current->next->c == 39)
+				t_char_del_pos(mini, list, current->next->pos);	
 		}
 		else if (current->c == '"')
 		{
@@ -97,9 +106,11 @@ bool	remove_all_quotes(t_mini *mini, t_char **list)
 			if (current && current->next && current->next->c == '"')
 				t_char_del_pos(mini, list, current->next->pos);
 		}
-		if (current)
+		// if (current)
+		mini->print("%d - %c\n", (int)is_variable, current->c);
 			current = current->next;
 	}
+	print_t_char_list(mini, *list);
 	return (false);
 }
 
