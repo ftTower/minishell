@@ -30,6 +30,39 @@ char	*get_content_var(t_mini *mini, char *name_var)
 	return (NULL);
 }
 
+bool	wrong_chars_str(char *str, char *wrong_chars)
+{
+	ssize_t index;
+	ssize_t index_chars;
+
+	index = -1;
+	while(str[++index])
+	{
+		index_chars = -1;
+		while(wrong_chars[++index_chars])
+			if (str[index] == wrong_chars[index_chars])
+				return (true);
+	}
+	return (false);
+}
+
+char	*extract_content_var(t_mini *mini, char *name_tofind_var)
+{
+	char *ret;
+	
+	ssize_t index;
+
+	index = -1;
+	while(name_tofind_var[++index])
+		if (name_tofind_var[index] == '|' || name_tofind_var[index] == '\\')
+			break;
+	ret = mini->libft->substr(mini->solib, name_tofind_var, 0, index);
+	// mini->print("extracted : %s\n", ret);
+	ret = get_envpl_var(mini, ret);
+	mini->libft->strmcat(mini->solib, &ret, name_tofind_var + index);
+	return (ret);
+}
+
 char	*get_envpl_var(t_mini *mini, char *name_var)
 {
 	t_envpl *current;
@@ -37,6 +70,8 @@ char	*get_envpl_var(t_mini *mini, char *name_var)
 	current = mini->envpl;
 	if (!name_var)
 		return (NULL);
+	else if (wrong_chars_str(name_var, "| \\"))
+		return (extract_content_var(mini, name_var));
 	return (get_content_var(mini, name_var));
 }
 

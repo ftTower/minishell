@@ -6,7 +6,7 @@
 /*   By: tauer <tauer@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 23:37:13 by tauer             #+#    #+#             */
-/*   Updated: 2024/08/06 19:57:00 by tauer            ###   ########.fr       */
+/*   Updated: 2024/08/07 14:05:59 by tauer            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,12 @@ bool	handle_in_quotes(t_mini *mini, t_char **list)
 			t_char_del_pos(mini, list, current->pos);
 			current = (*list);
 		}
-		else if (double_quote && current->c == '\\' && current->next
-			&& current->next->c == '$')
-		{
-			t_char_del_pos(mini, list, current->pos);
-			current = (*list);
-		}
+		// else if (double_quote && current->c == '\\' && current->next
+		// 	&& current->next->c == '$')
+		// {
+		// 	t_char_del_pos(mini, list, current->pos);
+		// 	current = (*list);
+		// }
 		current = current->next;
 	}
 	return (false);
