@@ -57,23 +57,29 @@ void display_path(t_mini *mini)
 	}
 }
 
-void display_info(t_mini *mini)
+void display_user(t_mini *mini)
 {
 	char *info;
 
 	info = get_envpl_var(mini, "USER");
 	printf("\033[48;5;202m🧿 %s\033[0m-", info);
-	info = get_envpl_var(mini, "SHELL");
-	printf("\033[48;5;202m[%s\033[0m", info);
-	info = get_envpl_var(mini, "SHLVL");
-	printf("\033[48;5;202m: %s]\033[0m-", info );
 }
 
+void display_info(t_mini *mini)
+{	
+	char *info;
+
+	info = get_envpl_var(mini, "SHELL");
+	printf("/\033[48;5;202m[%s]\033[0m-", info);
+	info = get_envpl_var(mini, "SHLVL");
+	printf("\033[48;5;202m[%s]\033[0m", info );
+}
 void display_prompt(t_mini *mini)
 {
 	printf(" \033[38;5;202m╭─\033[0m");
-	display_info(mini);
+	display_user(mini);
 	display_path(mini);
+	display_info(mini);
 	printf("\n ╰─ ");
 }
 
