@@ -61,12 +61,12 @@ void display_info(t_mini *mini)
 {
 	char *info;
 
-	info = get_envpl_var(mini, "USER=");
+	info = get_envpl_var(mini, "USER");
 	printf("\033[48;5;202m🧿 %s\033[0m-", info);
 	info = get_envpl_var(mini, "SHELL");
-	printf("\033[48;5;202m[%s\033[0m", info + 1);
+	printf("\033[48;5;202m[%s\033[0m", info);
 	info = get_envpl_var(mini, "SHLVL");
-	printf("\033[48;5;202m: %s]\033[0m-", info + 1);
+	printf("\033[48;5;202m: %s]\033[0m-", info );
 }
 
 void display_prompt(t_mini *mini)

@@ -6,7 +6,7 @@
 /*   By: tauer <tauer@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 17:50:26 by tauer             #+#    #+#             */
-/*   Updated: 2024/08/08 19:50:55 by tauer            ###   ########.fr       */
+/*   Updated: 2024/08/08 21:44:12 by tauer            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ char	*get_str(t_mini *mini, char c)
 void	delete_name_var(t_mini *mini, t_char **list, size_t pos)
 {
 	t_char	*current;
+	t_type_quotes buf;
 
 	current = *list;
 	while (current)
@@ -37,13 +38,14 @@ void	delete_name_var(t_mini *mini, t_char **list, size_t pos)
 			while (current && current->c != '"' && current->c != '\''
 				&& current->c != ' ' && current->c != '|' && current->c != '\\' && current->c != '$')
 			{
-				mini->print("%c %d\n", current->c, current->pos);
+				buf = current->type_quotes;
 				current = current->next;
 				t_char_del_pos(mini, list, current->pos - 1);
+				if (current && current->type_quotes != buf)
+					break;
 			}
 			if (current && current->c == '\\')
 			{
-				// mini->print("%c %d\n", current->c, current->pos);
 				current = current->next;
 				t_char_del_pos(mini, list, current->pos - 1);
 			}
@@ -66,19 +68,19 @@ char	*get_name_var(t_mini *mini, t_char **list, size_t pos)
 		{
 			while (current && current->c != '"' && current->c != '\''  && current->c != '|' && current->c != ' ' && current->c != '\\')
 			{
-				if (current->c == '$' && current->pos != pos)
+				if ((current->c == '$' && current->pos != pos))
 					break;
 				mini->libft->strmcat(mini->solib, &ret, get_str(mini,
 						current->c));
-				// if (current->next && current->next->type_quotes != current->type_quotes)
-				// 	break;
+				if (current->next && current->next->type_quotes != current->type_quotes)
+					break;
 				current = current->next;
 			}
 		}
 		if (current)
 			current = current->next;
 	}
-	// mini->print("[%s]\n", ret);
+	mini->print("[%s]\n", ret);
 	return (delete_name_var(mini, list, pos), get_envpl_var(mini, ret + 1));
 }
 

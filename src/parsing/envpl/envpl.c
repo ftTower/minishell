@@ -15,17 +15,30 @@
 
 #include <minishell/all.h>
 
+bool	ft_strcmp(char *s1, char *s2)
+{
+	ssize_t index;
+
+	index = -1;
+	while (s1[++index] && s2[index])
+		if (s1[index] != s2[index])
+			return (false);
+	if (s1[index] || s2[index])
+		return (false);
+	return (true);
+}
 
 char	*get_content_var(t_mini *mini, char *name_var)
 {
 	t_envpl *current;
+	char	**name_tab;
 
 	current = mini->envpl;
 	while (current)
 	{
-		if (!mini->libft->strncmp(current->var, name_var,
-				mini->libft->strlen(name_var)))
-			return (current->var + mini->libft->strlen(name_var));
+		name_tab = mini->libft->split(mini->solib, current->var, '=');
+		if (ft_strcmp(name_tab[0], name_var) && mini->libft->strlen(name_tab[0]) == mini->libft->strlen(name_var))
+			return (current->var + mini->libft->strlen(name_tab[0]) + 1);
 		current = current->next;
 	}
 	return (NULL);
