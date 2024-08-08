@@ -12,6 +12,6 @@
 
 CELLMAKER_DIR		=	cellmaker
 
-CELLMAKER_FILE		=	cellmaker.c miniformater.c miniformat_quotes.c
+CELLMAKER_FILE		=	cellmaker.c miniformater.c miniformat_quotes.c miniformat_var.c
  
 CELLMAKER			=	$(addprefix $(CELLMAKER_DIR)/, $(CELLMAKER_FILE))

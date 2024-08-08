@@ -46,8 +46,7 @@ bool	cell_parser(t_mini *mini, t_cell *cell)
 	while (++index < cell->nb_pipes)
 		if (t_pipe_parser(mini, &cell->pipes[index], index)
 			|| t_cell_connect_fd(mini, cell) || fd_parser(mini,
-				&cell->pipes[index].fds) || t_pipe_variable_handler(mini,
-					&cell->pipes[index]))
+				&cell->pipes[index].fds))
 			return (true);
 	return (false);
 }

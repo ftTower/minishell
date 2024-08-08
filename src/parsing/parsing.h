@@ -24,8 +24,10 @@ bool	cell_pipe_maker(t_mini *mini, t_pipe *pipe, char **pipe_words,
 		ssize_t pipe_pos);
 bool	cell_maker(t_mini *mini, t_cell *cell, char *raw_line);
 //? miniformat quotes
-bool	handle_in_quotes(t_mini *mini, t_char **list);
+void	handle_in_quotes(t_mini *mini, t_char **list);
 bool	t_char_list_format_quotes(t_mini *mini, t_char **list);
+//?miniformat var
+bool	miniformat_var(t_mini *mini, t_char **list);
 //? miniformater
 bool	redirect_unspacer(t_mini *mini, t_char **dst);
 bool	mini_formater(t_mini *mini, t_pipe *pipe, char **pipe_words);
