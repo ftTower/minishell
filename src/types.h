@@ -92,13 +92,20 @@ typedef enum s_error_code
 {
 	ERROR_UNSET,
 	ERROR_EMPTY_SEMICOLON,
+	ERROR_EMPTY_PIPE,
+	ERROR_EMPTY_REDIRECT,
+	ERROR_INVALID_REDIRECT,
+	ERROR_CHECKPOINT_CELL_PIPE_MAKER,
+	ERROR_FAILED_OPEN_IN_FD,
+	ERROR_FAILED_OPEN_OUT_FD,
+	ERROR_CHECKPOINT_CELL_PARSER,
 
 } t_error_code;
 
 typedef struct s_error_list
 {
 	t_error_code error_code;
-
+	char *content;
 	struct s_error_list *next;
 } t_error_list;
 

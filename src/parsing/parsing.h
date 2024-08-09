@@ -27,14 +27,14 @@ bool	cell_maker(t_mini *mini, t_cell *cell, char *raw_line);
 void	handle_in_quotes(t_mini *mini, t_char **list);
 bool	t_char_list_format_quotes(t_mini *mini, t_char **list);
 //?miniformat var
-bool	miniformat_var(t_mini *mini, t_char **list);
+bool	t_char_list_cat_var(t_mini *mini, t_char **list);
 //? miniformater
-bool	redirect_unspacer(t_mini *mini, t_char **dst);
+bool	redirect_unspacer(t_mini *mini, t_char **dst, t_error_list **error_list);
 bool	mini_formater(t_mini *mini, t_pipe *pipe, char **pipe_words);
 //! cell parser
 //? cell_fd
-bool	open_fd(t_mini *mini, t_word *word);
-bool	fd_parser(t_mini *mini, t_word **dst);
+bool	open_fd(t_mini *mini, t_word *word, t_error_list *error_list);
+bool	fd_parser(t_mini *mini, t_word **dst, t_error_list *error_list);
 bool	t_cell_connect_fd(t_mini *mini, t_cell *cell);
 //? cell_variable
 bool	t_word_variable_handler(t_mini *mini, t_word *word);
@@ -68,7 +68,7 @@ char	*variable_content_getter(t_mini *mini, t_char **dst);
 //! error_catcher
 //?error_catcher
 void	print_error_list(t_mini *mini, t_error_list *error_list);
-void	add_error_to_list(t_mini *mini, t_error_list **error_list,t_error_code code);
+void	add_error_to_list(t_mini *mini, t_error_list **error_list,t_error_code code, char *content);
 //! list_gears
 //?t_char_list
 void	t_char_print_typequote(t_mini *mini, t_char *list);
@@ -94,7 +94,7 @@ void	print_t_char_list(t_mini *mini, t_char *list);
 void	print_double_tab(t_mini *mini, char **tab);
 //?parsing_error
 bool	cells_empty_char(t_mini *mini, char *raw_line, char c);
-bool	invalid_redirect(t_mini *mini, t_char **list);
+bool	invalid_redirect(t_mini *mini, t_char **list, t_error_list **error_list);
 //?parsing_printer
 void	print_t_char(t_mini *mini, t_char *c, t_color color);
 void	print_t_word(t_mini *mini, t_word *word);

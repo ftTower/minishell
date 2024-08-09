@@ -6,7 +6,7 @@
 /*   By: tauer <tauer@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 02:35:05 by tauer             #+#    #+#             */
-/*   Updated: 2024/07/09 02:51:08 by tauer            ###   ########.fr       */
+/*   Updated: 2024/08/09 22:34:28 by tauer            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ bool	cells_empty_char(t_mini *mini, char *raw_line, char c)
 	return (false);
 }
 
-bool	invalid_redirect(t_mini *mini, t_char **list)
+bool	invalid_redirect(t_mini *mini, t_char **list, t_error_list **error_list)
 {
 	t_char	*current;
 
@@ -48,7 +48,7 @@ bool	invalid_redirect(t_mini *mini, t_char **list)
 			&& (current->c == '<' || current->c == '>')
 			&& (current->next->c == '<' || current->next->c == '>')
 			&& (current->next->next->c == '<' || current->next->next->c == '>'))
-			return (mini->print("Found invalid redirect '<<<' '>>>'\n"), true);
+			return (add_error_to_list(mini, error_list, ERROR_INVALID_REDIRECT, t_char_list_to_str(mini, *list)), true);
 		current = current->next;
 	}
 	return (false);

@@ -26,7 +26,7 @@ bool	cell_pipe_maker(t_mini *mini, t_pipe *pipe, char **pipe_words,
 	pipe->pos = pipe_pos;
 	pipe->error_list = NULL;
 	if (!pipe_words || !*pipe_words || mini_formater(mini, pipe, pipe_words))
-		return (true);
+		return (add_error_to_list(mini, &pipe->error_list, ERROR_CHECKPOINT_CELL_PIPE_MAKER, NULL),true);
 	return (false);
 }
 
@@ -67,7 +67,7 @@ bool	cell_maker(t_mini *mini, t_cell *cell, char *raw_line)
 	char **lines;
 
 	if (!raw_line || !*raw_line || cells_empty_char(mini, raw_line, '|'))
-		return (add_error_to_list(mini, &cell->error_list, ERROR_EMPTY_SEMICOLON), true);
+		return (add_error_to_list(mini, &cell->error_list, ERROR_EMPTY_PIPE, raw_line), true);
 	lines = mini->libft->split(mini->solib, raw_line, '|');
 	if (strtlen(lines, &size))
 		return (true);
@@ -75,13 +75,10 @@ bool	cell_maker(t_mini *mini, t_cell *cell, char *raw_line)
 	cell->pipes = mini->malloc(mini, sizeof(t_pipe) * size);
 	size = -1;
 	while (lines[++size])
-	{
 		if (cell_pipe_maker(mini, &cell->pipes[size],
 				mini->libft->split(mini->solib, preserve_space_in_quote(mini,
 						lines[size]), ' '), size))
 			;
-		// return (true);
-	}
 
 	return (false);
 }
