@@ -26,7 +26,8 @@
 //  echo start > outfile ; ls | cat -e | wc -l ; echo finished
 // contient une seul cell ; ...|...|... ;
 
-bool	cells_handler(t_mini *mini, t_error_list *error_list ,char *raw_line, size_t pos)
+bool	cells_handler(t_mini *mini, t_error_list *error_list, char *raw_line,
+		size_t pos)
 {
 	t_cell *cell;
 
@@ -36,8 +37,9 @@ bool	cells_handler(t_mini *mini, t_error_list *error_list ,char *raw_line, size_
 	error_list = NULL;
 	if (cell_maker(mini, cell, raw_line) || cell_parser(mini, cell)
 		|| cell_translator(mini, cell))
-		return (print_error_list(mini, cell->error_list), true);
-	return (print_t_cell(mini, cell), print_error_list(mini, cell->error_list), false);
+		;
+	return (print_t_cell(mini, cell), print_error_list(mini, cell->error_list),
+		false);
 }
 
 bool	mini_parsing(t_mini *mini, char *line)
@@ -50,12 +52,13 @@ bool	mini_parsing(t_mini *mini, char *line)
 	if (line && *line)
 	{
 		if (cells_empty_char(mini, line, ';'))
-			return (add_error_to_list(mini, &error_list, ERROR_EMPTY_SEMICOLON, line), true);
+			return (add_error_to_list(mini, &error_list, ERROR_EMPTY_SEMICOLON,
+					line), true);
 		mini->print("\n");
 		cells = mini->libft->split(mini->solib, line, ';');
 		index = -1;
 		while (cells[++index])
-			cells_handler(mini, error_list ,cells[index], index);
+			cells_handler(mini, error_list, cells[index], index);
 	}
 	else
 		return (true);

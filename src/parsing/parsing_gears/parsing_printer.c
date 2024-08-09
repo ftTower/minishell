@@ -6,7 +6,7 @@
 /*   By: tauer <tauer@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 02:37:02 by tauer             #+#    #+#             */
-/*   Updated: 2024/08/08 00:58:10 by tauer            ###   ########.fr       */
+/*   Updated: 2024/08/09 23:44:04 by tauer            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,12 +142,15 @@ void	print_t_cell(t_mini *mini, t_cell *cell)
 {
 	ssize_t	index;
 
+	if (!cell)
+		return ((void)mini->print("empty"));
 	mini->print("\n\t  %Cff0000([)%Cf1c40f(CELL %Cff0000(%d))%Cff0000(])\n",
 		cell->pos);
 	index = -1;
 	while (++index < cell->nb_pipes)
 		print_t_pipe(mini, &cell->pipes[index]);
-	print_t_pipex_list(mini, cell->final_line);
+	if (cell->final_line)
+		print_t_pipex_list(mini, cell->final_line);
 }
 
 void	print_envpl(t_mini *mini)

@@ -33,8 +33,8 @@ bool	redirect_unspacer(t_mini *mini, t_char **dst, t_error_list **error_list);
 bool	mini_formater(t_mini *mini, t_pipe *pipe, char **pipe_words);
 //! cell parser
 //? cell_fd
-bool	open_fd(t_mini *mini, t_word *word, t_error_list *error_list);
-bool	fd_parser(t_mini *mini, t_word **dst, t_error_list *error_list);
+bool	open_fd(t_mini *mini, t_word *word, t_error_list **error_list);
+bool	fd_parser(t_mini *mini, t_word **dst, t_error_list **error_list);
 bool	t_cell_connect_fd(t_mini *mini, t_cell *cell);
 //? cell_variable
 bool	t_word_variable_handler(t_mini *mini, t_word *word);
@@ -67,6 +67,7 @@ void	variable_content_setter(t_mini *mini, t_char **dst, char *content);
 char	*variable_content_getter(t_mini *mini, t_char **dst);
 //! error_catcher
 //?error_catcher
+void	t_error_cpy(t_mini *mini, t_error_list **dest, t_error_list *src);
 void	print_error_list(t_mini *mini, t_error_list *error_list);
 void	add_error_to_list(t_mini *mini, t_error_list **error_list,t_error_code code, char *content);
 //! list_gears
