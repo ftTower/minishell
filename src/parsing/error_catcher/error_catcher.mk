@@ -10,29 +10,8 @@
 #                                                                              #
 # **************************************************************************** #
 
-include src/parsing/cellmaker/cellmaker.mk
-include src/parsing/cellparser/cellparser.mk
-include src/parsing/celltranslator/celltranslator.mk
-include src/parsing/list_gears/list_gears.mk
-include src/parsing/envpl/envpl.mk
-include src/parsing/string_gears/string_gears.mk
-include src/parsing/parsing_gears/parsing_gears.mk
-include src/parsing/error_catcher/error_catcher.mk
+ERROR_CATCHER_DIR		=	error_catcher
 
-
-PARSING_DIR		=	parsing
-
-PARSING_HEADER	=	parsing.h
-PARSING_FILE	=	parsing.c  
-
-PARSING_FILE	+=	$(CELLMAKER)
-PARSING_FILE	+=	$(CELLPARSER)
-PARSING_FILE	+=	$(CELLTRANSLATOR)
-PARSING_FILE	+=	$(ENVPL)
-PARSING_FILE	+=	$(LIST_GEARS)
-PARSING_FILE	+=	$(STRING_GEARS)
-PARSING_FILE	+=	$(PARSING_GEARS)
-PARSING_FILE	+=	$(ERROR_CATCHER)
-
-PARSING			=	$(addprefix $(PARSING_DIR)/, $(PARSING_FILE))
-PARSING_HEAD	=	$(addprefix $(PARSING_DIR)/, $(PARSING_HEADER))
+ERROR_CATCHER_FILE		=	error_catcher.c
+ 
+ERROR_CATCHER		=	$(addprefix $(ERROR_CATCHER_DIR)/, $(ERROR_CATCHER_FILE))

@@ -86,7 +86,22 @@ typedef enum s_type_quotes
 	TYPEQUOTES_DOUBLE_QUOTED,
 	TYPEQUOTES_BOTH_QUOTED,
 	TYPEQUOTES_TO_KEEP,
-}	t_type_quotes;
+} t_type_quotes;
+
+typedef enum s_error_code
+{
+	ERROR_UNSET,
+	ERROR_EMPTY_SEMICOLON,
+
+} t_error_code;
+
+typedef struct s_error_list
+{
+	t_error_code error_code;
+
+	struct s_error_list *next;
+} t_error_list;
+
 typedef struct s_char
 {
 	char c;
@@ -112,6 +127,7 @@ typedef struct s_pipe
 	t_word *fds;
 	t_word *words;
 
+	t_error_list *error_list;
 	ssize_t pos;
 	bool used;
 } t_pipe;
@@ -133,6 +149,7 @@ typedef struct s_cell
 	ssize_t nb_pipes;
 	ssize_t pos;
 
+	t_error_list *error_list;
 	t_pipex *final_line;
 } t_cell;
 

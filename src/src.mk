@@ -15,6 +15,7 @@ include $(CURDIR)/src/gears/gears.mk
 include $(CURDIR)/src/parsing/parsing.mk
 include $(CURDIR)/src/pipex/pipex.mk
 
+
 SRC_DIR		=	$(CURDIR)/src
 
 LIB_HEADER	=	$(addprefix $(SRC_DIR)/, minishell.h)

@@ -65,6 +65,10 @@ bool	add_var_envpl(t_mini *mini, t_envpl **envpl, char *var);
 bool	copy_envp_to_list(t_mini *mini);
 void	variable_content_setter(t_mini *mini, t_char **dst, char *content);
 char	*variable_content_getter(t_mini *mini, t_char **dst);
+//! error_catcher
+//?error_catcher
+void	print_error_list(t_mini *mini, t_error_list *error_list);
+void	add_error_to_list(t_mini *mini, t_error_list **error_list,t_error_code code);
 //! list_gears
 //?t_char_list
 void	t_char_print_typequote(t_mini *mini, t_char *list);
