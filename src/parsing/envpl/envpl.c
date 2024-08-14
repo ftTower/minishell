@@ -82,9 +82,6 @@ char	*extract_content_var(t_mini *mini, char *name_tofind_var)
 
 char	*get_envpl_var(t_mini *mini, char *name_var)
 {
-	t_envpl *current;
-
-	current = mini->envpl;
 	if (!name_var)
 		return (NULL);
 	else if (wrong_chars_str(name_var, "| \\\"\'"))
