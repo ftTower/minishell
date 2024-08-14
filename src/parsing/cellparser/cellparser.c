@@ -49,6 +49,6 @@ bool	cell_parser(t_mini *mini, t_cell *cell)
 			|| t_cell_connect_fd(mini, cell) || fd_parser(mini,
 				&cell->pipes[index].fds, &cell->pipes[index].error_list))
 			return (add_error_to_list(mini, &cell->error_list,
-					ERROR_CHECKPOINT_CELL_PARSER, NULL), true);
+					ERROR_CHECKPOINT_CELL_PARSER, NULL), print_error_list(mini, cell->error_list), true);
 	return (false);
 }

@@ -69,7 +69,7 @@ bool	cell_maker(t_mini *mini, t_cell *cell, char *raw_line)
 
 	if (!raw_line || !*raw_line || cells_empty_char(mini, raw_line, '|'))
 		return (add_error_to_list(mini, &cell->error_list, ERROR_EMPTY_PIPE,
-				raw_line), true);
+				raw_line),cell->nb_pipes = 0, true);
 	lines = mini->libft->split(mini->solib, raw_line, '|');
 	if (strtlen(lines, &size))
 		return (true);

@@ -86,6 +86,7 @@ void	t_error_cpy(t_mini *mini, t_error_list **dest, t_error_list *src)
 	current = src;
 	while (current)
 	{
+		mini->print("[%s]\n", current);
 		add_error_to_list(mini, dest, current->error_code, current->content);
 		current = current->next;
 	}
@@ -97,7 +98,7 @@ void	add_error_to_list(t_mini *mini, t_error_list **error_list,
 	t_error_list *new_error;
 	t_error_list *current;
 
-	// mini->print("%d - %s\n", code, content);
+	mini->print("added [%d - %s]\n", code, content);
 	new_error = mini->malloc(mini, sizeof(t_error_list));
 	new_error->error_code = code;
 	new_error->content = content;

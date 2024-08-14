@@ -51,7 +51,7 @@ bool	fd_parser(t_mini *mini, t_word **dst, t_error_list **error_list)
 						CONCATE_OUT_FD_TYPE))))
 		{
 			if (open_fd(mini, current, error_list))
-				return (true);
+				return (mini->print("ici\n"), true);
 			delete_word_in_list(mini, dst, current);
 		}
 		current = next;
