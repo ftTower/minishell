@@ -6,7 +6,7 @@
 /*   By: tauer <tauer@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 02:23:45 by tauer             #+#    #+#             */
-/*   Updated: 2024/08/17 00:30:26 by tauer            ###   ########.fr       */
+/*   Updated: 2024/08/17 00:32:04 by tauer            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,11 @@ bool	t_word_parse_redirect(t_word *word)
 	else if (word->c->c == '>' && word->c->next->c == '>'
 		&& word->c->next->next)
 		return (word->type = CONCATE_OUT_FD_TYPE, true);
-	else if (word->c->c == '<' && word->c->next->c != '>' && word->c->next->c != '<')
+	else if (word->c->c == '<' && word->c->next->c != '>'
+		&& word->c->next->c != '<')
 		return (word->type = REPLACE_IN_FD_TYPE, true);
-	else if (word->c->c == '>' && word->c->next->c != '>' && word->c->next->c != '<')
+	else if (word->c->c == '>' && word->c->next->c != '>'
+		&& word->c->next->c != '<')
 		return (word->type = REPLACE_OUT_FD_TYPE, true);
 	else
 		return (true);
@@ -81,8 +83,8 @@ bool	t_word_parse_type(t_mini *mini, t_word *word)
 		return (word->type = ERROR_TYPE, true);
 	else if (word->c->c == ';' && !word->c->next)
 		return (word->type = SEPARATOR_TYPE, true);
-	else if (t_word_parse_para(word) ||t_word_parse_cmd(mini, word)|| t_word_parse_redirect(word)
-		||  t_word_parse_built_in(mini, word))
+	else if (t_word_parse_para(word) || t_word_parse_cmd(mini, word)
+		|| t_word_parse_redirect(word) || t_word_parse_built_in(mini, word))
 		return (true);
 	return (word->type = ARG_TYPE, false);
 }

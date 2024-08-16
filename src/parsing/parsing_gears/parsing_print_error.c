@@ -6,7 +6,7 @@
 /*   By: tauer <tauer@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 01:29:59 by tauer             #+#    #+#             */
-/*   Updated: 2024/08/16 23:23:37 by tauer            ###   ########.fr       */
+/*   Updated: 2024/08/17 00:48:15 by tauer            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	print_char_error(t_mini *mini, char *input, char *char_error,
 
 	len = mini->libft->strlen(get_envpl_var(mini, "USER"))
 		+ mini->libft->strlen(get_envpl_var(mini, "PWD")) + 7;
-	mini->print("\n\t\033[38;5;196mMinishell %s\033[0m\n ", error_msg);
+	mini->print("\n\t\033[38;5;196mMinishell \033[5m%s\033[0m\033[0m\n ", error_msg);
 	print_error_input(mini, input, char_error);
 }
 

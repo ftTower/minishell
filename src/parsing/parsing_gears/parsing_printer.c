@@ -6,7 +6,7 @@
 /*   By: tauer <tauer@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 02:37:02 by tauer             #+#    #+#             */
-/*   Updated: 2024/08/17 00:29:51 by tauer            ###   ########.fr       */
+/*   Updated: 2024/08/17 00:44:48 by tauer            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ void	print_t_word_list(t_mini *mini, t_word *word)
 	current = word;
 	while (current)
 	{
-		t_word_parse_type(mini, current);
 		print_t_word(mini, current);
 		current = current->next;
 	}
