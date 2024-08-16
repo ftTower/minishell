@@ -29,12 +29,12 @@ bool	t_char_list_format_quotes(t_mini *mini, t_char **list);
 //?miniformat var
 bool	t_char_list_cat_var(t_mini *mini, t_char **list);
 //? miniformater
-bool	redirect_unspacer(t_mini *mini, t_char **dst, t_error_list **error_list);
+bool	redirect_unspacer(t_mini *mini, t_char **dst);
 bool	mini_formater(t_mini *mini, t_pipe *pipe, char **pipe_words);
 //! cell parser
 //? cell_fd
-bool	open_fd(t_mini *mini, t_word *word, t_error_list **error_list);
-bool	fd_parser(t_mini *mini, t_word **dst, t_error_list **error_list);
+bool	open_fd(t_mini *mini, t_word *word);
+bool	fd_parser(t_mini *mini, t_word **dst);
 bool	t_cell_connect_fd(t_mini *mini, t_cell *cell);
 //? cell_variable
 bool	t_word_variable_handler(t_mini *mini, t_word *word);
@@ -65,11 +65,6 @@ bool	add_var_envpl(t_mini *mini, t_envpl **envpl, char *var);
 bool	copy_envp_to_list(t_mini *mini);
 void	variable_content_setter(t_mini *mini, t_char **dst, char *content);
 char	*variable_content_getter(t_mini *mini, t_char **dst);
-//! error_catcher
-//?error_catcher
-void	t_error_cpy(t_mini *mini, t_error_list **dest, t_error_list *src);
-void	print_error_list(t_mini *mini, t_error_list *error_list);
-void	add_error_to_list(t_mini *mini, t_error_list **error_list,t_error_code code, char *content);
 //! list_gears
 //?t_char_list
 void	t_char_print_typequote(t_mini *mini, t_char *list);
@@ -90,12 +85,13 @@ bool	delete_word_in_list(t_mini *mini, t_word **words_list, t_word *word);
 bool	t_word_list_has_type(t_word *words, t_type type);
 t_word	*t_word_list_get_type(t_word **dst, t_type to_get);
 //! parsing gears
+void	print_error(t_mini *mini, char *input, t_error_code code);
 //?parsing_debug
 void	print_t_char_list(t_mini *mini, t_char *list);
 void	print_double_tab(t_mini *mini, char **tab);
 //?parsing_error
-bool	cells_empty_char(t_mini *mini, char *raw_line, char c);
-bool	invalid_redirect(t_mini *mini, t_char **list, t_error_list **error_list);
+bool	cells_empty_char( char *raw_line, char c);
+bool	invalid_redirect(t_char **list);
 //?parsing_printer
 void	print_t_char(t_mini *mini, t_char *c, t_color color);
 void	print_t_word(t_mini *mini, t_word *word);

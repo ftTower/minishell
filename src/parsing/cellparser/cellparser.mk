@@ -12,6 +12,6 @@
 
 CELLPARSER_DIR		=	cellparser
 
-CELLPARSER_FILE		=	cellparser.c type_parse.c cell_fd.c cell_variable.c
+CELLPARSER_FILE		=	cellparser.c type_parse.c cell_fd.c 
  
 CELLPARSER		=	$(addprefix $(CELLPARSER_DIR)/, $(CELLPARSER_FILE))

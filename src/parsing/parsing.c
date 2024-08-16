@@ -26,26 +26,26 @@
 //  echo start > outfile ; ls | cat -e | wc -l ; echo finished
 // contient une seul cell ; ...|...|... ;
 
-void	cells_handler(t_mini *mini, char *raw_line,
-		size_t pos)
+void	cells_handler(t_mini *mini, char *raw_line, size_t pos)
 {
 	t_cell *cell;
-
-	return (cell = mini->malloc(mini, sizeof(t_cell)), cell->pos = pos, cell->error_list = NULL, cell_maker(mini, cell, raw_line), cell_parser(mini, cell), cell_translator(mini, cell) , print_t_cell(mini, cell), print_error_list(mini, cell->error_list));
+	cell = mini->malloc(mini, sizeof(t_cell));
+	cell->pos = pos;
+	if (cell_maker(mini, cell, raw_line) || cell_parser(mini, cell)
+		|| cell_translator(mini, cell))
+		return ;
+	return (print_t_cell(mini, cell));
 }
 
 bool	mini_parsing(t_mini *mini, char *line)
 {
 	char **cells;
 	ssize_t index;
-	t_error_list *error_list;
 
-	error_list = NULL;
 	if (line && *line)
 	{
-		if (cells_empty_char(mini, line, ';'))
-			return (add_error_to_list(mini, &error_list, ERROR_EMPTY_SEMICOLON,
-					line), true);
+		if (cells_empty_char(line, ';'))
+			return (true);
 		mini->print("\n");
 		cells = mini->libft->split(mini->solib, line, ';');
 		index = -1;

@@ -95,19 +95,10 @@ typedef enum s_error_code
 	ERROR_EMPTY_PIPE,
 	ERROR_EMPTY_REDIRECT,
 	ERROR_INVALID_REDIRECT,
-	ERROR_CHECKPOINT_CELL_PIPE_MAKER,
 	ERROR_FAILED_OPEN_IN_FD,
 	ERROR_FAILED_OPEN_OUT_FD,
-	ERROR_CHECKPOINT_CELL_PARSER,
 
 } t_error_code;
-
-typedef struct s_error_list
-{
-	t_error_code error_code;
-	char *content;
-	struct s_error_list *next;
-} t_error_list;
 
 typedef struct s_char
 {
@@ -134,7 +125,6 @@ typedef struct s_pipe
 	t_word *fds;
 	t_word *words;
 
-	t_error_list *error_list;
 	ssize_t pos;
 	bool used;
 } t_pipe;
@@ -156,7 +146,6 @@ typedef struct s_cell
 	ssize_t nb_pipes;
 	ssize_t pos;
 
-	t_error_list *error_list;
 	t_pipex *final_line;
 } t_cell;
 

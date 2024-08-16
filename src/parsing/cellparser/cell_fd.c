@@ -1,6 +1,6 @@
 #include <minishell/all.h>
 
-bool	open_fd(t_mini *mini, t_word *word, t_error_list **error_list)
+bool	open_fd(t_mini *mini, t_word *word)
 {
 	int	fd;
 
@@ -15,8 +15,7 @@ bool	open_fd(t_mini *mini, t_word *word, t_error_list **error_list)
 	{
 		fd = open(word->refined_word, O_RDONLY);
 		if (fd == -1)
-			return (add_error_to_list(mini, error_list,
-					ERROR_FAILED_OPEN_IN_FD, t_char_list_to_str(mini, word->c)), true);
+			return (true);
 		close(fd);
 	}
 	else if (word->type == REPLACE_OUT_FD_TYPE
@@ -24,14 +23,13 @@ bool	open_fd(t_mini *mini, t_word *word, t_error_list **error_list)
 	{
 		fd = open(word->refined_word, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		if (fd == -1)
-			return (add_error_to_list(mini, error_list,
-					ERROR_FAILED_OPEN_OUT_FD, t_char_list_to_str(mini, word->c)), true);
+			return ( true);
 		close(fd);
 	}
 	return (false);
 }
 
-bool	fd_parser(t_mini *mini, t_word **dst, t_error_list **error_list)
+bool	fd_parser(t_mini *mini, t_word **dst)
 {
 	t_word	*current;
 	t_word	*next;
@@ -50,8 +48,8 @@ bool	fd_parser(t_mini *mini, t_word **dst, t_error_list **error_list)
 					|| t_word_list_has_type(current->next,
 						CONCATE_OUT_FD_TYPE))))
 		{
-			if (open_fd(mini, current, error_list))
-				return (mini->print("ici\n"), true);
+			if (open_fd(mini, current))
+				return ( true);
 			delete_word_in_list(mini, dst, current);
 		}
 		current = next;

@@ -51,7 +51,7 @@ void display_path(t_mini *mini)
 			color_index = 0;
 		color_index++;
 		if (index == 0)
-			printf("%s📌 %s\033[0m", colors[color_index] ,path[index]);
+			printf("%s 📌 %s\033[0m", colors[color_index] ,path[index]);
 		else
 			printf("%s/%s\033[0m", colors[color_index] ,path[index]);
 	}
@@ -62,7 +62,7 @@ void display_user(t_mini *mini)
 	char *info;
 
 	info = get_envpl_var(mini, "USER");
-	printf("\033[48;5;202m🧿 %s\033[0m-", info);
+	printf("\033[48;5;202m🧿 %s \033[0m", info);
 }
 
 void display_info(t_mini *mini)
@@ -76,11 +76,11 @@ void display_info(t_mini *mini)
 }
 void display_prompt(t_mini *mini)
 {
-	printf(" \033[38;5;202m╭─\033[0m");
+	// printf(" \033[38;5;202m╭─\033[0m");
 	display_user(mini);
 	display_path(mini);
-	display_info(mini);
-	printf("\n ╰─ ");
+	// display_info(mini);
+	printf(" ");
 }
 
 void mini_prompt(t_mini *mini)
