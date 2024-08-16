@@ -6,7 +6,7 @@
 /*   By: tauer <tauer@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 02:37:02 by tauer             #+#    #+#             */
-/*   Updated: 2024/08/16 23:37:02 by tauer            ###   ########.fr       */
+/*   Updated: 2024/08/17 00:29:51 by tauer            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ void	print_t_word_list(t_mini *mini, t_word *word)
 	current = word;
 	while (current)
 	{
+		t_word_parse_type(mini, current);
 		print_t_word(mini, current);
 		current = current->next;
 	}
@@ -89,6 +90,7 @@ void	print_t_word_list_double_quotes(t_mini *mini, t_char *word)
 
 void	print_t_pipe(t_mini *mini, t_pipe *pipe)
 {
+	t_word_parse_type(mini, pipe->words);
 	mini->print("\n\t╭─%Cff0000([)%C5dade2(PIPE %C0ff1e7(%d))%Cff0000(])\n\t|",
 		pipe->pos);
 	mini->print("\n\t├──%Cff0000([)%Cf1c40f( WORDS TYPE  )%Cff0000(]) ");

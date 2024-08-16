@@ -6,7 +6,7 @@
 /*   By: tauer <tauer@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 02:23:45 by tauer             #+#    #+#             */
-/*   Updated: 2024/07/31 00:42:13 by tauer            ###   ########.fr       */
+/*   Updated: 2024/08/17 00:30:26 by tauer            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ bool	t_word_parse_cmd(t_mini *mini, t_word *word)
 	char	**parse_path;
 	ssize_t	index;
 
-	path = get_envpl_var(mini, "PATH=");
+	path = get_envpl_var(mini, "PATH");
 	if (!path)
 		return (false);
 	parse_path = mini->libft->split(mini->solib, path, ':');
@@ -81,8 +81,8 @@ bool	t_word_parse_type(t_mini *mini, t_word *word)
 		return (word->type = ERROR_TYPE, true);
 	else if (word->c->c == ';' && !word->c->next)
 		return (word->type = SEPARATOR_TYPE, true);
-	else if (t_word_parse_para(word) || t_word_parse_redirect(word)
-		|| t_word_parse_built_in(mini, word) || t_word_parse_cmd(mini, word))
+	else if (t_word_parse_para(word) ||t_word_parse_cmd(mini, word)|| t_word_parse_redirect(word)
+		||  t_word_parse_built_in(mini, word))
 		return (true);
 	return (word->type = ARG_TYPE, false);
 }
