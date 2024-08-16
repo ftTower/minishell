@@ -6,7 +6,7 @@
 /*   By: tauer <tauer@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 17:50:26 by tauer             #+#    #+#             */
-/*   Updated: 2024/08/09 22:11:41 by tauer            ###   ########.fr       */
+/*   Updated: 2024/08/16 23:45:03 by tauer            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,9 @@ void	insert_var_content(t_mini *mini, t_char **list, size_t pos,
 	{
 		if (current->pos == pos)
 			while (content[++index])
-				t_char_add_pos(mini, list, current->pos, content[index]);
+			{
+				t_char_add_pos(mini, list, current->pos, content[index]);	
+			}
 		current = current->next;
 	}
 }

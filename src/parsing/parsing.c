@@ -45,7 +45,7 @@ bool	mini_parsing(t_mini *mini, char *line)
 	if (line && *line)
 	{
 		if (cells_empty_char(line, ';'))
-			return (true);
+			return (handle_error(mini, line, ERROR_EMPTY_SEMICOLON),true);
 		mini->print("\n");
 		cells = mini->libft->split(mini->solib, line, ';');
 		index = -1;

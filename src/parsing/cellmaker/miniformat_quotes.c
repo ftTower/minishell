@@ -6,7 +6,7 @@
 /*   By: tauer <tauer@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 23:37:13 by tauer             #+#    #+#             */
-/*   Updated: 2024/08/08 22:02:21 by tauer            ###   ########.fr       */
+/*   Updated: 2024/08/16 23:29:31 by tauer            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,9 +97,7 @@ bool	t_char_list_format_quotes(t_mini *mini, t_char **list)
 {
 	t_char_set_pos(*list);
 	t_char_identify_typequote(*list);
-	t_char_print_typequote(mini, *list);
 	handle_in_quotes(mini, list);
-	t_char_print_typequote(mini, *list);
 	t_char_del_quotes(mini, list);
-	return (t_char_print_typequote(mini, *list), false);
+	return (false);
 }

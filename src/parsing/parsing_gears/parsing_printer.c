@@ -6,7 +6,7 @@
 /*   By: tauer <tauer@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 02:37:02 by tauer             #+#    #+#             */
-/*   Updated: 2024/08/09 23:44:04 by tauer            ###   ########.fr       */
+/*   Updated: 2024/08/16 23:37:02 by tauer            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,28 +80,22 @@ void	print_t_word_list(t_mini *mini, t_word *word)
 
 void	print_t_word_list_double_quotes(t_mini *mini, t_char *word)
 {
-	t_char	*current;
 
 	if (!word)
 		return ((void)mini->print("empty"));
-	current = word;
-	while (current)
-	{
-		// t_char_identify_typequote(current->c);
-		t_char_print_typequote(mini, current);
-		if (current->next)
-			mini->print(" ");
-		current = current->next;
-	}
+	// t_char_identify_typequote(word);
+	t_char_print_typequote(mini, word);
 }
 
 void	print_t_pipe(t_mini *mini, t_pipe *pipe)
 {
 	mini->print("\n\t╭─%Cff0000([)%C5dade2(PIPE %C0ff1e7(%d))%Cff0000(])\n\t|",
 		pipe->pos);
-	mini->print("\n\t├──%Cff0000([)%Cf1c40f( WORDS TYPE )%Cff0000(]) ");
+	mini->print("\n\t├──%Cff0000([)%Cf1c40f( WORDS TYPE  )%Cff0000(]) ");
 	print_t_word_list(mini, pipe->words);
-	mini->print("\n\t╰──%Cff0000([)%Cf1c40f(     FDS    )%Cff0000(]) ");
+	mini->print("\n\t├──%Cff0000([)%Cf1c40f( WORDS QUOTE )%Cff0000(]) ");
+	print_t_word_list_double_quotes(mini, pipe->raw_words);
+	mini->print("\n\t╰──%Cff0000([)%Cf1c40f(    F D S    )%Cff0000(]) ");
 	print_t_word_list(mini, pipe->fds);
 	mini->print("\n");
 }

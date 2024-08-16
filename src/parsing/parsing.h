@@ -91,7 +91,7 @@ void	print_t_char_list(t_mini *mini, t_char *list);
 void	print_double_tab(t_mini *mini, char **tab);
 //?parsing_error
 bool	cells_empty_char( char *raw_line, char c);
-bool	invalid_redirect(t_char **list);
+bool	invalid_redirect(t_mini *mini, t_char **list);
 //?parsing_printer
 void	print_t_char(t_mini *mini, t_char *c, t_color color);
 void	print_t_word(t_mini *mini, t_word *word);
@@ -109,6 +109,8 @@ void	free_tab(char **tab);
 char	*t_char_list_to_str(t_mini *mini, t_char *list);
 char	*t_word_to_str(t_mini *mini, t_word *word);
 char	*t_word_list_to_str(t_mini *mini, t_word *word);
+
+void	handle_error(t_mini *mini, char *input, t_error_code code);
 
 //! parsing
 bool	mini_parsing(t_mini *mini, char *line);

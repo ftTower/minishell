@@ -6,7 +6,7 @@
 /*   By: tauer <tauer@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 01:43:38 by tauer             #+#    #+#             */
-/*   Updated: 2024/08/09 21:57:34 by tauer            ###   ########.fr       */
+/*   Updated: 2024/08/16 23:49:33 by tauer            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,12 @@ void	t_char_print_typequote(t_mini *mini, t_char *list)
 	t_char	*current;
 
 	const char *colors[] = {
-		"\033[48;5;220m",
-		"\033[48;5;27m",
+		"\033[38;5;220m",
+		"\033[38;5;27m",
 		"\033[48;5;46m",
 		"\033[48;5;196m",
 		"\033[48;5;75m",
+		"\033[48;5;32m",
 	};
 	current = list;
 	while (current)
@@ -29,7 +30,6 @@ void	t_char_print_typequote(t_mini *mini, t_char *list)
 		mini->print("%s%c\033[0m", colors[current->type_quotes], current->c);
 		current = current->next;
 	}
-	mini->print("\n");
 }
 
 void	t_char_identify_bothquote(t_char *list)
@@ -115,6 +115,7 @@ bool	char_add_back(t_mini *mini, t_word *word, char c)
 
 	new = mini->malloc(mini, sizeof(t_char));
 	new->c = c;
+	new->type_quotes = TYPEQUOTES_UNSET;
 	new->next = NULL;
 	if (!word || !word->c)
 		return (word->c = new);
@@ -131,6 +132,7 @@ bool	char_t_char_add_back(t_mini *mini, t_char **list, char c)
 
 	new = mini->malloc(mini, sizeof(t_char));
 	new->c = c;
+	new->type_quotes = TYPEQUOTES_UNSET;
 	new->next = NULL;
 	if (!(*list) || !(*list)->c)
 		return ((*list) = new, false);
@@ -182,6 +184,7 @@ bool	t_char_add_pos(t_mini *mini, t_char **dst, size_t pos, char c)
 
 	new = mini->malloc(mini, sizeof(t_char));
 	new->c = c;
+	new->type_quotes = TYPEQUOTES_UNSET;
 	new->next = NULL;
 	t_char_set_pos((*dst));
 	current = (*dst);

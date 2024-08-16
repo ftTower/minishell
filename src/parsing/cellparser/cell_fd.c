@@ -15,7 +15,7 @@ bool	open_fd(t_mini *mini, t_word *word)
 	{
 		fd = open(word->refined_word, O_RDONLY);
 		if (fd == -1)
-			return (true);
+			return (handle_error(mini, word->refined_word, ERROR_FAILED_OPEN_IN_FD), true);
 		close(fd);
 	}
 	else if (word->type == REPLACE_OUT_FD_TYPE
@@ -23,7 +23,7 @@ bool	open_fd(t_mini *mini, t_word *word)
 	{
 		fd = open(word->refined_word, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		if (fd == -1)
-			return ( true);
+			return (handle_error(mini, word->refined_word, ERROR_FAILED_OPEN_OUT_FD), true);
 		close(fd);
 	}
 	return (false);
@@ -49,7 +49,7 @@ bool	fd_parser(t_mini *mini, t_word **dst)
 						CONCATE_OUT_FD_TYPE))))
 		{
 			if (open_fd(mini, current))
-				return ( true);
+				return (true);
 			delete_word_in_list(mini, dst, current);
 		}
 		current = next;
