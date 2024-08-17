@@ -25,6 +25,8 @@
 # include <stdbool.h>
 # include <stdlib.h>
 # include <sys/wait.h>
+# include <sys/types.h>
+#include <dirent.h>
 # include <unistd.h>
 
 typedef struct s_mini t_mini;
@@ -99,7 +101,6 @@ typedef enum s_error_code
 	ERROR_TOO_MANY_REDIRECT,
 	ERROR_FAILED_OPEN_IN_FD,
 	ERROR_FAILED_OPEN_OUT_FD,
-
 } t_error_code;
 
 typedef struct s_char
@@ -157,6 +158,14 @@ typedef struct s_envpl
 	struct s_envpl *next;
 } t_envpl;
 
+typedef struct s_history
+{
+	char *line;
+	ssize_t pos;
+	bool	success;
+	struct s_history *next;
+}	t_history;
+
 typedef struct s_mini
 {
 	int loop;
@@ -165,6 +174,8 @@ typedef struct s_mini
 	t_solibft *libft;
 	t_soenv *env;
 	t_envpl *envpl;
+	t_history *history;
+	int history_pos;
 	int (*print)(const char *str, ...);
 	void *(*malloc)(t_mini *mini, size_t size);
 	int (*free)(t_mini *mini, void *ptr);

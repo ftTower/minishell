@@ -18,6 +18,7 @@ include src/parsing/envpl/envpl.mk
 include src/parsing/string_gears/string_gears.mk
 include src/parsing/parsing_gears/parsing_gears.mk
 include src/parsing/error_catcher/error_catcher.mk
+include src/parsing/history/history.mk
 
 
 PARSING_DIR		=	parsing
@@ -33,6 +34,7 @@ PARSING_FILE	+=	$(LIST_GEARS)
 PARSING_FILE	+=	$(STRING_GEARS)
 PARSING_FILE	+=	$(PARSING_GEARS)
 PARSING_FILE	+=	$(ERROR_CATCHER)
+PARSING_FILE	+=	$(HISTORY)
 
 PARSING			=	$(addprefix $(PARSING_DIR)/, $(PARSING_FILE))
 PARSING_HEAD	=	$(addprefix $(PARSING_DIR)/, $(PARSING_HEADER))

@@ -58,6 +58,8 @@ t_mini	*minit(t_solib *solib)
 		solib->close(solib, EXIT_FAILURE);
 	mini->loop = 1;
 	mini->starting = 0;
+	mini->history = NULL;
+	mini->history_pos = 0;
 	mini->solib = solib;
 	mini->libft =  solib->libft;
 	mini->print =  solib->print;

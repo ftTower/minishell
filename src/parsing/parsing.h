@@ -115,4 +115,8 @@ void	handle_error(t_mini *mini, char *input, t_error_code code);
 //! parsing
 bool	mini_parsing(t_mini *mini, char *line);
 
+void	t_history_add_line(t_mini *mini, char *line, bool success);
+void	t_history_print(t_mini *mini);
+
+
 #endif

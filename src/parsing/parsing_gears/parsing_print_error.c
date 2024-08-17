@@ -43,10 +43,6 @@ void	print_error_input(t_mini *mini, char *input, char *char_error)
 void	print_char_error(t_mini *mini, char *input, char *char_error,
 		char *error_msg)
 {
-	size_t	len;
-
-	len = mini->libft->strlen(get_envpl_var(mini, "USER"))
-		+ mini->libft->strlen(get_envpl_var(mini, "PWD")) + 7;
 	mini->print("\n\t\033[38;5;196mMinishell \033[5m%s\033[0m\033[0m\n ", error_msg);
 	print_error_input(mini, input, char_error);
 }
