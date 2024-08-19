@@ -89,6 +89,20 @@ char	*get_envpl_var(t_mini *mini, char *name_var)
 	return (get_content_var(mini, name_var));
 }
 
+bool	replace_envpl_var(t_mini *mini, char *var_name, char *to_replace)
+{
+	t_envpl *current;
+
+	current = mini->envpl;
+	while(current)
+	{
+		if (!ft_strcmp(current->var, var_name))
+			return (current->var = mini->libft->strjoin(mini->solib, var_name, to_replace), mini->print("[%s]\n", current->var), true);
+		current = current->next;
+	}
+	return (false);
+}
+
 bool	add_var_envpl(t_mini *mini, t_envpl **envpl, char *var)
 {
 	t_envpl *new;

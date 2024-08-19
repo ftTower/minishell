@@ -101,6 +101,7 @@ typedef enum s_error_code
 	ERROR_TOO_MANY_REDIRECT,
 	ERROR_FAILED_OPEN_IN_FD,
 	ERROR_FAILED_OPEN_OUT_FD,
+	ERROR_TYPE_NO_CMD,
 } t_error_code;
 
 typedef struct s_char
@@ -163,6 +164,7 @@ typedef struct s_history
 	char *line;
 	ssize_t pos;
 	bool	success;
+	t_cell *cell;
 	struct s_history *next;
 }	t_history;
 

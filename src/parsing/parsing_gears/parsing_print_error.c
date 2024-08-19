@@ -63,4 +63,6 @@ void	handle_error(t_mini *mini, char *input, t_error_code code)
 		print_char_error(mini, input, ">", "failed to open output file");
 	else if (code == ERROR_TOO_MANY_REDIRECT)
 		print_char_error(mini, input, "><", "found too many redirects");
+	else if (code == ERROR_TYPE_NO_CMD)
+		print_char_error(mini, input, "", "found no command");
 }

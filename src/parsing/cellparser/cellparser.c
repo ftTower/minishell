@@ -39,6 +39,13 @@ bool	t_pipe_parser(t_mini *mini, t_pipe *pipe, ssize_t pipe_pos)
 	return (false);
 }
 
+bool	t_pipe_type_error(t_mini *mini, t_pipe *pipe)
+{
+	if (pipe->words->type != CMD_TYPE)
+		return (handle_error(mini, t_char_list_to_str(mini, pipe->raw_words), ERROR_TYPE_NO_CMD),true);
+	return (false);
+}
+
 bool	cell_parser(t_mini *mini, t_cell *cell)
 {
 	ssize_t index;
@@ -47,7 +54,7 @@ bool	cell_parser(t_mini *mini, t_cell *cell)
 	while (++index < cell->nb_pipes)
 		if (t_pipe_parser(mini, &cell->pipes[index], index)
 			|| t_cell_connect_fd(mini, cell) || fd_parser(mini,
-				&cell->pipes[index].fds))
+				&cell->pipes[index].fds) || t_pipe_type_error(mini, &cell->pipes[index]))
 			return (true);
 	return (false);
 }

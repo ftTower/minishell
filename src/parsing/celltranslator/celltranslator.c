@@ -89,6 +89,10 @@ t_pipex	*t_pipex_fill(t_mini *mini, t_cell *cell, t_pipex *ret)
 				word_add_back(mini, &cmd_line, ";");
 		}
 	}
+	if (!ret->in_fd)
+		ret->in_fd = "/stdin";
+	if (!ret->out_fd)
+		ret->out_fd = "/stdout";
 	return (tmp = t_word_list_to_str(mini, format_before_pipex(cmd_line)),
 		ret->args = mini->libft->split(mini->solib, tmp, ';'), ret);
 }

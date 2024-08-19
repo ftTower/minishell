@@ -22,28 +22,66 @@
 // 	struct s_history *next;
 // }	t_history;
 
-void	t_history_print(t_mini *mini)
+void	t_history_final_lines_print(t_mini *mini, t_cell *cell)
+{
+	ssize_t index;
+	ssize_t index2;
+	t_pipex *current;
+
+	current = cell->final_line;
+	index2 = 0;
+	while(current)
+	{
+		mini->print(" [%d:", index2);
+		mini->print("%C07f406(%s) ", current->in_fd);
+		index = -1;
+		while(current->args[++index])
+			mini->print("%s ",current->args[index]);
+		mini->print("%Cf43006(%s)]", current->out_fd);
+		current = current->next;
+		index2++;
+	}
+}
+
+void	t_history_print(t_mini *mini, t_history *current)
+{
+	mini->print("\033[48;5;166m %d \033[0m", current->pos);
+	if (current->success)
+		t_history_final_lines_print(mini, current->cell);
+	else
+	{
+		mini->print("\033[48;5;160m");
+		if (mini->history_pos == current->pos)
+			mini->print("\033[5m %s\033[0m\033[0m", current->line);
+		else
+			mini->print(" %s\033[0m", current->line);
+	}
+	mini->print("\n");
+}
+
+void	t_history_printer(t_mini *mini)
 {
 	t_history *current;
+	ssize_t index;
 
+	index = 0;
 	current = mini->history;
 	mini->print("\n");
 	if (!mini->history)
-		return (mini->print("no history\n"), (void)0);
+		return ;
 	while(current)
 	{
-		if (current->success)
-			mini->print("✅ ");
-		else
-			mini->print("❌ ");
-		mini->print("%d ", current->pos);
-		if (mini->history_pos == current->pos)
-			mini->print("\033[5m%s\033[0m", current->line);
-		else
-			mini->print("%s", current->line);
-		mini->print("\n");
+		index++;
 		current = current->next;
 	}
+	current = mini->history;
+	while(current)
+	{
+		if (current->pos > index - 4)
+			t_history_print(mini, current);
+		current = current->next;
+	}
+	mini->print("\n");
 }
 
 char  *t_history_get_line(t_mini *mini, ssize_t pos)
@@ -66,7 +104,7 @@ char  *t_history_get_line(t_mini *mini, ssize_t pos)
 	return (mini->history->line);
 }
 
-void t_history_add_line(t_mini *mini, char *line, bool success)
+void t_history_add_line(t_mini *mini, char *line, bool success, t_cell *cell)
 {
     t_history *new;
     t_history *current;
@@ -75,6 +113,7 @@ void t_history_add_line(t_mini *mini, char *line, bool success)
     new = mini->malloc(mini, sizeof(t_history));
     new->line = line;
     new->next = NULL;
+	new->cell = cell;
 	new->success = success;
     pos = 0;
     if (!mini->history)
