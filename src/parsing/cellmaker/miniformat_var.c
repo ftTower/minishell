@@ -36,7 +36,7 @@ void	delete_name_var(t_mini *mini, t_char **list, size_t pos)
 			t_char_del_pos(mini, list, current->pos - 1);
 			while (current && current->c != '"' && current->c != '\''
 				&& current->c != ' ' && current->c != '|' && current->c != '\\'
-				&& current->c != '$')
+				&& current->c != '$' && current->c != '!')
 			{
 				buf = current->type_quotes;
 				current = current->next;
@@ -50,7 +50,8 @@ void	delete_name_var(t_mini *mini, t_char **list, size_t pos)
 				t_char_del_pos(mini, list, current->pos - 1);
 			}
 		}
-		current = current->next;
+		if (current)
+			current = current->next;
 	}
 	print_t_char_list(mini, *list);
 }
@@ -67,7 +68,7 @@ char	*get_name_var(t_mini *mini, t_char **list, size_t pos)
 		if (current->pos == pos)
 		{
 			while (current && current->c != '"' && current->c != '\''
-				&& current->c != '|' && current->c != ' ' && current->c != '\\')
+				&& current->c != '|' && current->c != ' ' && current->c != '\\'&& current->c != '!')
 			{
 				if ((current->c == '$' && current->pos != pos))
 					break ;

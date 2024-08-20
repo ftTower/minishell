@@ -34,7 +34,7 @@ void	cells_handler(t_mini *mini, char *raw_line, size_t pos)
 	if (cell_maker(mini, cell, raw_line) || cell_parser(mini, cell)
 		|| cell_translator(mini, cell))
 		return (t_history_add_line(mini, raw_line, false, cell));
-	return (t_history_add_line(mini, raw_line, true, cell), print_t_cell(mini, cell));
+	return (t_history_add_line(mini, raw_line, true, cell));
 }
 
 bool	mini_parsing(t_mini *mini, char *line)
@@ -50,9 +50,8 @@ bool	mini_parsing(t_mini *mini, char *line)
 		if (dir && chdir(line) == 0)
 			return (replace_envpl_var(mini, "PWD=" , getcwd(cwd, sizeof(cwd))), closedir(dir), false);	
 		closedir(dir);
-
 		if (cells_empty_char(line, ';'))
-			return (handle_error(mini, line, ERROR_EMPTY_SEMICOLON),true);
+			return (handle_error(mini, line, ERROR_EMPTY_SEMICOLON),t_history_add_line(mini, line, false, NULL), true);
 		mini->print("\n");
 		cells = mini->libft->split(mini->solib, line, ';');
 		index = -1;

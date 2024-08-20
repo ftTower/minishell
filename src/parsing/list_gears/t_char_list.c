@@ -213,15 +213,14 @@ bool	t_char_del_pos(t_mini *mini, t_char **list, size_t pos_to_del)
 	t_char	*tmp;
 
 	if (pos_to_del == 0)
-		return (mini->print("%c:%d - %d\n", (*list)->c,(*list)->pos, pos_to_del),*list = (*list)->next, false);
+		return (*list = (*list)->next,t_char_set_pos(*list), false);
 	t_char_set_pos(*list);
 	current = (*list);
-	mini->print("%c:%d - %d\n", current->c, current->pos ,pos_to_del);
 	while (current)
 	{
 		if (current->next && current->next->pos == pos_to_del)
 			return (tmp = current->next, current->next = tmp->next,
-				mini->free(mini, tmp), t_char_set_pos(*list), false);
+				mini->free(mini, tmp), tmp = NULL,t_char_set_pos(*list), false);
 		current = current->next;
 	}
 	return (false);

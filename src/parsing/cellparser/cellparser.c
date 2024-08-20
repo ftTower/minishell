@@ -41,7 +41,7 @@ bool	t_pipe_parser(t_mini *mini, t_pipe *pipe, ssize_t pipe_pos)
 
 bool	t_pipe_type_error(t_mini *mini, t_pipe *pipe)
 {
-	if (pipe->words->type != CMD_TYPE)
+	if (!pipe->words || pipe->words->type != CMD_TYPE)
 		return (handle_error(mini, t_char_list_to_str(mini, pipe->raw_words), ERROR_TYPE_NO_CMD),true);
 	return (false);
 }

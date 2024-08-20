@@ -27,14 +27,14 @@ void display_path(t_mini *mini)
 	ssize_t index;
 	ssize_t color_index;
 	const char	*colors[] = {
-		"\033[48;5;25m",
+		"\033[48;5;58m",
+		"\033[48;5;59m",
+		"\033[48;5;60m",
+		"\033[48;5;61m",
+		"\033[48;5;62m",
 		"\033[48;5;63m",
-		"\033[48;5;122m",
-		"\033[48;5;153m",
-		"\033[48;5;159m",
-		"\033[48;5;189m",
-		"\033[48;5;195m",
-		"\033[48;5;226m",
+		"\033[48;5;64m",
+		"\033[48;5;65m",
 	};
 
 	path_content = get_envpl_var(mini, "PWD");
@@ -62,7 +62,7 @@ void display_user(t_mini *mini)
 	char *info;
 
 	info = get_envpl_var(mini, "USER");
-	printf("\033[48;5;202m🧿 %s \033[0m", info);
+	printf("\033[48;5;16m🧿 %s \033[0m", info);
 }
 
 void display_info(t_mini *mini)

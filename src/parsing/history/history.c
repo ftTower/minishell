@@ -43,19 +43,36 @@ void	t_history_final_lines_print(t_mini *mini, t_cell *cell)
 	}
 }
 
+char	*str_format_len(t_mini *mini, char *line, size_t size)
+{
+	char *ret;
+
+	ret= NULL;
+	if (size < 2 || !line)
+		return (NULL);
+	else if (mini->libft->strlen(line) > size)
+		return (ret = mini->libft->substr(mini->solib, line, 0, size - 1), \
+		ret = mini->libft->strjoin(mini->solib, ret, "."), ret);
+	else
+		return (ret = mini->malloc(mini, sizeof(char) * (size + 1)), \
+		mini->libft->memset(ret, ' ', size), ret[size] = '\0', \
+		mini->libft->memcpy(ret, line, mini->libft->strlen(line)), ret);
+}
+
 void	t_history_print(t_mini *mini, t_history *current)
 {
-	mini->print("\033[48;5;166m %d \033[0m", current->pos);
+	mini->print("\033[48;5;60m %d \033[0m ", current->pos);
 	if (current->success)
-		t_history_final_lines_print(mini, current->cell);
+		mini->print("\033[48;5;40m");
 	else
+		mini->print("\033[48;5;196m");
+	if (mini->history_pos == current->pos)
 	{
-		mini->print("\033[48;5;160m");
-		if (mini->history_pos == current->pos)
-			mini->print("\033[5m %s\033[0m\033[0m", current->line);
-		else
-			mini->print(" %s\033[0m", current->line);
+		mini->print("\033[5m%s\033[0m\033[0m" , str_format_len(mini, current->line, 10));
+		t_history_final_lines_print(mini, current->cell);
 	}
+	else
+		mini->print("%s\033[0m", str_format_len(mini, current->line, 10));
 	mini->print("\n");
 }
 

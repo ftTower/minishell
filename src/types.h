@@ -89,6 +89,7 @@ typedef enum s_type_quotes
 	TYPEQUOTES_DOUBLE_QUOTED,
 	TYPEQUOTES_BOTH_QUOTED,
 	TYPEQUOTES_TO_KEEP,
+	TYPEQUOTES_PATH,
 } t_type_quotes;
 
 typedef enum s_error_code
