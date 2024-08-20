@@ -48,14 +48,8 @@ bool	mini_parsing(t_mini *mini, char *line)
 	{
 		dir = opendir(line);
 		if (dir && chdir(line) == 0)
-		{
-			replace_envpl_var(mini, "PWD=" , getcwd(cwd, sizeof(cwd)));
-			closedir(dir);
-    	}	
-		else {
-        perror("chdir");
-		closedir(dir); // Print the error
-   		}
+			return (replace_envpl_var(mini, "PWD=" , getcwd(cwd, sizeof(cwd))), closedir(dir), false);	
+		closedir(dir);
 
 		if (cells_empty_char(line, ';'))
 			return (handle_error(mini, line, ERROR_EMPTY_SEMICOLON),true);
