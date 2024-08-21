@@ -151,11 +151,12 @@ void	print_t_cell(t_mini *mini, t_cell *cell)
 void	print_envpl(t_mini *mini)
 {
 	t_envpl *current;
-
+	
+	mini->print("\n");
 	current = mini->envpl;
 	while (current)
 	{
-		mini->print("%s\n", current->var);
+		mini->print("%s\n", str_format_len(mini, current->var, 15));
 		current = current->next;
 	}
 }

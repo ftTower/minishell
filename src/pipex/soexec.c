@@ -60,15 +60,37 @@ static char	*get_cmd(t_solib *solib, char **paths, char *cmd)
 	return (0);
 }
 
-void	echon(t_mini *mini, char *str)
+void	putstrfd(char *str, int fd)
 {
-	mini->print("%s", str);
+	ssize_t index;
+
+	if (!str || fd < 0)
+		return ;
+	index = -1;
+	while(str[++index])
+		write(fd, &str[index], 1);
 }
 
-void	pwd(t_mini *mini)
+void	echon(char *str, int fd)
 {
-	mini->print("%s\n", get_envpl_var(mini, "PWD="));
+	putstrfd(str, fd);
 }
+
+void	pwd(t_mini *mini, int fd)
+{
+	putstrfd(get_envpl_var(mini, "PWD"), fd);
+	putstrfd("\n", fd);
+}
+
+void	unset(t_mini *mini, char *var_to_unset, int fd)
+{
+	del_var_envpl(mini, var_to_unset);
+	putstrfd("unset ", fd);
+	putstrfd(var_to_unset, fd);
+	putstrfd("\n", fd);
+}
+
+
 
 int	str_exec(t_solib *solib, char *str)
 {

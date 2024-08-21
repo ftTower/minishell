@@ -103,6 +103,33 @@ bool	replace_envpl_var(t_mini *mini, char *var_name, char *to_replace)
 	return (false);
 }
 
+size_t	var_name_size(char *var)
+{
+	size_t index;
+
+	index = 0;
+	while(var[index])
+		if (var[index++] == '=')
+			return (index);
+	return (0);
+}
+
+void	del_var_envpl(t_mini *mini, char *var_name_to_del)
+{
+	t_envpl *current;
+	t_envpl *tmp;
+
+	current = mini->envpl;
+	if (mini->libft->strncmp(current->next->var, var_name_to_del, var_name_size(current->next->var)) && var_name_size(current->next->var) -1 == mini->libft->strlen(var_name_to_del))
+		return (mini->envpl = mini->envpl->next, (void)0);
+	 while(current->next)
+	{
+		if (!mini->libft->strncmp(current->next->var, var_name_to_del, var_name_size(current->next->var) - 1)  && var_name_size(current->next->var) -1 == mini->libft->strlen(var_name_to_del))
+			return (tmp = current->next, current->next = tmp->next, mini->free(mini, tmp), (void)0);
+		current = current->next;
+	}
+}
+
 bool	add_var_envpl(t_mini *mini, t_envpl **envpl, char *var)
 {
 	t_envpl *new;

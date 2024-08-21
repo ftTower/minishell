@@ -37,19 +37,28 @@ void	cells_handler(t_mini *mini, char *raw_line, size_t pos)
 	return (t_history_add_line(mini, raw_line, true, cell));
 }
 
+bool	is_raw_path(t_mini *mini, char *line)
+{
+	DIR *dir;
+	char cwd[1024];
+	dir = opendir(line);
+		
+	if (dir && chdir(line) == 0)
+		return (replace_envpl_var(mini, "PWD=" , getcwd(cwd, sizeof(cwd))), closedir(dir), true);	
+	closedir(dir);
+	return (false);
+}
+
 bool	mini_parsing(t_mini *mini, char *line)
 {
 	char **cells;
 	ssize_t index;
-	DIR *dir;
-	char cwd[1024];
 
-	if (line && *line)
+	if (line && *line && !is_raw_path(mini, line))
 	{
-		dir = opendir(line);
-		if (dir && chdir(line) == 0)
-			return (replace_envpl_var(mini, "PWD=" , getcwd(cwd, sizeof(cwd))), closedir(dir), false);	
-		closedir(dir);
+		// pwd(mini, 0);
+		// echon( "pas de ln", 0);
+		// unset(mini, "PWD", 0);
 		if (cells_empty_char(line, ';'))
 			return (handle_error(mini, line, ERROR_EMPTY_SEMICOLON),t_history_add_line(mini, line, false, NULL), true);
 		mini->print("\n");

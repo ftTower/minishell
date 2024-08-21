@@ -63,6 +63,7 @@ char	*get_envpl_var(t_mini *mini, char *name_var);
 char	*get_hidden_envpl_var(t_mini *mini, char *name_var);
 bool	replace_envpl_var(t_mini *mini, char *var_name, char *to_replace);
 bool	add_var_envpl(t_mini *mini, t_envpl **envpl, char *var);
+void	del_var_envpl(t_mini *mini, char *var_name_to_del);
 bool	copy_envp_to_list(t_mini *mini);
 void	variable_content_setter(t_mini *mini, t_char **dst, char *content);
 char	*variable_content_getter(t_mini *mini, t_char **dst);
@@ -119,5 +120,6 @@ bool	mini_parsing(t_mini *mini, char *line);
 void	t_history_add_line(t_mini *mini, char *line, bool success, t_cell *cell);
 void	t_history_printer(t_mini *mini);
 
+char	*str_format_len(t_mini *mini, char *line, size_t size);
 
 #endif
