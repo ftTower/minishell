@@ -90,9 +90,9 @@ t_pipex	*t_pipex_fill(t_mini *mini, t_cell *cell, t_pipex *ret)
 		}
 	}
 	if (!ret->in_fd)
-		ret->in_fd = "/stdin";
+		ret->in_fd = "/dev/stdin";
 	if (!ret->out_fd)
-		ret->out_fd = "/stdout";
+		ret->out_fd = "/dev/stdout";
 	return (tmp = t_word_list_to_str(mini, format_before_pipex(cmd_line)),
 		ret->args = mini->libft->split(mini->solib, tmp, ';'), ret);
 }

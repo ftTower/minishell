@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include <minishell/all.h>
+#include <solibft/sostring.h>
 
 void	pipe_swap(int pipefd[2], int filefd[2])
 {
@@ -21,10 +22,34 @@ void	pipe_swap(int pipefd[2], int filefd[2])
 	filefd[0] = tmp;
 }
 
-int	exec_fork_child(t_solib *solib, int pipefd[2], int filefd[2], char *command)
+
+
+int	hub_builtin(t_mini *mini, char *cmd, int pipefd[2])
+{
+	if (!ft_strncmp("echo -n", cmd, 7))
+	{
+		write(1, "echo -n", 7);
+		write(pipefd[1], "echo -n", 7);
+		return (1);
+	}
+	if (!ft_strncmp("cd", cmd, 2))
+		return (is_raw_path(mini, cmd + 3), 1);
+	if (!ft_strncmp("pwd", cmd, 3))
+	{
+		putstrfd(get_envpl_var(mini, "PWD="), 1);
+		putstrfd(get_envpl_var(mini, "PWD="), pipefd[1]);
+
+		return (1);
+	}
+	return (0);
+}
+
+int	exec_fork_child(t_mini *mini, int pipefd[2], int filefd[2], char *command)
 {
 	int	ret;
 
+	if (hub_builtin(command, pipefd))
+		return (0);
 	dup2(pipefd[0], 0);
 	dup2(pipefd[1], 1);
 	close(pipefd[0]);
@@ -36,7 +61,7 @@ int	exec_fork_child(t_solib *solib, int pipefd[2], int filefd[2], char *command)
 	return (ret);
 }
 
-int	exec_fork(t_solib *solib, char *command, int pipefd[2], int filefd[2])
+int	exec_fork(t_mini *mini, char *command, int pipefd[2], int filefd[2])
 {
 	int	pid;
 
@@ -50,7 +75,7 @@ int	exec_fork(t_solib *solib, char *command, int pipefd[2], int filefd[2])
 	return (0);
 }
 
-int	strs_cmds(t_solib *solib, char **commands, int pipefd[2], int filefd[2])
+int	strs_cmds(t_mini *mini, char **commands, int pipefd[2], int filefd[2])
 {
 	int	i;
 	int	status;
@@ -75,7 +100,7 @@ int	strs_cmds(t_solib *solib, char **commands, int pipefd[2], int filefd[2])
 	return (status);
 }
 
-int	strs_exec(t_solib *solib, int fdin, char **commands, int fdout)
+int	strs_exec(t_mini *mini, int fdin, char **commands, int fdout)
 {
 	int		pipefd[2];
 	int		filefd[2];

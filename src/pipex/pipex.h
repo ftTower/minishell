@@ -15,8 +15,8 @@
 
 # include <minishell/all.h>
 
-int	str_exec(t_solib *solib, char *str);
-int	strs_exec(t_solib *solib, int fdin, char **commands, int fdout);
-int	pipex(t_solib *solib, char *infile, char **commands, char *outfile);;
+int	str_exec(t_mini *mini, char *str);
+int	strs_exec(t_mini *mini, int fdin, char **commands, int fdout);
+int	pipex(t_mini *mini, char *infile, char **commands, char *outfile);;
 
 #endif

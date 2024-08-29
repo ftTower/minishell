@@ -28,7 +28,7 @@ int	pipex_openfd(char *path_in, char *path_out, int *in, int *out)
 	return (0);
 }
 
-int	pipex(t_solib *solib, char *infile, char **commands, char *outfile)
+int	pipex(t_mini *mini, char *infile, char **commands, char *outfile)
 {
 	int	fdin;
 	int	fdout;
@@ -37,5 +37,5 @@ int	pipex(t_solib *solib, char *infile, char **commands, char *outfile)
 	fdout = 0;
 	if (pipex_openfd(infile, outfile, &fdin, &fdout))
 		return (perror("Open"), 1);
-	return (strs_exec(solib, fdin, commands, fdout));
+	return (strs_exec(mini, fdin, commands, fdout));
 }

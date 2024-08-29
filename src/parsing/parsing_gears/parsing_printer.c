@@ -110,7 +110,7 @@ void	print_t_pipex(t_mini *mini, t_pipex *pipex, ssize_t pos)
 		return ;
 	mini->print("[ %Cf1c40f(%d) ]  %C2ecc71(%s) ",pos, pipex->in_fd);
 	while (pipex->args[++index])
-		mini->print("%s ", pipex->args[index]);
+		mini->print("%s | ", pipex->args[index]);
 	mini->print("%Ccb4335(%s)\n", pipex->out_fd);
 }
 

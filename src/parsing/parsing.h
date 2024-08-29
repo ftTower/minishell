@@ -18,6 +18,9 @@
 
 # include <minishell/all.h>
 
+//! cell exec
+//? cell exec
+bool	cell_pipex_exec(t_mini *mini, t_pipex *list);
 //! cell maker
 //? cell_maker
 bool	cell_pipe_maker(t_mini *mini, t_pipe *pipe, char **pipe_words,
@@ -116,9 +119,10 @@ void	handle_error(t_mini *mini, char *input, t_error_code code);
 
 //! parsing
 bool	mini_parsing(t_mini *mini, char *line);
-
+bool	is_raw_path(t_mini *mini, char *line);
 void	t_history_add_line(t_mini *mini, char *line, bool success, t_cell *cell);
 void	t_history_printer(t_mini *mini);
+void	putstrfd(char *str, int fd);=
 
 char	*str_format_len(t_mini *mini, char *line, size_t size);
 

@@ -32,9 +32,9 @@ void	cells_handler(t_mini *mini, char *raw_line, size_t pos)
 	cell = mini->malloc(mini, sizeof(t_cell));
 	cell->pos = pos;
 	if (cell_maker(mini, cell, raw_line) || cell_parser(mini, cell)
-		|| cell_translator(mini, cell))
+		|| cell_translator(mini, cell) || cell_pipex_exec(mini, cell->final_line))
 		return (t_history_add_line(mini, raw_line, false, cell));
-	return (t_history_add_line(mini, raw_line, true, cell));
+	return (t_history_add_line(mini, raw_line, true, cell), print_t_cell(mini, cell));
 }
 
 bool	is_raw_path(t_mini *mini, char *line)

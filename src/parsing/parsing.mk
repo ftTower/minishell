@@ -12,6 +12,7 @@
 
 include src/parsing/cellmaker/cellmaker.mk
 include src/parsing/cellparser/cellparser.mk
+include src/parsing/cellexec/cellexec.mk
 include src/parsing/celltranslator/celltranslator.mk
 include src/parsing/list_gears/list_gears.mk
 include src/parsing/envpl/envpl.mk
@@ -29,6 +30,7 @@ PARSING_FILE	=	parsing.c
 PARSING_FILE	+=	$(CELLMAKER)
 PARSING_FILE	+=	$(CELLPARSER)
 PARSING_FILE	+=	$(CELLTRANSLATOR)
+PARSING_FILE	+=	$(CELLEXEC)
 PARSING_FILE	+=	$(ENVPL)
 PARSING_FILE	+=	$(LIST_GEARS)
 PARSING_FILE	+=	$(STRING_GEARS)
