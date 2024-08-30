@@ -92,5 +92,5 @@ void mini_prompt(t_mini *mini)
 	display_prompt(mini);
 	// soprintf(" ╭─%Cff0000([)%Cf1c40f(%s)%Cff0000(])\n ╰─ ", get_envpl_var(mini, "PWD="));
 	rl_on_new_line(); // Remet le prompt sur une nouvelle ligne
-	rl_redisplay();	  // Redess
+	//rl_redisplay();	  // Redess
 }

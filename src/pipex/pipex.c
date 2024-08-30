@@ -11,10 +11,52 @@
 /* ************************************************************************** */
 
 #include <minishell/all.h>
+#include <solibft/sostring.h>
 
-int	pipex_openfd(char *path_in, char *path_out, int *in, int *out)
+
+int	hear_in(char *limiter)
 {
-	*in = open(path_in, O_RDONLY, 0644);
+	char	*doc;
+	char	*line;
+	char	*buf;
+	int		pipefd[2];
+	int		count;
+
+	doc = malloc(sizeof(0));
+	line = malloc(sizeof(0));
+	buf = malloc(sizeof(1));
+	count = 0;
+	if (pipe(pipefd) == -1)
+		return (-1);
+	// soprintf("%d~>:", count);
+	while (read(0, buf, 1))
+	{
+		ft_strmcat(NULL, &line, buf);
+		if (*buf == '\n')
+		{
+			// printf("line : %s | limiter : %s\n", line, limiter);
+			if (!ft_strncmp(line , limiter, ft_strlen(limiter) - 1))
+				break;
+			ft_strmcat(NULL, &doc, line);
+			free(line);
+			line = malloc(sizeof(0));
+			count++;
+			// soprintf("%d~>:", count);
+		}
+	}
+	free(line);
+	write(pipefd[1], doc, ft_strlen(doc));
+	close(pipefd[1]);
+	return (pipefd[0]);
+}
+
+int	hear_doc(char *path_in, char *path_out, int *in, int *out)
+{
+	soprintf("%s -- %s\n", path_in, path_out);
+	if (!ft_strncmp("<<", path_in, 2))
+		*in = hear_in(path_in + 2);
+	else
+		*in = open(path_in, O_RDONLY, 0644);
 	if (*in < 0)
 	{
 		perror("Open");
@@ -22,7 +64,10 @@ int	pipex_openfd(char *path_in, char *path_out, int *in, int *out)
 		if (*in < 0)
 			return (1);
 	}
-	*out = open(path_out, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (!ft_strncmp(">>", path_in, 2))
+		*out = open(path_out + 2, O_WRONLY | O_CREAT, 0644);
+	else
+		*out = open(path_out, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (*out < 0)
 		return (1);
 	return (0);
@@ -35,7 +80,8 @@ int	pipex(t_mini *mini, char *infile, char **commands, char *outfile)
 
 	fdin = 0;
 	fdout = 0;
-	if (pipex_openfd(infile, outfile, &fdin, &fdout))
+	if (hear_doc(infile, outfile, &fdin, &fdout))
 		return (perror("Open"), 1);
 	return (strs_exec(mini, fdin, commands, fdout));
+	return 0;
 }

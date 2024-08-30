@@ -48,7 +48,7 @@ int	exec_fork_child(t_mini *mini, int pipefd[2], int filefd[2], char *command)
 {
 	int	ret;
 
-	if (hub_builtin(command, pipefd))
+	if (hub_builtin(mini, command, pipefd))
 		return (0);
 	dup2(pipefd[0], 0);
 	dup2(pipefd[1], 1);
@@ -56,8 +56,8 @@ int	exec_fork_child(t_mini *mini, int pipefd[2], int filefd[2], char *command)
 	close(pipefd[1]);
 	close(filefd[0]);
 	close(filefd[1]);
-	ret = str_exec(solib, command);
-	solib->close(solib, EXIT_FAILURE);
+	ret = str_exec(mini, command);
+	mini->solib->close(mini->solib, EXIT_FAILURE);
 	return (ret);
 }
 
@@ -67,9 +67,9 @@ int	exec_fork(t_mini *mini, char *command, int pipefd[2], int filefd[2])
 
 	pid = fork();
 	if (pid == -1)
-		solib->close(solib, EXIT_FAILURE);
+		mini->solib->close(mini->solib, EXIT_FAILURE);
 	if (pid == 0)
-		exit(exec_fork_child(solib, pipefd, filefd, command));
+		exit(exec_fork_child(mini, pipefd, filefd, command));
 	close(pipefd[0]);
 	close(pipefd[1]);
 	return (0);
@@ -83,16 +83,16 @@ int	strs_cmds(t_mini *mini, char **commands, int pipefd[2], int filefd[2])
 	i = 0;
 	while (commands[i + 1])
 	{
-		exec_fork(solib, commands[i], pipefd, filefd);
+		exec_fork(mini, commands[i], pipefd, filefd);
 		if (pipe(pipefd) == -1)
-			solib->close(solib, EXIT_FAILURE);
+			mini->solib->close(mini->solib, EXIT_FAILURE);
 		pipe_swap(pipefd, filefd);
 		i++;
 	}
 	close(pipefd[1]);
 	close(filefd[0]);
 	pipefd[1] = filefd[1];
-	exec_fork(solib, commands[i], pipefd, filefd);
+	exec_fork(mini, commands[i], pipefd, filefd);
 	while (wait(&status) != -1)
 		continue ;
 	close(pipefd[0]);
@@ -110,7 +110,7 @@ int	strs_exec(t_mini *mini, int fdin, char **commands, int fdout)
 	filefd[1] = fdout;
 	filefd[0] = fdin;
 	if (pipe(pipefd) == -1)
-		solib->close(solib, EXIT_FAILURE);
+		mini->solib->close(mini->solib, EXIT_FAILURE);
 	pipe_swap(pipefd, filefd);
-	return (strs_cmds(solib, commands, pipefd, filefd));
+	return (strs_cmds(mini, commands, pipefd, filefd));
 }

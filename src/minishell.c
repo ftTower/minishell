@@ -19,6 +19,8 @@
 
 void mini_line_handler(t_mini *mini, char *line)
 {
+	if (*line)
+		add_history(line);
 	if (line && *line)
 		mini_parsing(mini, line);
 	mini->print("\n");
@@ -37,7 +39,7 @@ int line_update(t_mini *mini, char *line, int key)
 }
 
 
-void mini_special_keys(t_mini *mini, char *line, int key)
+/*void mini_special_keys(t_mini *mini, char *line, int key)
 {
 	if (key == '\n' || key == '\r')
 	{
@@ -61,22 +63,23 @@ void mini_special_keys(t_mini *mini, char *line, int key)
 		}
 
 	}
-}
+}*/
 
 void mini_start(t_mini *mini)
 {
-	int	key;
+	//int	key;
 
-	rl_callback_handler_install("", line_handler);
+	//rl_callback_handler_install("", line_handler);
 	mini_prompt(mini);
 	// Boucle principale
 	while (mini->loop)
 	{
-		key = rl_read_key(); // Lecture d'une seule touche
+		mini_line_handler(mini, readline(" "));
+		/*key = rl_read_key(); // Lecture d'une seule touche
 		if (key >= 32 && key <= 126)
 			line_update(mini, rl_line_buffer, key);
 		else
-			mini_special_keys(mini, rl_line_buffer, key);
+			mini_special_keys(mini, rl_line_buffer, key);*/
 		rl_redisplay();
 	}
 }

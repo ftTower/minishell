@@ -122,7 +122,7 @@ bool	mini_parsing(t_mini *mini, char *line);
 bool	is_raw_path(t_mini *mini, char *line);
 void	t_history_add_line(t_mini *mini, char *line, bool success, t_cell *cell);
 void	t_history_printer(t_mini *mini);
-void	putstrfd(char *str, int fd);=
+void	putstrfd(char *str, int fd);
 
 char	*str_format_len(t_mini *mini, char *line, size_t size);
 
