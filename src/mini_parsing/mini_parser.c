@@ -47,7 +47,7 @@ bool	find_keyword(t_mini *mini ,char *find_in, char *to_find)
 		return (false);
 	index = -1;
 	while(find_in[++index])
-		if (!mini->libft->strncmp(find_in + index, to_find, mini->libft->strlen(to_find)))
+		if (!mini->libft->strncmp(find_in + index, to_find, mini->libft->strlen(to_find) - 1))
 			return (true);
 	return (false);
 }

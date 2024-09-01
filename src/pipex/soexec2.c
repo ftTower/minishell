@@ -107,6 +107,8 @@ int	strs_exec(t_mini *mini, int fdin, char **commands, int fdout)
 
 	if (!commands || !*commands)
 		return (0);
+	soprintf("fdin : %d -- %d\n", fdin, fdout);
+	//file[read(fdin, file, 5000)] = '\0';
 	filefd[1] = fdout;
 	filefd[0] = fdin;
 	if (pipe(pipefd) == -1)

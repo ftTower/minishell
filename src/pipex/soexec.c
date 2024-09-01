@@ -31,7 +31,7 @@ int	ft_strarrfree(t_mini *mini, char **strarr)
 static char	*strarr_prefixchr(t_mini *mini, char **strarr, char *target)
 {
 	while (*strarr && mini->libft->strncmp(target, *strarr,
-			mini->libft->strlen(target)))
+			mini->libft->strlen(target) - 1))
 		strarr++;
 	return (*strarr);
 }
