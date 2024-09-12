@@ -24,6 +24,19 @@ void	pipe_swap(int pipefd[2], int filefd[2])
 
 
 
+void	write_envpl(int fd, t_mini *mini)
+{
+	t_envpl *current;
+
+	current = mini->envpl;
+	while (current)
+	{
+		putstrfd(current->var, fd);
+		putstrfd("\n", fd);
+		current = current->next;
+	}
+}
+
 int	hub_builtin(t_mini *mini, char *cmd, int pipefd[2])
 {
 	if (!ft_strncmp("echo -n", cmd, 7))
@@ -31,13 +44,14 @@ int	hub_builtin(t_mini *mini, char *cmd, int pipefd[2])
 	if (!ft_strncmp("cd", cmd, 2))
 		return (is_raw_path(mini, cmd + 3), 1);
 	if (!ft_strncmp("pwd", cmd, 3))
-		return (putstrfd(get_envpl_var(mini, "PWD"), pipefd[1]), 1);
+		return (putstrfd(get_envpl_var(mini, "PWD"), pipefd[1]),
+			putstrfd("\n", pipefd[1]), 1);
 	if (!ft_strncmp("export", cmd, 6))
 		return (putstrfd(get_envpl_var(mini, "PWD"), pipefd[1]), 1);
 	if (!ft_strncmp("unset", cmd, 5))
-		return (putstrfd(get_envpl_var(mini, "PWD"), pipefd[1]), 1);
+		return (del_var_envpl(mini, cmd + 6), 1);
 	if (!ft_strncmp("env", cmd, 3))
-		return (putstrfd(get_envpl_var(mini, "PWD"), pipefd[1]), 1);
+		return (write_envpl(pipefd[1], mini), 1);
 	return (0);
 }
 
@@ -110,7 +124,6 @@ int	strs_exec(t_mini *mini, int fdin, char **commands, int fdout)
 
 	if (!commands || !*commands)
 		return (0);
-	soprintf("fdin : %d -- %d\n", fdin, fdout);
 	filefd[1] = fdout;
 	filefd[0] = fdin;
 	if (!commands[1])

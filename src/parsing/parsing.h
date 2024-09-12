@@ -125,5 +125,6 @@ void	t_history_printer(t_mini *mini);
 void	putstrfd(char *str, int fd);
 
 char	*str_format_len(t_mini *mini, char *line, size_t size);
+bool	t_word_parse_built_in(t_mini *mini, t_word *word);
 
 #endif

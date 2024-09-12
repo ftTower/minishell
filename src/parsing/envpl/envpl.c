@@ -97,7 +97,7 @@ bool	replace_envpl_var(t_mini *mini, char *var_name, char *to_replace)
 	while(current)
 	{
 		if (!ft_strcmp(current->var, var_name))
-			return (current->var = mini->libft->strjoin(mini->solib, var_name, to_replace), mini->print("[%s]\n", current->var), true);
+			return (current->var = mini->libft->strjoin(mini->solib, var_name, to_replace), true);
 		current = current->next;
 	}
 	return (false);

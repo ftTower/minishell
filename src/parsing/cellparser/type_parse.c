@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   type_parse.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tauer <tauer@student.42.fr>                +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 02:23:45 by tauer             #+#    #+#             */
-/*   Updated: 2024/08/17 00:32:04 by tauer            ###   ########.fr       */
+/*   Updated: 2024/09/12 17:28:25 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,8 @@ bool	t_word_parse_type(t_mini *mini, t_word *word)
 		return (word->type = ERROR_TYPE, true);
 	else if (word->c->c == ';' && !word->c->next)
 		return (word->type = SEPARATOR_TYPE, true);
-	else if (t_word_parse_para(word) || t_word_parse_cmd(mini, word)
-		|| t_word_parse_redirect(word) || t_word_parse_built_in(mini, word))
+	else if (t_word_parse_built_in(mini, word) || t_word_parse_para(word) || t_word_parse_cmd(mini, word)
+		|| t_word_parse_redirect(word))
 		return (true);
 	return (word->type = ARG_TYPE, false);
 }
