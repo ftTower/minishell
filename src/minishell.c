@@ -16,6 +16,39 @@
 #include <minishell/all.h>
 #include <sotypes/soprintf.h>
 
+pid_t	g_signal_pid;
+
+void	ft_sig_quit(int id)
+{
+	soprintf("\n");
+	rl_replace_line("", 0);
+	rl_on_new_line();
+	if (g_signal_pid != 0)
+	{
+		if (id)
+			kill(g_signal_pid, SIGQUIT);
+	}
+	else
+		rl_redisplay();
+}
+
+void	ft_sig_segv(void)
+{
+	soprintf("Segmentation fault\n");
+	exit(11);
+}
+
+static void	handle_signals(int code)
+{
+	if (code == SIGINT)
+		ft_sig_quit(0);
+	if (code == SIGQUIT)
+		ft_sig_quit(1);
+	if (code == SIGABRT)
+		soprintf("abort\n");
+	if (code == SIGSEGV)
+		ft_sig_segv();
+}
 
 void mini_line_handler(t_mini *mini, char *line)
 {
@@ -23,6 +56,7 @@ void mini_line_handler(t_mini *mini, char *line)
 		add_history(line);
 	if (line && *line)
 		mini_parsing(mini, line);
+	g_signal_pid = 0;
 }
 
 int minishell(t_solib *solib)
@@ -30,9 +64,15 @@ int minishell(t_solib *solib)
 	t_mini *mini;
 
 	mini = minit(solib);
+	signal(SIGINT, &handle_signals);
+	signal(SIGSEGV, &handle_signals);
+	signal(SIGABRT, &handle_signals);
+	signal(SIGQUIT, &handle_signals);
+	g_signal_pid = 0;
 	pre_parsing(mini);
 	rl_initialize();
 	while (mini->loop)
 		mini_line_handler(mini, readline("prompt >"));
+	rl_clear_history();
 	return (mini->close(mini, EXIT_SUCCESS));
 }

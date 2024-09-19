@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_printer.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tauer <tauer@student.42.fr>                +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 02:37:02 by tauer             #+#    #+#             */
-/*   Updated: 2024/08/17 00:44:48 by tauer            ###   ########.fr       */
+/*   Updated: 2024/09/19 17:45:36 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,15 +148,16 @@ void	print_t_cell(t_mini *mini, t_cell *cell)
 		print_t_pipex_list(mini, cell->final_line);
 }
 
-void	print_envpl(t_mini *mini)
+
+void	print_envpl(int fd, t_mini *mini)
 {
 	t_envpl *current;
 	
-	mini->print("\n");
+	soprintf_fd(fd, "\n");
 	current = mini->envpl;
 	while (current)
 	{
-		mini->print("%s\n", str_format_len(mini, current->var, 15));
+		soprintf_fd(fd, "%s\n", str_format_len(mini, current->var, 15));
 		current = current->next;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 02:23:45 by tauer             #+#    #+#             */
-/*   Updated: 2024/09/12 17:28:25 by marvin           ###   ########.fr       */
+/*   Updated: 2024/09/19 17:51:38 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,12 +67,13 @@ bool	t_word_parse_built_in(t_mini *mini, t_word *word)
 {
 	if (!word || !word->refined_word)
 		return (false);
-	else if (!mini->libft->strncmp(word->refined_word, "cd", 2)
+	else if ( !mini->libft->strncmp(word->refined_word, "exit", 4)
+		|| !mini->libft->strncmp(word->refined_word, "cd", 2)
+		|| !mini->libft->strncmp(word->refined_word, "./", 2)
 		|| !mini->libft->strncmp(word->refined_word, "pwd", 3)
 		|| !mini->libft->strncmp(word->refined_word, "export", 6)
 		|| !mini->libft->strncmp(word->refined_word, "unset", 5
-			|| !mini->libft->strncmp(word->refined_word, "env", 3)
-			|| !mini->libft->strncmp(word->refined_word, "exit", 4)))
+			|| !mini->libft->strncmp(word->refined_word, "env", 3)))
 		return (word->type = BUILT_IN_TYPE, true);
 	return (false);
 }

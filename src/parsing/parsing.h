@@ -105,7 +105,7 @@ void	print_t_pipe(t_mini *mini, t_pipe *pipe);
 void	print_t_pipex(t_mini *mini, t_pipex *pipex, ssize_t pos);
 void	print_t_pipex_list(t_mini *mini, t_pipex *pipex);
 void	print_t_cell(t_mini *mini, t_cell *cell);
-void	print_envpl(t_mini *mini);
+void	print_envpl(int fd, t_mini *mini);
 //?parsing_utils
 bool	strtlen(char **tab, ssize_t *ret);
 void	free_tab(char **tab);

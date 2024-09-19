@@ -32,6 +32,8 @@
 typedef struct s_mini t_mini;
 typedef struct s_mini_param t_mini_param;
 
+extern pid_t	g_signal_pid;
+
 // echo start | cat -e >test  | ls -la | cat -e
 
 typedef enum e_color
