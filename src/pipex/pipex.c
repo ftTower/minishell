@@ -61,7 +61,7 @@ int	hear_in(char *limiter)
 	return (pipefd[0]);
 }
 
-int	hear_doc(char *path_in, char *path_out, int *in, int *out)
+int	heredoc(char *path_in, char *path_out, int *in, int *out)
 {
 	if (!ft_strncmp("<<", path_in, 2))
 		*in = hear_in(path_in + 2);
@@ -95,7 +95,7 @@ int	pipex(t_mini *mini, char *infile, char **commands, char *outfile)
 	fdin = 0;
 	
 	fdout = 0;
-	if (hear_doc(infile, outfile, &fdin, &fdout))
+	if (heredoc(infile, outfile, &fdin, &fdout))
 		return (perror("Open"), 1);
 	return (strs_exec(mini, fdin, commands, fdout));
 	return 0;

@@ -47,7 +47,7 @@ int	hub_builtin(t_mini *mini, char *cmd, int pipefd[2])
 		return (putstrfd(get_envpl_var(mini, "PWD"), pipefd[1]),
 			putstrfd("\n", pipefd[1]), 1);
 	if (!ft_strncmp("export", cmd, 6))
-		return (putstrfd(get_envpl_var(mini, "PWD"), pipefd[1]), 1);
+		return (add_var_envpl(mini, cmd + 7), 1);
 	if (!ft_strncmp("unset", cmd, 5))
 		return (del_var_envpl(mini, cmd + 6), 1);
 	if (!ft_strncmp("env", cmd, 3))
