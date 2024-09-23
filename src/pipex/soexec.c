@@ -72,16 +72,6 @@ void	putstrfd(char *str, int fd)
 		write(fd, &str[index], 1);
 }
 
-void	unset(t_mini *mini, char *var_to_unset, int fd)
-{
-	del_var_envpl(mini, var_to_unset);
-	putstrfd("unset ", fd);
-	putstrfd(var_to_unset, fd);
-	putstrfd("\n", fd);
-}
-
-
-
 int	str_exec(t_mini *mini, char *str)
 {
 	static char **paths = 0;

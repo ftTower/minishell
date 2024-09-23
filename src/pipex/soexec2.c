@@ -22,38 +22,13 @@ void	pipe_swap(int pipefd[2], int filefd[2])
 	filefd[0] = tmp;
 }
 
-void	close_pipe(int pipefd[2])
-{
-	close(pipefd[0]);
-	close(pipefd[1]);
-}
-
-int	hub_builtin(t_mini *mini, char *cmd, int pipefd[2])
-{
-	if (!ft_strncmp("exit", cmd, 4))
-		return (close_pipe(pipefd), mini->close(mini, EXIT_SUCCESS), 1);
-	if (!ft_strncmp("echo -n", cmd, 7))
-		return (putstrfd(cmd + 8, pipefd[1]), putstrfd("\n", pipefd[1]), close_pipe(pipefd), 1);
-	if (!ft_strncmp("cd", cmd, 2))
-		return (is_raw_path(mini, cmd + 3), close_pipe(pipefd), 1);
-	if (!ft_strncmp("pwd", cmd, 3))
-		return (putstrfd(get_envpl_var(mini, "PWD"), pipefd[1]),
-			putstrfd("\n", pipefd[1]), close_pipe(pipefd), 1);
-	if (!ft_strncmp("export", cmd, 6))
-		return (close_pipe(pipefd), 1);
-	if (!ft_strncmp("unset", cmd, 5))
-		return (del_var_envpl(mini, cmd + 6), close_pipe(pipefd), 1);
-	if (!ft_strncmp("env", cmd, 3))
-		return (print_envpl(pipefd[1], mini), close_pipe(pipefd), 1);
-	return (0);
-}
-
 int	exec_fork_child(t_mini *mini, int pipefd[2], int filefd[2], char *command)
 {
 	int	ret;
 
 	if (hub_builtin(mini, command, pipefd))
-		return (close_pipe(filefd), mini->solib->close(mini->solib, EXIT_SUCCESS));
+		return (close_pipe(filefd),
+			mini->solib->close(mini->solib, EXIT_SUCCESS));
 	dup2(pipefd[0], 0);
 	dup2(pipefd[1], 1);
 	close_pipe(pipefd);
@@ -65,8 +40,8 @@ int	exec_fork_child(t_mini *mini, int pipefd[2], int filefd[2], char *command)
 
 int	exec_fork(t_mini *mini, char *command, int pipefd[2], int filefd[2])
 {
-	g_signal_pid  = fork();
-	if (g_signal_pid  < 0)
+	g_signal_pid = fork();
+	if (g_signal_pid < 0)
 		mini->solib->close(mini->solib, EXIT_FAILURE);
 	if (!g_signal_pid)
 		exit(exec_fork_child(mini, pipefd, filefd, command));
@@ -115,4 +90,10 @@ int	strs_exec(t_mini *mini, int fdin, char **commands, int fdout)
 		mini->solib->close(mini->solib, EXIT_FAILURE);
 	pipe_swap(pipefd, filefd);
 	return (strs_cmds(mini, commands, pipefd, filefd));
+}
+
+void	close_pipe(int pipefd[2])
+{
+	close(pipefd[0]);
+	close(pipefd[1]);
 }

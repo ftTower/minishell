@@ -13,11 +13,6 @@
 #include <minishell/all.h>
 #include <sotypes/soprintf.h>
 
-void line_handler() // pas touche a ca ! okok... ;(
-{
-	return ;
-}
-
 // !!!!! TW PRINTF !!!!!!!
 
 void display_path(t_mini *mini)

@@ -15,8 +15,10 @@
 
 # include <minishell/all.h>
 
-int	str_exec(t_mini *mini, char *str);
-int	strs_exec(t_mini *mini, int fdin, char **commands, int fdout);
-int	pipex(t_mini *mini, char *infile, char **commands, char *outfile);;
+int		hub_builtin(t_mini *mini, char *cmd, int pipefd[2]);
+int		str_exec(t_mini *mini, char *str);
+int		strs_exec(t_mini *mini, int fdin, char **commands, int fdout);
+int		pipex(t_mini *mini, char *infile, char **commands, char *outfile);
+void	close_pipe(int pipefd[2]);
 
 #endif

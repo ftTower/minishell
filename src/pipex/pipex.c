@@ -87,6 +87,27 @@ int	heredoc(char *path_in, char *path_out, int *in, int *out)
 	return (0);
 }
 
+int	hub_builtin(t_mini *mini, char *cmd, int pipefd[2])
+{
+	if (!ft_strncmp("exit", cmd, 4))
+		return (close_pipe(pipefd), mini->close(mini, EXIT_SUCCESS), 1);
+	if (!ft_strncmp("echo -n", cmd, 7))
+		return (putstrfd(cmd + 8, pipefd[1]),
+			putstrfd("\n", pipefd[1]), close_pipe(pipefd), 1);
+	if (!ft_strncmp("cd", cmd, 2))
+		return (is_raw_path(mini, cmd + 3), close_pipe(pipefd), 1);
+	if (!ft_strncmp("pwd", cmd, 3))
+		return (putstrfd(get_envpl_var(mini, "PWD"), pipefd[1]),
+			putstrfd("\n", pipefd[1]), close_pipe(pipefd), 1);
+	if (!ft_strncmp("export", cmd, 6))
+		return (close_pipe(pipefd), 1);
+	if (!ft_strncmp("unset", cmd, 5))
+		return (del_var_envpl(mini, cmd + 6), close_pipe(pipefd), 1);
+	if (!ft_strncmp("env", cmd, 3))
+		return (print_envpl(pipefd[1], mini), close_pipe(pipefd), 1);
+	return (0);
+}
+
 int	pipex(t_mini *mini, char *infile, char **commands, char *outfile)
 {
 	int	fdin;

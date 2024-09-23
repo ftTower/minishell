@@ -24,9 +24,9 @@
 
 void	t_history_final_lines_print(t_mini *mini, t_cell *cell)
 {
-	ssize_t index;
-	ssize_t index2;
-	t_pipex *current;
+	ssize_t	index;
+	ssize_t	index2;
+	t_pipex	*current;
 
 	current = cell->final_line;
 	index2 = 0;

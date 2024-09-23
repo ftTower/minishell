@@ -6,7 +6,7 @@
 /*   By: tauer <tauer@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 17:50:26 by tauer             #+#    #+#             */
-/*   Updated: 2024/08/16 23:45:03 by tauer            ###   ########.fr       */
+/*   Updated: 2024/09/23 23:34:32 by tauer            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ char	*get_name_var(t_mini *mini, t_char **list, size_t pos)
 		if (current)
 			current = current->next;
 	}
-	mini->print("[%s]\n", ret);
+	// mini->print("[%s]\n", ret);
 	return (delete_name_var(mini, list, pos), get_envpl_var(mini, ret + 1));
 }
 

@@ -77,5 +77,7 @@ dependencies: $(BUILD_INCLUDES)
 	@cp -r $(ALL_L_INCLUDES) $(BUILD_INCLUDES)
 
 re: clean all clear 
+	rm -rf build/includes
+	rm -rf libs
 
 .PHONY: all start clean fclean re val dependencies check
