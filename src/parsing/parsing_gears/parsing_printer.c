@@ -34,11 +34,30 @@ void	print_t_char(t_mini *mini, t_char *c, t_color color)
 		mini->print("%Cffffff(%c)", c->c);
 }
 
+void	print_t_type(t_mini *mini ,t_type type)
+{
+	if (type == CMD_TYPE)
+		mini->print("[CMD]");
+	else if (type == BUILT_IN_TYPE)
+		mini->print("[BUILT IN]");
+	else if (type == PARA_TYPE)
+		mini->print("[PARA]");
+	else if (type == ARG_TYPE)
+		mini->print("[ARG]");
+	else if (type == REPLACE_IN_FD_TYPE || type == REPLACE_OUT_FD_TYPE)
+		mini->print("[RE FD]");
+	else if (type == CONCATE_IN_FD_TYPE || type == CONCATE_OUT_FD_TYPE)
+		mini->print("[CONC FD]");
+	else
+		mini->print("[DEFAULT]");
+}
+
 void	print_t_word(t_mini *mini, t_word *word)
 {
 	t_char	*current;
 
 	current = word->c;
+	print_t_type(mini, word->type);
 	while (current)
 	{
 		if (word->type == CMD_TYPE)

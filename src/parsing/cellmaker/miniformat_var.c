@@ -22,6 +22,13 @@ char	*get_str(t_mini *mini, char c)
 	return (ret);
 }
 
+bool	is_alpha(char compare)
+{
+	if ((compare >= 'a' && compare <= 'z') || (compare >= 'A' && compare <= 'Z'))
+		return (true);
+	return (false);
+}
+
 void	delete_name_var(t_mini *mini, t_char **list, size_t pos)
 {
 	t_char			*current;
@@ -34,9 +41,7 @@ void	delete_name_var(t_mini *mini, t_char **list, size_t pos)
 		{
 			current = current->next;
 			t_char_del_pos(mini, list, current->pos - 1);
-			while (current && current->c != '"' && current->c != '\''
-				&& current->c != ' ' && current->c != '|' && current->c != '\\'
-				&& current->c != '$' && current->c != '!')
+			while (current && is_alpha(current->c))
 			{
 				buf = current->type_quotes;
 				current = current->next;
@@ -65,10 +70,9 @@ char	*get_name_var(t_mini *mini, t_char **list, size_t pos)
 	current = *list;
 	while (current)
 	{
-		if (current->pos == pos)
+		if (current->pos == pos + 1)
 		{
-			while (current && current->c != '"' && current->c != '\''
-				&& current->c != '|' && current->c != ' ' && current->c != '\\'&& current->c != '!')
+			while (current && is_alpha(current->c))
 			{
 				if ((current->c == '$' && current->pos != pos))
 					break ;
@@ -83,8 +87,8 @@ char	*get_name_var(t_mini *mini, t_char **list, size_t pos)
 		if (current)
 			current = current->next;
 	}
-	// mini->print("[%s]\n", ret);
-	return (delete_name_var(mini, list, pos), get_envpl_var(mini, ret + 1));
+	mini->print("~%s~\n", ret);
+	return (delete_name_var(mini, list, pos), get_envpl_var(mini, ret));
 }
 
 void	insert_var_content(t_mini *mini, t_char **list, size_t pos,
@@ -115,9 +119,12 @@ bool	t_char_list_cat_var(t_mini *mini, t_char **list)
 	size_t buf_index;
 
 	current = *list;
+	print_t_char_list(mini, *list);
 	while (current)
 	{
-		if (current->c == '$' && current->type_quotes != TYPEQUOTES_TO_KEEP)
+		// if (current->c == '$' && current->next && !is_alpha(current->next->c))
+		// 	;
+		else if (current->c == '$' && current->type_quotes != TYPEQUOTES_TO_KEEP)
 		{
 			buf_index = current->pos;
 			buf_content = get_name_var(mini, list, buf_index);

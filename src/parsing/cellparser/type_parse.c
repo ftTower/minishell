@@ -58,8 +58,19 @@ bool	t_word_parse_redirect(t_word *word)
 
 bool	t_word_parse_para(t_word *word)
 {
-	if (!word->c || word->c->c != '-' || !word->c->next)
+	t_char *current;
+
+	if (!word->c || word->c->c != '-' || !word->c->next || (word->c->next->next && word->c->next->c != word->c->next->next->c))
 		return (false);
+	else if (word->c->c == '-' && word->c->next && word->c->next->c == '-')
+		return (false);
+	current = word->c->next;
+	while(current)
+	{
+		if (current->c != word->c->next->c)
+			return (false);
+		current = current->next;
+	}
 	return (word->type = PARA_TYPE, true);
 }
 

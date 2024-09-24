@@ -30,6 +30,7 @@ bool	cell_maker(t_mini *mini, t_cell *cell, char *raw_line);
 void	handle_in_quotes(t_mini *mini, t_char **list);
 bool	t_char_list_format_quotes(t_mini *mini, t_char **list);
 //?miniformat var
+bool	is_alpha(char compare);
 bool	t_char_list_cat_var(t_mini *mini, t_char **list);
 //? miniformater
 bool	redirect_unspacer(t_mini *mini, t_char **dst);

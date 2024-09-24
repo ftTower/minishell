@@ -41,8 +41,25 @@ bool	t_pipe_parser(t_mini *mini, t_pipe *pipe, ssize_t pipe_pos)
 
 bool	t_pipe_type_error(t_mini *mini, t_pipe *pipe)
 {
+	t_word *current;
+	bool	have_para;
+	bool	stop_para;
+
 	if (!pipe->words || (pipe->words->type != CMD_TYPE && pipe->words->type != BUILT_IN_TYPE))
 		return (handle_error(mini, t_char_list_to_str(mini, pipe->raw_words), ERROR_TYPE_NO_CMD),true);
+	current = pipe->words;
+	have_para = false;
+	stop_para = false;
+	while(current)
+	{
+		if (!have_para && current->type == PARA_TYPE)
+			have_para = true;
+		else if (current != pipe->words && current->type != PARA_TYPE)
+			stop_para = true;
+		else if (!stop_para && have_para && current->type == PARA_TYPE)
+			delete_word_in_list(mini, &pipe->words, current);
+		current = current->next;
+	}
 	return (false);
 }
 

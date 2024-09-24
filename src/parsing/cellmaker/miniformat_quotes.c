@@ -31,6 +31,12 @@ void	handle_in_quotes(t_mini *mini, t_char **list)
 	current = *list;
 	while (current)
 	{
+		if (current->c == '$' && (current->type_quotes == TYPEQUOTES_DOUBLE_QUOTED || current->type_quotes == TYPEQUOTES_SINGLE_QUOTED))
+			current->type_quotes = TYPEQUOTES_SINGLE_QUOTED;
+		else if (current->c == '$' && (current->next->c == '"' || current->next->c == (char)39))
+			t_char_del_pos(mini, list, current->pos);
+		if (current->c == '\\' && current->next && current->next->c != '\\' && current->next->c != '$' && current->type_quotes != TYPEQUOTES_TO_KEEP)
+			t_char_del_pos(mini, list, current->pos);
 		if (current->c == '\\' && current->next && current->next->c == '\\')
 		{
 			current = current->next;
