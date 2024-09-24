@@ -87,6 +87,53 @@ int	heredoc(char *path_in, char *path_out, int *in, int *out)
 	return (0);
 }
 
+int	get_c(char *str, char c)
+{
+	int len;
+
+	len = 0;
+	while (str[len] && str[len] != c)
+		len++;
+	return (len);
+}
+
+char *add_c_end(t_solib *solib, char **str, char c)
+{
+	char	*new_str;
+	int		len;
+
+	len = ft_strlen(*str);
+	new_str = somalloc(solib, sizeof(char) * (len + 2));
+	ft_strlcpy(new_str, *str, len + 1);
+	new_str[len] = c;
+	new_str[len + 1] = '\0';
+	free(*str);
+	*str = new_str;
+	return (new_str);
+}
+
+void handle_export(t_mini *mini, char *cmd, int fd)
+{
+	char	**exs;
+	char	*varname;
+	char	*varlue;
+	int		i;	
+
+	if (!*cmd)
+		return print_envpl(fd, mini);
+	exs = ft_split(mini->solib, cmd, ' ');
+	i = -1;
+	while (exs[++i])
+	{
+		varlue = ft_substr(NULL, exs[i], get_c(exs[i], '=') + 1, ft_strlen(exs[i]));
+		varname = ft_substr(NULL, exs[i], 0, get_c(exs[i], '='));
+		soprintf("adding varname : %s\nadding value : %s\n", varname, varlue);
+		set_envpl_var(mini, add_c_end(mini->solib, &varname, '='), varlue);
+		free(varname);
+		free(varlue);
+	}
+}
+
 int	hub_builtin(t_mini *mini, char *cmd, int pipefd[2])
 {
 	if (!ft_strncmp("exit", cmd, 4))
@@ -100,7 +147,7 @@ int	hub_builtin(t_mini *mini, char *cmd, int pipefd[2])
 		return (putstrfd(get_envpl_var(mini, "PWD"), pipefd[1]),
 			putstrfd("\n", pipefd[1]), close_pipe(pipefd), 1);
 	if (!ft_strncmp("export", cmd, 6))
-		return (close_pipe(pipefd), 1);
+		return (handle_export(mini, cmd + 7, pipefd[1]), close_pipe(pipefd), 1);
 	if (!ft_strncmp("unset", cmd, 5))
 		return (del_var_envpl(mini, cmd + 6), close_pipe(pipefd), 1);
 	if (!ft_strncmp("env", cmd, 3))

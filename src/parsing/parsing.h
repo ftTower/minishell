@@ -66,6 +66,7 @@ char	*get_envpl_var(t_mini *mini, char *name_var);
 char	*get_hidden_envpl_var(t_mini *mini, char *name_var);
 bool	replace_envpl_var(t_mini *mini, char *var_name, char *to_replace);
 bool	add_var_envpl(t_mini *mini, t_envpl **envpl, char *var);
+void	set_envpl_var(t_mini *mini, char *varname, char *to_replace);
 void	del_var_envpl(t_mini *mini, char *var_name_to_del);
 bool	copy_envp_to_list(t_mini *mini);
 void	variable_content_setter(t_mini *mini, t_char **dst, char *content);

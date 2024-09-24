@@ -14,19 +14,7 @@
 /* ************************************************************************** */
 
 #include <minishell/all.h>
-
-bool	ft_strcmp(char *s1, char *s2)
-{
-	ssize_t index;
-
-	index = -1;
-	while (s1[++index] && s2[index])
-		if (s1[index] != s2[index])
-			return (false);
-	if (s1[index] || s2[index])
-		return (false);
-	return (true);
-}
+#include <solibft/sostring.h>
 
 char	*get_content_var(t_mini *mini, char *name_var)
 {
@@ -37,7 +25,7 @@ char	*get_content_var(t_mini *mini, char *name_var)
 	while (current)
 	{
 		name_tab = mini->libft->split(mini->solib, current->var, '=');
-		if (ft_strcmp(name_tab[0], name_var) && mini->libft->strlen(name_tab[0]) == mini->libft->strlen(name_var))
+		if (!ft_strcmp(name_tab[0], name_var) && mini->libft->strlen(name_tab[0]) == mini->libft->strlen(name_var))
 			return (current->var + mini->libft->strlen(name_tab[0]) + 1);
 		current = current->next;
 	}
@@ -103,6 +91,13 @@ bool	replace_envpl_var(t_mini *mini, char *var_name, char *to_replace)
 	return (false);
 }
 
+void	set_envpl_var(t_mini *mini, char *varname, char *to_replace)
+{
+	if (!get_envpl_var(mini, varname))
+		add_var_envpl(mini, &mini->envpl, varname);
+	replace_envpl_var(mini, varname, to_replace);
+}
+
 size_t	var_name_size(char *var)
 {
 	size_t index;
@@ -119,6 +114,8 @@ void	del_var_envpl(t_mini *mini, char *var_name_to_del)
 	t_envpl *current;
 	t_envpl *tmp;
 
+	if (!var_name_to_del)
+		return ;
 	current = mini->envpl;
 	if (mini->libft->strncmp(current->next->var, var_name_to_del, var_name_size(current->next->var) - 1)
 			&& var_name_size(current->next->var) -1 == mini->libft->strlen(var_name_to_del))
