@@ -20,7 +20,6 @@ pid_t	g_signal_pid;
 
 void	ft_sig_quit(int id)
 {
-	soprintf("\n");
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	if (g_signal_pid != 0)
@@ -72,7 +71,7 @@ int minishell(t_solib *solib)
 	pre_parsing(mini);
 	rl_initialize();
 	while (mini->loop)
-		mini_line_handler(mini, readline("prompt >"));
+		mini_line_handler(mini, readline(display_prompt(mini)));
 	rl_clear_history();
 	return (mini->close(mini, EXIT_SUCCESS));
 }

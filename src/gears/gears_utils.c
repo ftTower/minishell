@@ -11,11 +11,11 @@
 /* ************************************************************************** */
 
 #include <minishell/all.h>
-#include <sotypes/soprintf.h>
+#include <solibft/sostring.h>
 
 // !!!!! TW PRINTF !!!!!!!
 
-void display_path(t_mini *mini)
+void display_path(t_mini *mini, char **promt)
 {
 	char **path;
 	char *path_content;
@@ -31,13 +31,14 @@ void display_path(t_mini *mini)
 		"\033[48;5;64m",
 		"\033[48;5;65m",
 	};
+	char	*caracs;
 
 	path_content = get_envpl_var(mini, "PWD");
 	if (!path_content)
-		return (printf("\033[48;5;196mNO PATH\033[0m"), (void)NULL);
+		return (caracs = ft_strdup(NULL, "\033[48;5;196mNO PATH\033[0m"), ft_strmcat(mini->solib, promt, caracs), free(caracs), (void)NULL);
 	path = mini->libft->split(mini->solib,path_content ,'/');
 	if (!path)
-		return (printf("\033[48;5;196mNO PATH\033[0m"), (void)NULL);
+		return (caracs = ft_strdup(NULL, "\033[48;5;196mNO PATH\033[0m"), ft_strmcat(mini->solib, promt, caracs), free(caracs), (void)NULL);
 	index = -1;
 	color_index = -1;
 	while(path[++index])
@@ -46,18 +47,29 @@ void display_path(t_mini *mini)
 			color_index = 0;
 		color_index++;
 		if (index == 0)
+		{
 			printf("%s 📌 %s\033[0m", colors[color_index] ,path[index]);
+		}
 		else
+		{
 			printf("%s/%s\033[0m", colors[color_index] ,path[index]);
+		}
 	}
 }
 
-void display_user(t_mini *mini)
+void display_user(t_mini *mini, char **promt)
 {
-	char *info;
+	char	*info;
+	char	*caracs;
 
 	info = get_envpl_var(mini, "USER");
-	printf("\033[48;5;16m🧿 %s \033[0m", info);
+	caracs = ft_strdup(NULL, "\033[48;5;16m🧿 ");
+	ft_strmcat(mini->solib, promt, caracs);
+	ft_strmcat(mini->solib, promt, info);
+	free(caracs);
+	caracs = ft_strdup(NULL, " \033[0m");
+	ft_strmcat(mini->solib, promt, caracs);
+	free(caracs);
 }
 
 void display_info(t_mini *mini)
@@ -69,23 +81,14 @@ void display_info(t_mini *mini)
 	info = get_envpl_var(mini, "SHLVL");
 	printf("\033[48;5;202m[%s]\033[0m", info );
 }
-void display_prompt(t_mini *mini)
+char	*display_prompt(t_mini *mini)
 {
-	// printf(" \033[38;5;202m╭─\033[0m");
-	display_user(mini);
-	display_path(mini);
-	// display_info(mini);
-	printf(" ");
-}
+	char *new_prompt;
 
-void mini_prompt(t_mini *mini)
-{
-	rl_replace_line("", -1); // Efface la ligne courante
-	//soprintf("%C22d8db(%s)%s", ft_get_dictionary("promt"), ft_get_dictionary("promt"));
-	// soprintf("[MINISHELL]\t> ");
 	t_history_printer(mini);
-	display_prompt(mini);
-	// soprintf(" ╭─%Cff0000([)%Cf1c40f(%s)%Cff0000(])\n ╰─ ", get_envpl_var(mini, "PWD="));
-	rl_on_new_line(); // Remet le prompt sur une nouvelle ligne
-	//rl_redisplay();	  // Redess
+	new_prompt = ft_strdup(mini->solib, " \033[38;5;202m╭─\033[0m");
+	display_user(mini, &new_prompt);
+	//display_path(mini, new_prompt)
+	//display_info(mini, new_prompt);
+	return (new_prompt);
 }
