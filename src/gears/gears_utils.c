@@ -83,12 +83,11 @@ void display_info(t_mini *mini)
 }
 char	*display_prompt(t_mini *mini)
 {
-	char *new_prompt;
-
-	t_history_printer(mini);
-	new_prompt = ft_strdup(mini->solib, " \033[38;5;202m╭─\033[0m");
-	display_user(mini, &new_prompt);
+	//char *new_prompt = "      ˚ · .˚ ༘🦋⋆｡˚ )";
+	//t_history_printer(mini);
+	//new_prompt = ft_strdup(mini->solib, " \033[38;5;202m╭─\033[0m");
+	//display_user(mini, &new_prompt);
 	//display_path(mini, new_prompt)
 	//display_info(mini, new_prompt);
-	return (new_prompt);
+	return (soprintf_get(mini->solib, "%s %C-if#57219e#292929( %s %C-b#696969() %C-b#0000ff(%s) )%C#292929() ",get_envpl_var(mini, "SHLVL"), get_envpl_var(mini, "PWD"), get_envpl_var(mini, "USER")));
 }

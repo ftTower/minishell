@@ -15,11 +15,14 @@
 
 #include <minishell/all.h>
 #include <sotypes/soprintf.h>
+#include <solibft/sostdlib.h>
+#include <solibft/sostring.h>
 
 pid_t	g_signal_pid;
 
 void	ft_sig_quit(int id)
 {
+	soprintf("\n");
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	if (g_signal_pid != 0)
@@ -60,7 +63,8 @@ void mini_line_handler(t_mini *mini, char *line)
 
 int minishell(t_solib *solib)
 {
-	t_mini *mini;
+	t_mini	*mini;
+	char	*shlvl;
 
 	mini = minit(solib);
 	signal(SIGINT, &handle_signals);
@@ -69,9 +73,13 @@ int minishell(t_solib *solib)
 	signal(SIGQUIT, &handle_signals);
 	g_signal_pid = 0;
 	pre_parsing(mini);
+	shlvl = soprintf_get(solib, "%d", ft_atoi(get_envpl_var(mini, "SHLVL")) + 1);
+	replace_envpl_var(mini, "SHLVL=", shlvl);
 	rl_initialize();
 	while (mini->loop)
 		mini_line_handler(mini, readline(display_prompt(mini)));
 	rl_clear_history();
+	shlvl = soprintf_get(solib, "%d", ft_atoi(get_envpl_var(mini, "SHLVL")) - 1);
+	replace_envpl_var(mini, "SHLVL=", shlvl);
 	return (mini->close(mini, EXIT_SUCCESS));
 }

@@ -11,12 +11,12 @@
 /* ************************************************************************** */
 
 #include <minishell/all.h>
+#include <solibft/sostdlib.h>
 
 int mini_close_update(t_mini *mini, int state)
 {
 	if (mini)
 		mini->loop = 0;
-	
 	if (state)
 		mini_close(mini, state);
 	mini_close(mini, state);
@@ -25,6 +25,12 @@ int mini_close_update(t_mini *mini, int state)
 
 int mini_close(t_mini *mini, int state)
 {
+	char	*shlvl;
+
+	if (!mini)
+		exit(state);
+	shlvl = soprintf_get(mini->solib, "%d", ft_atoi(get_envpl_var(mini, "SHLVL")) - 1);
+	set_envpl_var(mini, "SHLVL=", shlvl);
 	if (state)
 		exit(mini->solib->close(mini->solib, state));
 	exit(mini->solib->close(mini->solib, state));

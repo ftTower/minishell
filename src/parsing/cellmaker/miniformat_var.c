@@ -124,7 +124,7 @@ bool	t_char_list_cat_var(t_mini *mini, t_char **list)
 	{
 		// if (current->c == '$' && current->next && !is_alpha(current->next->c))
 		// 	;
-		else if (current->c == '$' && current->type_quotes != TYPEQUOTES_TO_KEEP)
+		if (current->c == '$' && current->type_quotes != TYPEQUOTES_TO_KEEP)
 		{
 			buf_index = current->pos;
 			buf_content = get_name_var(mini, list, buf_index);

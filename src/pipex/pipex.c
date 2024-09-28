@@ -139,8 +139,7 @@ int	hub_builtin(t_mini *mini, char *cmd, int pipefd[2])
 	if (!ft_strncmp("exit", cmd, 4))
 		return (close_pipe(pipefd), mini->close(mini, EXIT_SUCCESS), 1);
 	if (!ft_strncmp("echo -n", cmd, 7))
-		return (putstrfd(cmd + 8, pipefd[1]),
-			putstrfd("\n", pipefd[1]), close_pipe(pipefd), 1);
+		return (putstrfd(cmd + 8, pipefd[1]), close_pipe(pipefd), 1);
 	if (!ft_strncmp("cd", cmd, 2))
 		return (is_raw_path(mini, cmd + 3), close_pipe(pipefd), 1);
 	if (!ft_strncmp("pwd", cmd, 3))
