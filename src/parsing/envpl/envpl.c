@@ -84,7 +84,7 @@ bool	replace_envpl_var(t_mini *mini, char *var_name, char *to_replace)
 	current = mini->envpl;
 	while(current)
 	{
-		if (!ft_strcmp(current->var, var_name))
+		if (!ft_strncmp(var_name, current->var, ft_strlen(var_name)))
 			return (current->var = mini->libft->strjoin(mini->solib, var_name, to_replace), true);
 		current = current->next;
 	}
@@ -94,7 +94,7 @@ bool	replace_envpl_var(t_mini *mini, char *var_name, char *to_replace)
 void	set_envpl_var(t_mini *mini, char *varname, char *to_replace)
 {
 	if (!get_envpl_var(mini, varname))
-		add_var_envpl(mini, &mini->envpl, varname);
+		add_var_envpl(mini, varname);
 	replace_envpl_var(mini, varname, to_replace);
 }
 
@@ -129,14 +129,26 @@ void	del_var_envpl(t_mini *mini, char *var_name_to_del)
 	}
 }
 
-bool	add_var_envpl(t_mini *mini, t_envpl **envpl, char *var)
+bool	add_var_envpl(t_mini *mini, char *var)
 {
 	t_envpl *new;
+	t_envpl *current;
 
+	current = mini->envpl;
+	if (!current)
+	{
+		new = mini->malloc(mini, sizeof(t_envpl));
+		new->var = var;
+		new->next = NULL;
+		mini->envpl = new;
+		return (false);
+	}
+	while (current && current->next)
+		current = current->next;
 	new = mini->malloc(mini, sizeof(t_envpl));
 	new->var = var;
-	new->next = *envpl;
-	*envpl = new;
+	new->next = NULL;
+	current->next = new;
 	return (false);
 }
 
@@ -149,7 +161,7 @@ bool	copy_envp_to_list(t_mini *mini)
 	if (!mini->env->envp)
 		return (true);
 	while (mini->env->envp[++index])
-		add_var_envpl(mini, &mini->envpl, mini->env->envp[index]);
+		add_var_envpl(mini, mini->env->envp[index]);
 	return (false);
 }
 

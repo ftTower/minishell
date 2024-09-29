@@ -176,7 +176,7 @@ void	print_envpl(int fd, t_mini *mini)
 	current = mini->envpl;
 	while (current)
 	{
-		soprintf_fd(fd, "%s\n", str_format_len(mini, current->var, 15));
+		soprintf_fd(fd, "%s\n", current->var);
 		current = current->next;
 	}
 }

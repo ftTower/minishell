@@ -127,7 +127,6 @@ void handle_export(t_mini *mini, char *cmd, int fd)
 	{
 		varlue = ft_substr(NULL, exs[i], get_c(exs[i], '=') + 1, ft_strlen(exs[i]));
 		varname = ft_substr(NULL, exs[i], 0, get_c(exs[i], '='));
-		soprintf("adding varname : %s\nadding value : %s\n", varname, varlue);
 		set_envpl_var(mini, add_c_end(mini->solib, &varname, '='), varlue);
 		free(varname);
 		free(varlue);
@@ -143,7 +142,7 @@ int	hub_builtin(t_mini *mini, char *cmd, int pipefd[2])
 	if (!ft_strncmp("cd", cmd, 2))
 		return (is_raw_path(mini, cmd + 3), close_pipe(pipefd), 1);
 	if (!ft_strncmp("pwd", cmd, 3))
-		return (putstrfd(get_envpl_var(mini, "PWD"), pipefd[1]),
+		return (putstrfd(getcwd(NULL, 0), pipefd[1]),
 			putstrfd("\n", pipefd[1]), close_pipe(pipefd), 1);
 	if (!ft_strncmp("export", cmd, 6))
 		return (handle_export(mini, cmd + 7, pipefd[1]), close_pipe(pipefd), 1);

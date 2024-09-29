@@ -87,7 +87,7 @@ char	*get_name_var(t_mini *mini, t_char **list, size_t pos)
 		if (current)
 			current = current->next;
 	}
-	mini->print("~%s~\n", ret);
+	//mini->print("~%s~\n", ret);
 	return (delete_name_var(mini, list, pos), get_envpl_var(mini, ret));
 }
 

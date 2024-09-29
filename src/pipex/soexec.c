@@ -72,6 +72,32 @@ void	putstrfd(char *str, int fd)
 		write(fd, &str[index], 1);
 }
 
+char	**envpl_to_envp(t_mini *mini)
+{
+	char	**envp;
+	t_envpl	*current;
+	int		len;
+
+	current = mini->envpl;
+	len = 0;
+	while (current)
+	{
+		len++;
+		current = current->next;
+	}
+	current = mini->envpl;
+	envp = somalloc(mini->solib, sizeof(char *) * (len + 1));
+	envp[len] = NULL;
+	len = 0;
+	while (current)
+	{
+		envp[len] = ft_strdup(mini->solib, current->var);
+		current = current->next;
+		len++;
+	}
+	return (envp);
+}
+
 int	str_exec(t_mini *mini, char *str)
 {
 	static char **paths = 0;
@@ -104,7 +130,7 @@ int	str_exec(t_mini *mini, char *str)
 	ft_strarrfree(mini, paths);
 	if (!cmd && ft_strarrfree(mini, argv))
 		return (1);
-	ret = execve(cmd, argv, mini->env->envp);
+	ret = execve(cmd, argv,  envpl_to_envp(mini));
 	mini->free(mini, cmd);
 	ft_strarrfree(mini, argv);
 	return (ret);
