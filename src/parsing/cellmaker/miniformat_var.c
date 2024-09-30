@@ -24,7 +24,7 @@ char	*get_str(t_mini *mini, char c)
 
 bool	is_alpha(char compare)
 {
-	if ((compare >= 'a' && compare <= 'z') || (compare >= 'A' && compare <= 'Z'))
+	if ((compare >= 'a' && compare <= 'z') || (compare >= 'A' && compare <= 'Z') || (compare >= '0' && compare <= '9'))
 		return (true);
 	return (false);
 }
@@ -49,16 +49,10 @@ void	delete_name_var(t_mini *mini, t_char **list, size_t pos)
 				if (current && current->type_quotes != buf)
 					break ;
 			}
-			if (current && current->c == '\\')
-			{
-				current = current->next;
-				t_char_del_pos(mini, list, current->pos - 1);
-			}
 		}
 		if (current)
 			current = current->next;
 	}
-	print_t_char_list(mini, *list);
 }
 
 char	*get_name_var(t_mini *mini, t_char **list, size_t pos)
@@ -87,7 +81,6 @@ char	*get_name_var(t_mini *mini, t_char **list, size_t pos)
 		if (current)
 			current = current->next;
 	}
-	//mini->print("~%s~\n", ret);
 	return (delete_name_var(mini, list, pos), get_envpl_var(mini, ret));
 }
 
@@ -105,9 +98,7 @@ void	insert_var_content(t_mini *mini, t_char **list, size_t pos,
 	{
 		if (current->pos == pos)
 			while (content[++index])
-			{
 				t_char_add_pos(mini, list, current->pos, content[index]);	
-			}
 		current = current->next;
 	}
 }
@@ -119,16 +110,23 @@ bool	t_char_list_cat_var(t_mini *mini, t_char **list)
 	size_t buf_index;
 
 	current = *list;
-	print_t_char_list(mini, *list);
 	while (current)
 	{
-		// if (current->c == '$' && current->next && !is_alpha(current->next->c))
-		// 	;
-		if (current->c == '$' && current->type_quotes != TYPEQUOTES_TO_KEEP)
+		if (current->c == '$' && ((current->next && !is_alpha(current->next->c)) || (!current->next)))
+			current->type_quotes = TYPEQUOTES_TO_KEEP;
+		else if (current->c == '$' && current->type_quotes != TYPEQUOTES_TO_KEEP)
 		{
 			buf_index = current->pos;
-			buf_content = get_name_var(mini, list, buf_index);
-			insert_var_content(mini, list, buf_index, buf_content);
+			if (current->next && current->next->c == '?')
+			{
+				t_char_del_pos(mini, list, current->pos + 1);
+				insert_var_content(mini, list, buf_index, "10");
+			}
+			else
+			{
+				buf_content = get_name_var(mini, list, buf_index);
+				insert_var_content(mini, list, buf_index, buf_content);
+			}
 			current = *list;
 		}
 		current = current->next;

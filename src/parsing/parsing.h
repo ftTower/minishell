@@ -26,6 +26,9 @@ bool	cell_pipex_exec(t_mini *mini, t_pipex *list);
 bool	cell_pipe_maker(t_mini *mini, t_pipe *pipe, char **pipe_words,
 		ssize_t pipe_pos);
 bool	cell_maker(t_mini *mini, t_cell *cell, char *raw_line);
+//? miniformat quotes utils
+bool	is_quoted(char *str, ssize_t index);
+char	*preserve_space_in_quote(t_mini *mini, char *str_to_dup);
 //? miniformat quotes
 void	handle_in_quotes(t_mini *mini, t_char **list);
 bool	t_char_list_format_quotes(t_mini *mini, t_char **list);
@@ -122,8 +125,7 @@ void	handle_error(t_mini *mini, char *input, t_error_code code);
 //! parsing
 bool	mini_parsing(t_mini *mini, char *line);
 bool	is_raw_path(t_mini *mini, char *line);
-void	t_history_add_line(t_mini *mini, char *line, bool success, t_cell *cell);
-void	t_history_printer(t_mini *mini);
+
 void	putstrfd(char *str, int fd);
 
 char	*str_format_len(t_mini *mini, char *line, size_t size);

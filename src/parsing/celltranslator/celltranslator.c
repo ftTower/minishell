@@ -73,7 +73,6 @@ t_pipex	*t_pipex_fill(t_mini *mini, t_cell *cell, t_pipex *ret)
 	t_word	*cmd_line;
 	ssize_t	index;
 
-	tmp = NULL;
 	index = -1;
 	cmd_line = NULL;
 	while (++index < cell->nb_pipes)
@@ -109,7 +108,6 @@ bool	is_unused_t_pipe_in_cell(t_cell *cell)
 	}
 	return (false);
 }
-
 
 bool	cell_translator(t_mini *mini, t_cell *cell)
 {

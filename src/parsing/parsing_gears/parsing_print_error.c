@@ -51,18 +51,18 @@ void	handle_error(t_mini *mini, char *input, t_error_code code)
 {
 	if (code == ERROR_UNSET)
 		return ;
-	else if (code == ERROR_EMPTY_SEMICOLON)
+	else if (code == ERROR_EMPTY_SEMICOLON) // 2
 		print_char_error(mini, input, ";", "found an empty semicolon");
-	else if (code == ERROR_EMPTY_PIPE)
+	else if (code == ERROR_EMPTY_PIPE) // 2
 		print_char_error(mini, input, "|", "found an empty pipe");
-	else if (code == ERROR_EMPTY_REDIRECT || code == ERROR_INVALID_REDIRECT)
+	else if (code == ERROR_EMPTY_REDIRECT || code == ERROR_INVALID_REDIRECT) // 2
 		print_char_error(mini, input, "<>", "found an invalid redirect");
-	else if (code == ERROR_FAILED_OPEN_IN_FD)
+	else if (code == ERROR_FAILED_OPEN_IN_FD) //2
 		print_char_error(mini, input, "<", "failed to open input file");
-	else if (code == ERROR_FAILED_OPEN_OUT_FD)
+	else if (code == ERROR_FAILED_OPEN_OUT_FD) //2
 		print_char_error(mini, input, ">", "failed to open output file");
-	else if (code == ERROR_TOO_MANY_REDIRECT)
+	else if (code == ERROR_TOO_MANY_REDIRECT) //2
 		print_char_error(mini, input, "><", "found too many redirects");
-	else if (code == ERROR_TYPE_NO_CMD)
+	else if (code == ERROR_TYPE_NO_CMD) //127
 		print_char_error(mini, input, "", "found no command");
 }
