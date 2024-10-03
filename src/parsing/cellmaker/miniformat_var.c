@@ -113,15 +113,16 @@ bool	t_char_list_cat_var(t_mini *mini, t_char **list)
 	current = *list;
 	while (current)
 	{
-		if (current->c == '$' && ((current->next && !is_alpha(current->next->c)) || (!current->next)))
+		if (current->c == '$' && ((current->next && !is_alpha(current->next->c) && current->next->c != '?') || (!current->next)))
 			current->type_quotes = TYPEQUOTES_TO_KEEP;
 		else if (current->c == '$' && current->type_quotes != TYPEQUOTES_TO_KEEP)
 		{
 			buf_index = current->pos;
 			if (current->next && current->next->c == '?')
 			{
-				soprintf("hey bg \n");
-				t_char_del_pos(mini, list, current->pos + 1);
+				t_char_del_pos(mini, list, current->pos);
+				current = current->next;
+				t_char_del_pos(mini, list, current->pos);
 				str_signal = soprintf_get(NULL, "%d", g_signal);
 				insert_var_content(mini, list, buf_index, str_signal);
 				free(str_signal);
