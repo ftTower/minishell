@@ -40,10 +40,12 @@ int	exec_fork_child(t_mini *mini, int pipefd[2], int filefd[2], char *command)
 
 int	exec_fork(t_mini *mini, char *command, int pipefd[2], int filefd[2])
 {
-	g_signal_pid = fork();
-	if (g_signal_pid < 0)
+	pid_t	pid;
+
+	pid = fork();
+	if (pid < 0)
 		mini->solib->close(mini->solib, EXIT_FAILURE);
-	if (!g_signal_pid)
+	if (!pid)
 		exit(exec_fork_child(mini, pipefd, filefd, command));
 	close(pipefd[0]);
 	close(pipefd[1]);
@@ -69,7 +71,7 @@ int	strs_cmds(t_mini *mini, char **commands, int pipefd[2], int filefd[2])
 	pipefd[1] = filefd[1];
 	exec_fork(mini, commands[i], pipefd, filefd);
 	while (wait(&status) != -1)
-		continue ;
+		g_signal = status;
 	close(pipefd[0]);
 	close(pipefd[1]);
 	return (status);

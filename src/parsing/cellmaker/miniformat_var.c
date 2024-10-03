@@ -108,6 +108,7 @@ bool	t_char_list_cat_var(t_mini *mini, t_char **list)
 	t_char *current;
 	char *buf_content;
 	size_t buf_index;
+	char	*str_signal;
 
 	current = *list;
 	while (current)
@@ -119,8 +120,11 @@ bool	t_char_list_cat_var(t_mini *mini, t_char **list)
 			buf_index = current->pos;
 			if (current->next && current->next->c == '?')
 			{
+				soprintf("hey bg \n");
 				t_char_del_pos(mini, list, current->pos + 1);
-				insert_var_content(mini, list, buf_index, "10");
+				str_signal = soprintf_get(NULL, "%d", g_signal);
+				insert_var_content(mini, list, buf_index, str_signal);
+				free(str_signal);
 			}
 			else
 			{

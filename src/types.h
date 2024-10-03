@@ -32,7 +32,7 @@
 typedef struct s_mini t_mini;
 typedef struct s_mini_param t_mini_param;
 
-extern pid_t	g_signal_pid;
+extern volatile sig_atomic_t	g_signal;
 
 // echo start | cat -e >test  | ls -la | cat -e
 

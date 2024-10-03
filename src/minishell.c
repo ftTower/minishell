@@ -18,20 +18,32 @@
 #include <solibft/sostdlib.h>
 #include <solibft/sostring.h>
 
-pid_t	g_signal_pid;
+volatile sig_atomic_t	g_signal;
+
+void	stop_child_process(int code)
+{
+	pid_t	pid;
+	int		status;
+
+	pid = waitpid(-1, &status, WNOHANG);
+	while (pid > 0)
+    {
+    	if (code == SIGINT)
+			kill(pid, SIGTERM);
+		else
+			kill(pid, SIGQUIT);
+		pid = waitpid(-1, &status, WNOHANG);
+    }
+}
 
 void	ft_sig_quit(int id)
 {
 	soprintf("\n");
 	rl_replace_line("", 0);
 	rl_on_new_line();
-	if (g_signal_pid != 0)
-	{
-		if (id)
-			kill(g_signal_pid, SIGQUIT);
-	}
-	else
-		rl_redisplay();
+	if (id)
+		kill(0, SIGQUIT);
+	rl_redisplay();
 }
 
 void	ft_sig_segv(void)
@@ -42,14 +54,20 @@ void	ft_sig_segv(void)
 
 static void	handle_signals(int code)
 {
-	if (code == SIGINT)
+	stop_child_process(code);
+	g_signal = 128 + code;
+	soprintf("\n");
+	rl_replace_line("", 0);
+	rl_on_new_line();
+	rl_redisplay();
+	/*if (code == SIGINT)
 		ft_sig_quit(0);
 	if (code == SIGQUIT)
 		ft_sig_quit(1);
 	if (code == SIGABRT)
 		soprintf("abort\n");
 	if (code == SIGSEGV)
-		ft_sig_segv();
+		ft_sig_segv();*/
 }
 
 void mini_line_handler(t_mini *mini, char *line)
@@ -58,7 +76,6 @@ void mini_line_handler(t_mini *mini, char *line)
 		add_history(line);
 	if (line && *line)
 		mini_parsing(mini, line);
-	g_signal_pid = 0;
 }
 
 int minishell(t_solib *solib)
@@ -71,7 +88,7 @@ int minishell(t_solib *solib)
 	signal(SIGSEGV, &handle_signals);
 	signal(SIGABRT, &handle_signals);
 	signal(SIGQUIT, &handle_signals);
-	g_signal_pid = 0;
+	g_signal = 0;
 	pre_parsing(mini);
 	shlvl = soprintf_get(solib, "%d", (int)ft_atoi(get_envpl_var(mini, "SHLVL")) + 1);
 	replace_envpl_var(mini, "SHLVL=", shlvl);

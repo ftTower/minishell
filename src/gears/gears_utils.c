@@ -89,5 +89,5 @@ char	*display_prompt(t_mini *mini)
 	//display_user(mini, &new_prompt);
 	//display_path(mini, new_prompt)
 	//display_info(mini, new_prompt);
-	return (soprintf_get(mini->solib, "%s %C-if#57219e#292929( %s %C-b#696969() %C-b#0000ff(%s) )%C#292929() ",get_envpl_var(mini, "SHLVL"), getcwd(NULL, 0), get_envpl_var(mini, "USER")));
+	return (soprintf_get(mini->solib, "%s %C-if#57219e#292929( %s %C-b#696969() %C-b#0000ff((%d) - %s) )%C#292929() ",get_envpl_var(mini, "SHLVL"), getcwd(NULL, 0), g_signal, get_envpl_var(mini, "USER")));
 }
