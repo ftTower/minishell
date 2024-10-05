@@ -20,54 +20,40 @@
 
 volatile sig_atomic_t	g_signal;
 
+void	redisplay_prompt(void)
+{
+    soprintf("\n");
+	rl_replace_line("", 0);
+	rl_on_new_line();
+	rl_redisplay();
+}
+
 void	stop_child_process(int code)
 {
 	pid_t	pid;
 	int		status;
 
-	pid = waitpid(-1, &status, WNOHANG);
+	pid = waitpid(-1, &status, 0);
+	if (pid < 1)
+		redisplay_prompt();
+    else
+    {
+        soprintf("\n");
+    }
 	while (pid > 0)
     {
-    	if (code == SIGINT)
-			kill(pid, SIGTERM);
-		else
-			kill(pid, SIGQUIT);
+        if (code == SIGINT)
+		    kill(pid, SIGTERM);
+        else
+		    kill(pid, SIGQUIT);
 		pid = waitpid(-1, &status, WNOHANG);
     }
 }
 
-void	ft_sig_quit(int id)
-{
-	soprintf("\n");
-	rl_replace_line("", 0);
-	rl_on_new_line();
-	if (id)
-		kill(0, SIGQUIT);
-	rl_redisplay();
-}
-
-void	ft_sig_segv(void)
-{
-	soprintf("Segmentation fault\n");
-	exit(11);
-}
-
 static void	handle_signals(int code)
 {
-	stop_child_process(code);
 	g_signal = 128 + code;
-	soprintf("\n");
-	rl_replace_line("", 0);
-	rl_on_new_line();
-	rl_redisplay();
-	/*if (code == SIGINT)
-		ft_sig_quit(0);
-	if (code == SIGQUIT)
-		ft_sig_quit(1);
-	if (code == SIGABRT)
-		soprintf("abort\n");
-	if (code == SIGSEGV)
-		ft_sig_segv();*/
+	stop_child_process(code);
 }
 
 void mini_line_handler(t_mini *mini, char *line)
@@ -85,8 +71,6 @@ int minishell(t_solib *solib)
 
 	mini = minit(solib);
 	signal(SIGINT, &handle_signals);
-	signal(SIGSEGV, &handle_signals);
-	signal(SIGABRT, &handle_signals);
 	signal(SIGQUIT, &handle_signals);
 	g_signal = 0;
 	pre_parsing(mini);

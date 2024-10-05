@@ -70,11 +70,15 @@ int	strs_cmds(t_mini *mini, char **commands, int pipefd[2], int filefd[2])
 	close(filefd[0]);
 	pipefd[1] = filefd[1];
 	exec_fork(mini, commands[i], pipefd, filefd);
+    g_signal = 0;
 	while (wait(&status) != -1)
-		g_signal = status;
-	close(pipefd[0]);
-	close(pipefd[1]);
-	return (status);
+	{
+		if (WIFEXITED(status) && status)
+        	g_signal = WEXITSTATUS(status);
+    	if (WIFSIGNALED(status))
+       		g_signal = WTERMSIG(status) + 128;
+    }
+	return (close_pipe(pipefd), status);
 }
 
 int	strs_exec(t_mini *mini, int fdin, char **commands, int fdout)
