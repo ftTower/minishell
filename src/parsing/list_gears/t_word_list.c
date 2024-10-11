@@ -2,9 +2,12 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   t_word_list.c                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tauer <tauer@student.42.fr>                +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
+/*                                                    +:+ +:+        
+	+:+     */
+/*   By: tauer <tauer@student.42.fr>                +#+  +:+      
+	+#+        */
+/*                                                +#+#+#+#+#+  
+	+#+           */
 /*   Created: 2024/07/09 01:42:00 by tauer             #+#    #+#             */
 /*   Updated: 2024/07/09 01:42:41 by tauer            ###   ########.fr       */
 /*                                                                            */
@@ -41,24 +44,23 @@ bool	word_add_back(t_mini *mini, t_word **words_list, char *word)
 
 bool	t_word_list_add_back(t_mini *mini, t_word **dst, t_word *src)
 {
-	t_word *current;
+	t_word	*current;
 
 	current = src;
-	while(current)
+	while (current)
 	{
 		word_add_back(mini, dst, current->refined_word);
 		if (current->next)
 			word_add_back(mini, dst, " ");
 		current = current->next;
 	}
-
 	return (false);
 }
 
 bool	delete_word_in_list(t_mini *mini, t_word **words_list, t_word *word)
 {
-	t_word *current;
-	t_word *previous;
+	t_word	*current;
+	t_word	*previous;
 
 	current = *words_list;
 	previous = NULL;
@@ -81,7 +83,7 @@ bool	delete_word_in_list(t_mini *mini, t_word **words_list, t_word *word)
 
 bool	t_word_list_has_type(t_word *words, t_type type)
 {
-	t_word *current;
+	t_word	*current;
 
 	current = words;
 	while (current)
@@ -93,19 +95,19 @@ bool	t_word_list_has_type(t_word *words, t_type type)
 	return (false);
 }
 
-t_word *t_word_list_get_type(t_word **dst, t_type to_get)
+t_word	*t_word_list_get_type(t_word **dst, t_type to_get)
 {
-	t_word *current;
-	t_word *ret;
+	t_word	*current;
+	t_word	*ret;
 
 	current = *dst;
 	ret = NULL;
-	while(current)
+	while (current)
 	{
 		if (current->type == to_get)
 		{
 			ret = current;
-			break;
+			break ;
 		}
 		current = current->next;
 	}

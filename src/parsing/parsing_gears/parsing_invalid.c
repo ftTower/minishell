@@ -2,9 +2,12 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   parsing_invalid.c                                  :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tauer <tauer@student.42.fr>                +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
+/*                                                    +:+ +:+        
+	+:+     */
+/*   By: tauer <tauer@student.42.fr>                +#+  +:+      
+	+#+        */
+/*                                                +#+#+#+#+#+  
+	+#+           */
 /*   Created: 2024/07/09 02:35:05 by tauer             #+#    #+#             */
 /*   Updated: 2024/08/16 23:23:07 by tauer            ###   ########.fr       */
 /*                                                                            */
@@ -47,8 +50,10 @@ bool	invalid_redirect(t_mini *mini, t_char **list)
 		if (current && current->next && current->next->next
 			&& (current->c == '<' || current->c == '>')
 			&& (current->next->c == '<' || current->next->c == '>')
-			&& (current->next->next->c == '<' || current->next->next->c == '>'))
-			return (handle_error(mini, t_char_list_to_str(mini, *list), ERROR_TOO_MANY_REDIRECT),true);
+			&& (current->next->next->c == '<'
+				|| current->next->next->c == '>'))
+			return (handle_error(mini, t_char_list_to_str(mini, *list),
+					ERROR_TOO_MANY_REDIRECT), true);
 		current = current->next;
 	}
 	return (false);

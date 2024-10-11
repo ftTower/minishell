@@ -24,6 +24,46 @@ char    *skipc(char **s, char c)
     return (*s);
 }
 
+char    *changec(char *s, char c, char to)
+{
+    int i;
+
+    if (!s || !*s)
+        return (NULL);
+    i = -1;
+    while (s[++i])
+    {
+        if (s[i] == c)
+            s[i] = to;
+    }
+    return (s);
+}
+
+int	get_c(char *str, char c)
+{
+	int len;
+
+	len = 0;
+	while (str[len] && str[len] != c)
+		len++;
+	return (len);
+}
+
+char *add_c_end(t_solib *solib, char **str, char c)
+{
+	char	*new_str;
+	int		len;
+
+	len = ft_strlen(*str);
+	new_str = somalloc(solib, sizeof(char) * (len + 2));
+	ft_strlcpy(new_str, *str, len + 1);
+	new_str[len] = c;
+	new_str[len + 1] = '\0';
+	free(*str);
+	*str = new_str;
+	return (new_str);
+}
+
 int check_echo_option(char *s, char c)
 {
     while (*s && *s != ' ')
@@ -38,9 +78,8 @@ int check_echo_option(char *s, char c)
 char	*display_prompt(t_mini *mini)
 {
 	return (soprintf_get(mini->solib,
-        "%s %C-if#57219e#292929( %s %C-b#696969() %C-b#0000ff((%d) - %s) )%C#292929() ",
+        "%s %C-if#57219e#292929( %s %C-b#696969() %C-b#0000ff(%s) )%C#292929() ",
         get_envpl_var(mini, "SHLVL"),
         getcwd(NULL, 0),
-        g_signal,
         get_envpl_var(mini, "USER")));
 }

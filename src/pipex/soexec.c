@@ -98,6 +98,19 @@ char	**envpl_to_envp(t_mini *mini)
 	return (envp);
 }
 
+
+char	**format_cmds(t_mini *mini, char *str)
+{
+	char	**argv;
+	int		i;
+
+	argv = ft_split(mini->solib, str, ' ');
+	i = -1;
+	while (argv[++i])
+		changec(argv[i], '|', ' ');
+	return (argv);
+}
+
 int	str_exec(t_mini *mini, char *str)
 {
 	static char **paths = 0;
@@ -123,7 +136,7 @@ int	str_exec(t_mini *mini, char *str)
 	// 	i++;
 	// }
 	
-	argv = mini->libft->split(mini->solib, str, ' ');
+	argv = format_cmds(mini, str);
 	if (!argv && ft_strarrfree(mini, paths))
 		return (1);
 	cmd = get_cmd(mini, paths, argv[0]);

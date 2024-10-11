@@ -20,5 +20,6 @@ int		str_exec(t_mini *mini, char *str);
 int		strs_exec(t_mini *mini, int fdin, char **commands, int fdout);
 int		pipex(t_mini *mini, char *infile, char **commands, char *outfile);
 void	close_pipe(int pipefd[2]);
+void 	handle_export(t_mini *mini, char *cmd, int fd);
 
 #endif

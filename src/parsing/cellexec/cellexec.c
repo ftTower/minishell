@@ -17,10 +17,10 @@
 
 bool	cell_pipex_exec(t_mini *mini, t_pipex *list)
 {
-	t_pipex *current;
+	t_pipex	*current;
 
 	current = list;
-	while(current)
+	while (current)
 	{
 		pipex(mini, current->in_fd, current->args, current->out_fd);
 		current = current->next;

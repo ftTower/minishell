@@ -2,9 +2,12 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   string_gears.c                                     :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tauer <tauer@student.42.fr>                +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
+/*                                                    +:+ +:+        
+	+:+     */
+/*   By: tauer <tauer@student.42.fr>                +#+  +:+      
+	+#+        */
+/*                                                +#+#+#+#+#+  
+	+#+           */
 /*   Created: 2024/07/05 15:20:46 by tauer             #+#    #+#             */
 /*   Updated: 2024/07/28 18:16:47 by tauer            ###   ########.fr       */
 /*                                                                            */
@@ -14,9 +17,9 @@
 
 char	*t_char_list_to_str(t_mini *mini, t_char *list)
 {
-	char *ret;
-	t_char *current;
-	ssize_t index;
+	char	*ret;
+	t_char	*current;
+	ssize_t	index;
 
 	index = 0;
 	current = list;
@@ -40,13 +43,13 @@ char	*t_char_list_to_str(t_mini *mini, t_char *list)
 
 char	*t_word_to_str(t_mini *mini, t_word *word)
 {
-	char *ret;
-	t_char *current_char;
-	ssize_t index;
+	char	*ret;
+	t_char	*current_char;
+	ssize_t	index;
 
 	index = 0;
 	current_char = word->c;
-	while(current_char)
+	while (current_char)
 	{
 		++index;
 		current_char = current_char->next;
@@ -54,7 +57,7 @@ char	*t_word_to_str(t_mini *mini, t_word *word)
 	ret = mini->malloc(mini, sizeof(char) * (index + 1));
 	index = 0;
 	current_char = word->c;
-	while(current_char)
+	while (current_char)
 	{
 		ret[index++] = current_char->c;
 		current_char = current_char->next;
@@ -64,17 +67,17 @@ char	*t_word_to_str(t_mini *mini, t_word *word)
 
 char	*t_word_list_to_str(t_mini *mini, t_word *word)
 {
-	char *ret;
-	t_word *current_word;
-	t_char *current_char;
-	ssize_t index;
+	char	*ret;
+	t_word	*current_word;
+	t_char	*current_char;
+	ssize_t	index;
 
 	index = 0;
 	current_word = word;
-	while(current_word)
+	while (current_word)
 	{
 		current_char = current_word->c;
-		while(current_char)
+		while (current_char)
 		{
 			++index;
 			current_char = current_char->next;
@@ -84,10 +87,10 @@ char	*t_word_list_to_str(t_mini *mini, t_word *word)
 	ret = mini->malloc(mini, sizeof(char) * (index + 1));
 	index = 0;
 	current_word = word;
-	while(current_word)
+	while (current_word)
 	{
 		current_char = current_word->c;
-		while(current_char)
+		while (current_char)
 		{
 			ret[index++] = current_char->c;
 			current_char = current_char->next;

@@ -12,6 +12,6 @@
 
 LIST_GEARS_DIR		=	list_gears
 
-LIST_GEARS_FILE		=	t_word_list.c t_char_list.c t_pipex.c
+LIST_GEARS_FILE		=	t_word_list.c t_char_list.c t_pipex.c t_char_list_utils.c t_char_list_quotes.c
  
 LIST_GEARS		=	$(addprefix $(LIST_GEARS_DIR)/, $(LIST_GEARS_FILE))

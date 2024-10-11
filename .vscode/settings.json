@@ -13,6 +13,8 @@
 		"rltypedefs.h": "c",
 		"readline.h": "c",
 		"sotypes.h": "c",
-		"sostdlib.h": "c"
+		"sostdlib.h": "c",
+		"sostring.h": "c",
+		"soctype.h": "c"
 	}
 }

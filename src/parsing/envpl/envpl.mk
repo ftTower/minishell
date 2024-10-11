@@ -12,6 +12,8 @@
 
 ENVPL_DIR		=	envpl
 
-ENVPL_FILE		=	envpl.c
+ENVPL_FILE		=	envpl.c \
+                    envpl_utils.c \
+					envpl_var.c
  
 ENVPL		=	$(addprefix $(ENVPL_DIR)/, $(ENVPL_FILE))

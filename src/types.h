@@ -105,6 +105,8 @@ typedef enum s_error_code
 	ERROR_FAILED_OPEN_IN_FD,
 	ERROR_FAILED_OPEN_OUT_FD,
 	ERROR_TYPE_NO_CMD,
+	ERROR_TYPE_DIRECTORY,
+	ERROR_TYPE_UNCLOSED_QUOTES,
 } t_error_code;
 
 typedef struct s_char

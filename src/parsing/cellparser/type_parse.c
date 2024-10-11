@@ -2,9 +2,12 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   type_parse.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
+/*                                                    +:+ +:+        
+	+:+     */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+      
+	+#+        */
+/*                                                +#+#+#+#+#+  
+	+#+           */
 /*   Created: 2024/07/09 02:23:45 by tauer             #+#    #+#             */
 /*   Updated: 2024/09/19 17:51:38 by marvin           ###   ########.fr       */
 /*                                                                            */
@@ -19,6 +22,8 @@ bool	t_word_parse_cmd(t_mini *mini, t_word *word)
 	char	**parse_path;
 	ssize_t	index;
 
+	if (!access(t_word_to_str(mini, word), X_OK | F_OK))
+		return (word->type = CMD_TYPE, true);
 	path = get_envpl_var(mini, "PATH");
 	if (!path)
 		return (false);
@@ -58,14 +63,15 @@ bool	t_word_parse_redirect(t_word *word)
 
 bool	t_word_parse_para(t_word *word)
 {
-	t_char *current;
+	t_char	*current;
 
-	if (!word->c || word->c->c != '-' || !word->c->next || (word->c->next->next && word->c->next->c != word->c->next->next->c))
+	if (!word->c || word->c->c != '-' || !word->c->next || (word->c->next->next
+			&& word->c->next->c != word->c->next->next->c))
 		return (false);
 	else if (word->c->c == '-' && word->c->next && word->c->next->c == '-')
 		return (false);
 	current = word->c->next;
-	while(current)
+	while (current)
 	{
 		if (current->c != word->c->next->c)
 			return (false);
@@ -78,7 +84,7 @@ bool	t_word_parse_built_in(t_mini *mini, t_word *word)
 {
 	if (!word || !word->refined_word)
 		return (false);
-	else if ( !mini->libft->strncmp(word->refined_word, "exit", 4)
+	else if (!mini->libft->strncmp(word->refined_word, "exit", 4)
 		|| !mini->libft->strncmp(word->refined_word, "cd", 2)
 		|| !mini->libft->strncmp(word->refined_word, "./", 2)
 		|| !mini->libft->strncmp(word->refined_word, "pwd", 3)
@@ -95,27 +101,8 @@ bool	t_word_parse_type(t_mini *mini, t_word *word)
 		return (word->type = ERROR_TYPE, true);
 	else if (word->c->c == ';' && !word->c->next)
 		return (word->type = SEPARATOR_TYPE, true);
-	else if (t_word_parse_built_in(mini, word) || t_word_parse_para(word) || t_word_parse_cmd(mini, word)
-		|| t_word_parse_redirect(word))
+	else if (t_word_parse_built_in(mini, word) || t_word_parse_para(word)
+		|| t_word_parse_cmd(mini, word) || t_word_parse_redirect(word))
 		return (true);
 	return (word->type = ARG_TYPE, false);
-}
-
-bool	t_pipe_parse_type(t_mini *mini, t_pipe *pipe)
-{
-	t_word	*current;
-
-	current = pipe->words;
-	while (current)
-	{
-		t_word_parse_type(mini, current);
-		current = current->next;
-	}
-	current = pipe->fds;
-	while (current)
-	{
-		t_word_parse_type(mini, current);
-		current = current->next;
-	}
-	return (false);
 }

@@ -2,32 +2,18 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   miniformat_var.c                                   :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tauer <tauer@student.42.fr>                +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
+/*                                                    +:+ +:+        
+	+:+     */
+/*   By: tauer <tauer@student.42.fr>                +#+  +:+      
+	+#+        */
+/*                                                +#+#+#+#+#+  
+	+#+           */
 /*   Created: 2024/08/08 17:50:26 by tauer             #+#    #+#             */
 /*   Updated: 2024/09/23 23:35:38 by tauer            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell/all.h>
-
-char	*get_str(t_mini *mini, char c)
-{
-	char	*ret;
-
-	ret = mini->malloc(mini, sizeof(char) * 2);
-	ret[0] = c;
-	ret[1] = '\0';
-	return (ret);
-}
-
-bool	is_alpha(char compare)
-{
-	if ((compare >= 'a' && compare <= 'z') || (compare >= 'A' && compare <= 'Z') || (compare >= '0' && compare <= '9'))
-		return (true);
-	return (false);
-}
 
 void	delete_name_var(t_mini *mini, t_char **list, size_t pos)
 {
@@ -98,24 +84,26 @@ void	insert_var_content(t_mini *mini, t_char **list, size_t pos,
 	{
 		if (current->pos == pos)
 			while (content[++index])
-				t_char_add_pos(mini, list, current->pos, content[index]);	
+				t_char_add_pos(mini, list, current->pos, content[index]);
 		current = current->next;
 	}
 }
 
 bool	t_char_list_cat_var(t_mini *mini, t_char **list)
 {
-	t_char *current;
-	char *buf_content;
-	size_t buf_index;
+	t_char	*current;
+	char	*buf_content;
+	size_t	buf_index;
 	char	*str_signal;
 
 	current = *list;
 	while (current)
 	{
-		if (current->c == '$' && ((current->next && !is_alpha(current->next->c) && current->next->c != '?') || (!current->next)))
+		if (current->c == '$' && ((current->next && !is_alpha(current->next->c)
+					&& current->next->c != '?') || (!current->next)))
 			current->type_quotes = TYPEQUOTES_TO_KEEP;
-		else if (current->c == '$' && current->type_quotes != TYPEQUOTES_TO_KEEP)
+		else if (current->c == '$'
+			&& current->type_quotes != TYPEQUOTES_TO_KEEP)
 		{
 			buf_index = current->pos;
 			if (current->next && current->next->c == '?')

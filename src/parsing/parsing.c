@@ -15,43 +15,33 @@
 
 #include <minishell/all.h>
 
-
-// typedef struct s_cell
-// {
-// 	char **lines;
-// 	t_pipe *pipes;
-
-// } t_cell;
-
-//  echo start > outfile ; ls | cat -e | wc -l ; echo finished
-// contient une seul cell ; ...|...|... ;
-
 void	cells_handler(t_mini *mini, char *raw_line, size_t pos)
 {
-	t_cell *cell;
+	t_cell	*cell;
+
 	cell = mini->malloc(mini, sizeof(t_cell));
 	cell->pos = pos;
 	if (cell_maker(mini, cell, raw_line) || cell_parser(mini, cell)
-		|| cell_translator(mini, cell) || cell_pipex_exec(mini, cell->final_line))
+		|| cell_translator(mini, cell) || cell_pipex_exec(mini,
+			cell->final_line))
 		return ;
 }
 
 bool	is_raw_path(t_mini *mini, char *line)
 {
-	DIR *dir;
-	char cwd[1024];
+	DIR	*dir;
+
 	dir = opendir(line);
-		
 	if (dir && chdir(line) == 0)
-		return (replace_envpl_var(mini, "PWD=" , getcwd(cwd, sizeof(cwd))), closedir(dir), true);	
+		return (handle_error(mini, line, ERROR_TYPE_DIRECTORY), true);
 	closedir(dir);
 	return (false);
 }
 
 bool	mini_parsing(t_mini *mini, char *line)
 {
-	char **cells;
-	ssize_t index;
+	char	**cells;
+	ssize_t	index;
 
 	if (line && *line && !is_raw_path(mini, line))
 	{

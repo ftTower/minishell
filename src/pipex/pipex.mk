@@ -13,7 +13,7 @@
 PIPEX_DIR		=	pipex
 
 PIPEX_HEADER	=	pipex.h
-PIPEX_FILE		=	pipex.c soexec.c soexec2.c
+PIPEX_FILE		=	pipex.c soexec.c soexec2.c builtin.c
 
 PIPEX			=	$(addprefix $(PIPEX_DIR)/, $(PIPEX_FILE))
 PIPEX_HEAD		=	$(addprefix $(PIPEX_DIR)/, $(PIPEX_HEADER))

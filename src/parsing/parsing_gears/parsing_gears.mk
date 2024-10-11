@@ -14,6 +14,7 @@ PARSING_GEARS_DIR		=	parsing_gears
 
 PARSING_GEARS_FILE		=  	parsing_utils.c  parsing_invalid.c \
 							parsing_printer.c parsing_debug.c	\
-							parsing_print_error.c
+							parsing_print_error.c \
+							parsing_print_type.c
  
 PARSING_GEARS			=	$(addprefix $(PARSING_GEARS_DIR)/, $(PARSING_GEARS_FILE))
