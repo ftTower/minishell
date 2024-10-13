@@ -14,13 +14,13 @@
 
 t_mini_param	pre_parsing(t_mini *mini)
 {
-	t_mini_param param;
-	
+	t_mini_param	param;
+
 	mini->print("%Cd6f27c( \
 	Program name : %Cc238eb(%s)\n \
 	Number of argument : %Cebba38(%d)\n \
 	Aruments : \n%C38eb4b(%S) \
 	Envp is init : %b\n)",
-	mini->env->name, mini->env->argc, mini->env->argv, mini->env->envp);
+		mini->env->name, mini->env->argc, mini->env->argv, mini->env->envp);
 	return (pre_parser(mini, &param));
 }

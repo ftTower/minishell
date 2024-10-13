@@ -15,7 +15,7 @@
 
 # include <minishell/types.h>
 
-int	minishell(t_solib *solib);
+int		minishell(t_solib *solib);
 void	echon(char *str, int fd);
 void	pwd(t_mini *mini, int fd);
 void	unset(t_mini *mini, char *var_to_unset, int fd);

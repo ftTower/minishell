@@ -26,15 +26,13 @@
 # include <stdlib.h>
 # include <sys/wait.h>
 # include <sys/types.h>
-#include <dirent.h>
+# include <dirent.h>
 # include <unistd.h>
 
-typedef struct s_mini t_mini;
-typedef struct s_mini_param t_mini_param;
+typedef struct s_mini			t_mini;
+typedef struct s_mini_param		t_mini_param;
 
 extern volatile sig_atomic_t	g_signal;
-
-// echo start | cat -e >test  | ls -la | cat -e
 
 typedef enum e_color
 {
@@ -46,7 +44,7 @@ typedef enum e_color
 	LIGHT_BLUE,
 	RED,
 	DEFAULT,
-} t_color;
+}	t_color;
 
 typedef enum e_value
 {
@@ -55,33 +53,30 @@ typedef enum e_value
 	FULL,
 	ERROR,
 	UNSET,
-} t_value;
+}	t_value;
 
 typedef struct s_mini_param
 {
-	bool no_param;
-	t_value display;
-	t_value output;
-	t_value debug;
-} t_mini_param;
+	bool	no_param;
+	t_value	display;
+	t_value	output;
+	t_value	debug;
+}	t_mini_param;
 
 typedef enum e_type
 {
 	CMD_TYPE,
 	ARG_TYPE,
 	PARA_TYPE,
-
 	REPLACE_IN_FD_TYPE,
 	REPLACE_OUT_FD_TYPE,
 	CONCATE_OUT_FD_TYPE,
 	CONCATE_IN_FD_TYPE,
-
 	BUILT_IN_TYPE,
 	BUILT_IN_PARA_TYPE,
-
 	SEPARATOR_TYPE,
 	ERROR_TYPE,
-} t_type;
+}	t_type;
 
 typedef enum s_type_quotes
 {
@@ -92,7 +87,7 @@ typedef enum s_type_quotes
 	TYPEQUOTES_BOTH_QUOTED,
 	TYPEQUOTES_TO_KEEP,
 	TYPEQUOTES_PATH,
-} t_type_quotes;
+}	t_type_quotes;
 
 typedef enum s_error_code
 {
@@ -107,86 +102,81 @@ typedef enum s_error_code
 	ERROR_TYPE_NO_CMD,
 	ERROR_TYPE_DIRECTORY,
 	ERROR_TYPE_UNCLOSED_QUOTES,
-} t_error_code;
+}	t_error_code;
 
 typedef struct s_char
 {
-	char c;
-	size_t pos;
-	t_type_quotes type_quotes;
-	struct s_char *next;
-} t_char;
+	char			c;
+	size_t			pos;
+	t_type_quotes	type_quotes;
+	struct s_char	*next;
+}	t_char;
 
 typedef struct s_word
 {
-	t_char *c;
-	t_type type;
-	ssize_t pos;
+	t_char			*c;
+	t_type			type;
+	ssize_t			pos;
 
-	char *refined_word;
-	struct s_word *next;
-} t_word;
+	char			*refined_word;
+	struct s_word	*next;
+}	t_word;
 
 typedef struct s_pipe
 {
-	t_char *raw_words;
-
-	t_word *fds;
-	t_word *words;
-
-	ssize_t pos;
-	bool used;
-} t_pipe;
+	t_char	*raw_words;
+	t_word	*fds;
+	t_word	*words;
+	ssize_t	pos;
+	bool	used;
+}	t_pipe;
 
 typedef struct s_pipex
 {
-	char *in_fd;
-	char **args;
-	char *out_fd;
+	char			*in_fd;
+	char			**args;
+	char			*out_fd;
 
-	struct s_pipex *next;
-} t_pipex;
-
-//  ; ls | cat -e | cat ;
+	struct s_pipex	*next;
+}	t_pipex;
 
 typedef struct s_cell
 {
-	t_pipe *pipes;
-	ssize_t nb_pipes;
-	ssize_t pos;
-
-	t_pipex *final_line;
-} t_cell;
+	t_pipe	*pipes;
+	ssize_t	nb_pipes;
+	ssize_t	pos;
+	t_pipex	*final_line;
+}	t_cell;
 
 typedef struct s_envpl
 {
-	char *var;
-	struct s_envpl *next;
-} t_envpl;
+	char			*var;
+	struct s_envpl	*next;
+}	t_envpl;
 
 typedef struct s_history
 {
-	char *line;
-	ssize_t pos;
-	bool	success;
-	t_cell *cell;
-	struct s_history *next;
+	char				*line;
+	ssize_t				pos;
+	bool				success;
+	t_cell				*cell;
+	struct s_history	*next;
 }	t_history;
 
 typedef struct s_mini
 {
-	int loop;
-	int starting;
-	t_solib *solib;
-	t_solibft *libft;
-	t_soenv *env;
-	t_envpl *envpl;
-	t_history *history;
-	int history_pos;
-	int (*print)(const char *str, ...);
-	void *(*malloc)(t_mini *mini, size_t size);
-	int (*free)(t_mini *mini, void *ptr);
-	int (*close)(t_mini *mini, int state);
-} t_mini;
+	int			loop;
+	int			starting;
+	t_solib		*solib;
+	t_solibft	*libft;
+	t_soenv		*env;
+	t_envpl		*envpl;
+	t_history	*history;
+	int			history_pos;
+	int			(*print)(const char *str, ...);
+	void		*(*malloc)(t_mini *mini, size_t size);
+	int			(*free)(t_mini *mini, void *ptr);
+	int			(*close)(t_mini *mini, int state);
+}	t_mini;
 
 #endif

@@ -60,7 +60,8 @@ void	print_t_pipex_list(t_mini *mini, t_pipex *pipex)
 	ssize_t	index;
 
 	index = -1;
-	mini->print("\n\t╭─%Cff0000([)%Cf1c40f(%C5dade2(PIPEX LINE))%Cff0000(])\n\t|\n");
+	mini->print("\n\t╭─%Cff0000([)%Cf1c40f(%C5dade2(PIPEX LINE))\
+	%Cff0000(])\n\t|\n");
 	current = pipex;
 	while (current)
 	{

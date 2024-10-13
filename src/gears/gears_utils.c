@@ -13,35 +13,35 @@
 #include <minishell/all.h>
 #include <solibft/sostring.h>
 
-char    *skipc(char **s, char c)
+char	*skipc(char **s, char c)
 {
-    if (!s || !*s || !**s)
-        return (NULL);
-    while (**s && **s == c && **s != ' ')
-        (*s)++;
-    if (**s == ' ')
-        (*s)++;
-    return (*s);
+	if (!s || !*s || !**s)
+		return (NULL);
+	while (**s && **s == c && **s != ' ')
+		(*s)++;
+	if (**s == ' ')
+		(*s)++;
+	return (*s);
 }
 
-char    *changec(char *s, char c, char to)
+char	*changec(char *s, char c, char to)
 {
-    int i;
+	int	i;
 
-    if (!s || !*s)
-        return (NULL);
-    i = -1;
-    while (s[++i])
-    {
-        if (s[i] == c)
-            s[i] = to;
-    }
-    return (s);
+	if (!s || !*s)
+		return (NULL);
+	i = -1;
+	while (s[++i])
+	{
+		if (s[i] == c)
+			s[i] = to;
+	}
+	return (s);
 }
 
 int	get_c(char *str, char c)
 {
-	int len;
+	int	len;
 
 	len = 0;
 	while (str[len] && str[len] != c)
@@ -49,7 +49,7 @@ int	get_c(char *str, char c)
 	return (len);
 }
 
-char *add_c_end(t_solib *solib, char **str, char c)
+char	*add_c_end(t_solib *solib, char **str, char c)
 {
 	char	*new_str;
 	int		len;
@@ -64,22 +64,22 @@ char *add_c_end(t_solib *solib, char **str, char c)
 	return (new_str);
 }
 
-int check_echo_option(char *s, char c)
+int	check_echo_option(char *s, char c)
 {
-    while (*s && *s != ' ')
-    {
-        if (*s != c)
-            return (0);
-        s++;
-    }
-    return (1);
+	while (*s && *s != ' ')
+	{
+		if (*s != c)
+			return (0);
+		s++;
+	}
+	return (1);
 }
 
 char	*display_prompt(t_mini *mini)
 {
 	return (soprintf_get(mini->solib,
-        "%s %C-if#57219e#292929( %s %C-b#696969() %C-b#0000ff(%s) )%C#292929() ",
-        get_envpl_var(mini, "SHLVL"),
-        getcwd(NULL, 0),
-        get_envpl_var(mini, "USER")));
+		"%s %C-if#57219e#292929( %s %C-b#696969() %C-b#0000ff(%s) )%C#292929() ",
+		get_envpl_var(mini, "SHLVL"),
+		getcwd(NULL, 0),
+		get_envpl_var(mini, "USER")));
 }

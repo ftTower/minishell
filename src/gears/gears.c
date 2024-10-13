@@ -13,7 +13,7 @@
 #include <minishell/all.h>
 #include <solibft/sostdlib.h>
 
-int mini_close_update(t_mini *mini, int state)
+int	mini_close_update(t_mini *mini, int state)
 {
 	if (mini)
 		mini->loop = 0;
@@ -23,13 +23,14 @@ int mini_close_update(t_mini *mini, int state)
 	return (state);
 }
 
-int mini_close(t_mini *mini, int state)
+int	mini_close(t_mini *mini, int state)
 {
 	char	*shlvl;
 
 	if (!mini)
 		exit(state);
-	shlvl = soprintf_get(mini->solib, "%d", ft_atoi(get_envpl_var(mini, "SHLVL")) - 1);
+	shlvl = soprintf_get(mini->solib, \
+	"%d", ft_atoi(get_envpl_var(mini, "SHLVL")) - 1);
 	set_envpl_var(mini, "SHLVL=", shlvl);
 	if (state)
 		exit(mini->solib->close(mini->solib, state));
@@ -67,11 +68,11 @@ t_mini	*minit(t_solib *solib)
 	mini->history = NULL;
 	mini->history_pos = 0;
 	mini->solib = solib;
-	mini->libft =  solib->libft;
-	mini->print =  solib->print;
-	mini->env =  solib->env;
-	mini->malloc =  mini_malloc;
-	mini->free =  mini_free;
+	mini->libft = solib->libft;
+	mini->print = solib->print;
+	mini->env = solib->env;
+	mini->malloc = mini_malloc;
+	mini->free = mini_free;
 	mini->close = mini_close_update;
 	if (copy_envp_to_list(mini))
 		solib->close(solib, EXIT_FAILURE);

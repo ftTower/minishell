@@ -12,6 +12,26 @@
 
 #include <minishell/all.h>
 
+void	patern_bothquote(t_char *current, t_type_quotes *quotes)
+{
+	if (current->c == (char)39)
+		*quotes = TYPEQUOTES_DOUBLE_QUOTED;
+	else if (current->c == '"')
+		*quotes = TYPEQUOTES_TO_KEEP;
+	if ((current->c == (char)39 || current->c == '"') && current->next
+		&& current->next->type_quotes == TYPEQUOTES_BOTH_QUOTED)
+	{
+		current = current->next;
+		while (current->next
+			&& current->next->type_quotes == TYPEQUOTES_BOTH_QUOTED)
+		{
+			current->type_quotes = *quotes;
+			current = current->next;
+			current->type_quotes = *quotes;
+		}
+	}
+}
+
 void	t_char_identify_bothquote(t_char *list)
 {
 	t_char			*current;
@@ -21,22 +41,7 @@ void	t_char_identify_bothquote(t_char *list)
 	quotes = TYPEQUOTES_UNSET;
 	while (current)
 	{
-		if (current->c == (char)39)
-			quotes = TYPEQUOTES_DOUBLE_QUOTED;
-		else if (current->c == '"')
-			quotes = TYPEQUOTES_TO_KEEP;
-		if ((current->c == (char)39 || current->c == '"') && current->next
-			&& current->next->type_quotes == TYPEQUOTES_BOTH_QUOTED)
-		{
-			current = current->next;
-			while (current->next
-				&& current->next->type_quotes == TYPEQUOTES_BOTH_QUOTED)
-			{
-				current->type_quotes = quotes;
-				current = current->next;
-				current->type_quotes = quotes;
-			}
-		}
+		patern_bothquote(current, &quotes);
 		if (current)
 			current = current->next;
 	}

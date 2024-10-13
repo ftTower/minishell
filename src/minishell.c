@@ -18,8 +18,7 @@
 #include <solibft/sostring.h>
 #include <sotypes/soprintf.h>
 
-
-volatile sig_atomic_t g_signal;
+volatile sig_atomic_t	g_signal;
 
 void	redisplay_prompt(void)
 {
@@ -31,16 +30,14 @@ void	redisplay_prompt(void)
 
 void	stop_child_process(int code)
 {
-	pid_t pid;
-	int status;
+	pid_t	pid;
+	int		status;
 
 	pid = waitpid(-1, &status, 0);
 	if (pid < 1)
 		redisplay_prompt();
 	else
-	{
 		soprintf("\n");
-	}
 	while (pid > 0)
 	{
 		if (code == SIGINT)
@@ -67,8 +64,8 @@ void	mini_line_handler(t_mini *mini, char *line)
 
 int	minishell(t_solib *solib)
 {
-	t_mini *mini;
-	char *shlvl;
+	t_mini	*mini;
+	char	*shlvl;
 
 	mini = minit(solib);
 	signal(SIGINT, &handle_signals);

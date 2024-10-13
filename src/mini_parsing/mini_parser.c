@@ -39,34 +39,22 @@ void	print_mini_param(t_mini *mini, t_mini_param param)
 	print_t_value(mini, param.debug, "debug");
 }
 
-bool	find_keyword(t_mini *mini ,char *find_in, char *to_find)
+bool	find_keyword(t_mini *mini, char *find_in, char *to_find)
 {
-	long index;
+	long	index;
 
 	if (!find_in || !to_find)
 		return (false);
 	index = -1;
-	while(find_in[++index])
-		if (!mini->libft->strncmp(find_in + index, to_find, mini->libft->strlen(to_find) - 1))
+	while (find_in[++index])
+		if (!mini->libft->strncmp(find_in + index, \
+		to_find, mini->libft->strlen(to_find) - 1))
 			return (true);
 	return (false);
 }
 
-
-// bool	find_keyword_list(t_mini *mini, char *find_in, char *to_find)
-// {
-// 	if (open())
-// }
-
-
-//! logique simple cherche dans largv a trouver des mots cles
-
-// * a terme cherchera en second lieu les valeurs (yes/no/full/...)
-
-// * a terme find_keyword_list ira open un fichier contenant des possibilites
-// * de keyword (similaire/diminue)
-
-void	handle_param(t_mini *mini, t_mini_param *mini_param, char *current_param, long index)
+void	handle_param(t_mini *mini, t_mini_param *mini_param, \
+		char *current_param, long index)
 {
 	mini->print("[%d][%Cff004d(%s)] : %Cff0000(found) ", index, current_param);
 	if (find_keyword(mini, current_param, "display"))
@@ -80,11 +68,9 @@ void	handle_param(t_mini *mini, t_mini_param *mini_param, char *current_param, l
 	mini_param->no_param = false;
 }
 
-//* modifie le comportement de minishell en fonction darguments passer en parametres;
-
-t_mini_param pre_parser(t_mini *mini, t_mini_param *mini_param)
+t_mini_param	pre_parser(t_mini *mini, t_mini_param *mini_param)
 {
-	long index;
+	long	index;
 
 	index = -1;
 	mini->print("==========pre parser==============\n");
@@ -100,7 +86,8 @@ t_mini_param pre_parser(t_mini *mini, t_mini_param *mini_param)
 	}
 	else
 	{
-		mini->print("No configuration detected, running basic version of Minishell\n");
+		mini->print("No configuration detected, \
+		running basic version of Minishell\n");
 	}
 	return (mini->print("===============================\n\n"), *mini_param);
 }
