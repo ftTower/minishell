@@ -14,6 +14,7 @@
 /* ************************************************************************** */
 
 #include <minishell/all.h>
+#include <solibft/sostring.h>
 
 void	cells_handler(t_mini *mini, char *raw_line, size_t pos)
 {
@@ -33,11 +34,10 @@ bool	is_raw_path(t_mini *mini, char *line)
 	DIR	*dir;
 
 	dir = opendir(line);
-	if (dir && chdir(line) == 0)
-		return (closedir(dir),
-            handle_error(mini, line, ERROR_TYPE_DIRECTORY), true);
+	if (dir && !chdir(line))
+		return (closedir(dir), true);
 	closedir(dir);
-	return (false);
+	return (handle_error(mini, line, ERROR_TYPE_DIRECTORY), false);
 }
 
 bool	mini_parsing(t_mini *mini, char *line)
@@ -45,7 +45,8 @@ bool	mini_parsing(t_mini *mini, char *line)
 	char	**cells;
 	ssize_t	index;
 
-	if (line && *line && !is_raw_path(mini, line))
+    //soprintf("--- line : %s\n", line + 3);
+	if (line && *line && !(!ft_strncmp("cd ", line, 3) && is_raw_path(mini, line + 3)))
 	{
 		if (cells_empty_char(line, ';'))
 			return (handle_error(mini, line, ERROR_EMPTY_SEMICOLON), true);

@@ -56,8 +56,10 @@ static void	handle_signals(int code)
 
 void	mini_line_handler(t_mini *mini, char *line)
 {
-	if (!line || !*line)
+	if (!line)
 		return (free(line), soprintf("exit\n"), (void)mini->close(mini, g_signal));
+    if (!*line)
+        return ;
     add_history(line);
 	mini_parsing(mini, line);
     free(line);
@@ -78,7 +80,7 @@ int	minishell(t_solib *solib)
 	rl_initialize();
 	while (mini->loop)
 		mini_line_handler(mini, readline(display_prompt(mini)));
-	rl_clear_history();
+    rl_clear_history();
 	shlvl = soprintf_get(solib, "%d", ft_atoi(get_envpl_var(mini, "SHLVL"))
 			- 1);
 	replace_envpl_var(mini, "SHLVL=", shlvl);
