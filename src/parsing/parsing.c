@@ -34,7 +34,8 @@ bool	is_raw_path(t_mini *mini, char *line)
 
 	dir = opendir(line);
 	if (dir && chdir(line) == 0)
-		return (closedir(dir), handle_error(mini, line, ERROR_TYPE_DIRECTORY), true);
+		return (closedir(dir),
+            handle_error(mini, line, ERROR_TYPE_DIRECTORY), true);
 	closedir(dir);
 	return (false);
 }

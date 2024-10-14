@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 20:22:15 by marvin            #+#    #+#             */
-/*   Updated: 2024/10/14 16:00:45 by marvin           ###   ########.fr       */
+/*   Updated: 2024/10/14 16:18:28 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@ int	hub_builtin(t_mini *mini, char *cmd, int pipefd[2])
 	if (!ft_strncmp("echo -", cmd, 6) && check_echo_option(cmd + 6, 'n'))
 		return (cmd += 6, changec(cmd, '\x01', ' '), changec(cmd, '\x02', '|'), putstrfd(skipc(&cmd, 'n'), pipefd[1]), close_pipe(pipefd), 1);
 	if (!ft_strncmp("cd", cmd, 2))
-		return (cmd += 3, changec(cmd, '\x02', '|'), is_raw_path(mini, changec(cmd, '\x01', ' ')), close_pipe(pipefd), 1);
+		return (cmd += 3, changec(cmd, '\x02', '|'), is_raw_path(mini, changec(cmd, '\x01', ' ')), pwd = getcwd(NULL, 0), replace_envpl_var(mini, "PWD=", pwd), free(pwd), close_pipe(pipefd), 1);
 	if (!ft_strncmp("pwd", cmd, 3))
-		return (pwd = getcwd(NULL, 0), putstrfd(pwd, pipefd[1]), free(pwd),
+		return (pwd = getcwd(NULL, 0), putstrfd(pwd, pipefd[1]), replace_envpl_var(mini, "PWD=", pwd), free(pwd),
 			putstrfd("\n", pipefd[1]), close_pipe(pipefd), 1);
 	if (!ft_strncmp("export", cmd, 6))
 		return (cmd += 7, changec(cmd, '\x02', '|'), handle_export(mini, changec(cmd, '\x01', ' '), pipefd[1]), close_pipe(pipefd), 1);
