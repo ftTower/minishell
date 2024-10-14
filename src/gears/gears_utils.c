@@ -84,7 +84,7 @@ char	*display_prompt(t_mini *mini)
 	prompt = soprintf_get(mini->solib,
 		"%s %C-if#57219e#292929( %s %C-b#696969() %C-b#0000ff(%s) )%C#292929() ",
 		get_envpl_var(mini, "SHLVL"),
-		getcwd(NULL, 0),
+		pwd,
 		get_envpl_var(mini, "USER"));
 	free(pwd);
 	return (prompt);
