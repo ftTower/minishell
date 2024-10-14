@@ -26,18 +26,33 @@ void	cells_handler(t_mini *mini, char *raw_line, size_t pos)
 		|| cell_translator(mini, cell) || cell_pipex_exec(mini,
 			cell->final_line))
 		return ;
-	//print_t_cell(mini, cell);
 }
 
 bool	is_raw_path(t_mini *mini, char *line)
 {
-	DIR	*dir;
+	char	*path;
+	char	*home;
+	char	*pwd;
 
-	dir = opendir(line);
-	if (dir && !chdir(line))
-		return (closedir(dir), true);
-	closedir(dir);
-	return (handle_error(mini, line, ERROR_TYPE_DIRECTORY), false);
+	home = get_envpl_var(mini, "HOME");
+	if (!line || !*line || !ft_strcmp(line, "~"))
+		path = home;
+	else if (!ft_strncmp(line, "~/", 2))
+		path = ft_strjoin(NULL, home, line + 1);
+	else
+		path = line;
+	if (!chdir(path))
+	{
+		if (path != line && path != home)
+			free(path);
+		pwd = getcwd(NULL, 0);
+		replace_envpl_var(mini, "PWD=", pwd);
+		free(pwd);
+		return (true);
+	}
+	if (path != line && path != home)
+		free(path);
+	return (handle_error(mini, path, ERROR_TYPE_DIRECTORY), false);
 }
 
 bool	mini_parsing(t_mini *mini, char *line)
@@ -45,8 +60,8 @@ bool	mini_parsing(t_mini *mini, char *line)
 	char	**cells;
 	ssize_t	index;
 
-    //soprintf("--- line : %s\n", line + 3);
-	if (line && *line && !(!ft_strncmp("cd ", line, 3) && is_raw_path(mini, line + 3)))
+	if (line && *line && !(!ft_strncmp("cd ", line, 3)
+			&& is_raw_path(mini, line + 3)))
 	{
 		if (cells_empty_char(line, ';'))
 			return (handle_error(mini, line, ERROR_EMPTY_SEMICOLON), true);

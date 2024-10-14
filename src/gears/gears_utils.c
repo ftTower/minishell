@@ -59,7 +59,8 @@ char	*add_c_end(t_solib *solib, char **str, char c)
 	ft_strlcpy(new_str, *str, len + 1);
 	new_str[len] = c;
 	new_str[len + 1] = '\0';
-	free(*str);
+    if (*str)
+	    free(*str);
 	*str = new_str;
 	return (new_str);
 }
