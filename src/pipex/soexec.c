@@ -107,7 +107,10 @@ char	**format_cmds(t_mini *mini, char *str)
 	argv = ft_split(mini->solib, str, ' ');
 	i = -1;
 	while (argv[++i])
-		changec(argv[i], '|', ' ');
+	{
+		changec(argv[i], '\x01', ' ');
+		changec(argv[i], '\x02', '|');	
+	}
 	return (argv);
 }
 

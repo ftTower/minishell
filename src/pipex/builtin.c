@@ -35,16 +35,16 @@ int	hub_builtin(t_mini *mini, char *cmd, int pipefd[2])
 	if (!ft_strncmp("exit", cmd, 4))
 		return (cmd += 4, close_pipe(pipefd), set_exit_status(cmd), mini->close(mini, g_signal), 1);
 	if (!ft_strncmp("echo -", cmd, 6) && check_echo_option(cmd + 6, 'n'))
-		return (cmd += 6, changec(cmd, '|', ' '), putstrfd(skipc(&cmd, 'n'), pipefd[1]), close_pipe(pipefd), 1);
+		return (cmd += 6, changec(cmd, '\x01', ' '), changec(cmd, '\x02', '|'), putstrfd(skipc(&cmd, 'n'), pipefd[1]), close_pipe(pipefd), 1);
 	if (!ft_strncmp("cd", cmd, 2))
-		return (cmd += 3, is_raw_path(mini, changec(cmd, '|', ' ')), close_pipe(pipefd), 1);
+		return (cmd += 3, changec(cmd, '\x02', '|'), is_raw_path(mini, changec(cmd, '\x01', ' ')), close_pipe(pipefd), 1);
 	if (!ft_strncmp("pwd", cmd, 3))
 		return (putstrfd(getcwd(NULL, 0), pipefd[1]),
 			putstrfd("\n", pipefd[1]), close_pipe(pipefd), 1);
 	if (!ft_strncmp("export", cmd, 6))
-		return (cmd += 7, handle_export(mini, changec(cmd, '|', ' '), pipefd[1]), close_pipe(pipefd), 1);
+		return (cmd += 7, changec(cmd, '\x02', '|'), handle_export(mini, changec(cmd, '\x01', ' '), pipefd[1]), close_pipe(pipefd), 1);
 	if (!ft_strncmp("unset", cmd, 5))
-		return (cmd += 6, del_var_envpl(mini, changec(cmd, '|', ' ')), close_pipe(pipefd), 1);
+		return (cmd += 6, changec(cmd, '\x02', '|'), del_var_envpl(mini, changec(cmd, '\x01', ' ')), close_pipe(pipefd), 1);
 	if (!ft_strncmp("env\0", cmd, 4))
 		return (print_envpl(pipefd[1], mini), close_pipe(pipefd), 1);
 	return (0);

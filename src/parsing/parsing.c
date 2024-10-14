@@ -25,6 +25,7 @@ void	cells_handler(t_mini *mini, char *raw_line, size_t pos)
 		|| cell_translator(mini, cell) || cell_pipex_exec(mini,
 			cell->final_line))
 		return ;
+	print_t_cell(mini, cell);
 }
 
 bool	is_raw_path(t_mini *mini, char *line)
