@@ -38,7 +38,6 @@ void	print_error_input(t_mini *mini, char *input, char *char_error)
 			mini->print("\033[48;5;196m%c\033[0m", input[index]);
 		else
 			mini->print("\033[38;5;231m%c\033[0m", input[index]);
-		usleep(100000);
 	}
 	mini->print("\n");
 }

@@ -21,10 +21,9 @@ int				mini_close(t_mini *mini, int state);
 void			*mini_malloc(t_mini *mini, size_t size);
 int				mini_free(t_mini *mini, void *ptr);
 char			*display_prompt(t_mini *mini);
-int				check_echo_option(char *s, char c);
 char			*skipc(char **s, char c);
 char			*add_c_end(t_solib *solib, char **str, char c);
 int				get_c(char *str, char c);
-char			*changec(char *s, char c, char to);
+char			*changec(char *s, char *c, char *to);
 
 #endif

@@ -18,8 +18,6 @@
 #include <solibft/sostring.h>
 #include <sotypes/soprintf.h>
 
-volatile sig_atomic_t	g_signal;
-
 void	redisplay_prompt(void)
 {
 	soprintf("\n");
@@ -50,19 +48,20 @@ void	stop_child_process(int code)
 
 static void	handle_signals(int code)
 {
-	g_signal = 128 + code;
+	set_g_signal(128 + code);
 	stop_child_process(code);
 }
 
 void	mini_line_handler(t_mini *mini, char *line)
 {
 	if (!line)
-		return (free(line), soprintf("exit\n"), (void)mini->close(mini, g_signal));
-    if (!*line)
-        return ;
-    add_history(line);
+		return (free(line), soprintf("exit\n"),
+			(void)mini->close(mini, get_g_signal()));
+	if (!*line)
+		return ;
+	add_history(line);
 	mini_parsing(mini, line);
-    free(line);
+	free(line);
 }
 
 int	minishell(t_solib *solib)
@@ -73,14 +72,12 @@ int	minishell(t_solib *solib)
 	mini = minit(solib);
 	signal(SIGINT, &handle_signals);
 	signal(SIGQUIT, &handle_signals);
-	g_signal = 0;
 	shlvl = soprintf_get(solib, "%d", (int)ft_atoi(get_envpl_var(mini, "SHLVL"))
 			+ 1);
 	replace_envpl_var(mini, "SHLVL=", shlvl);
-	rl_initialize();
 	while (mini->loop)
 		mini_line_handler(mini, readline(display_prompt(mini)));
-    rl_clear_history();
+	rl_clear_history();
 	shlvl = soprintf_get(solib, "%d", ft_atoi(get_envpl_var(mini, "SHLVL"))
 			- 1);
 	replace_envpl_var(mini, "SHLVL=", shlvl);

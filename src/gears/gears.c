@@ -32,7 +32,7 @@ int	mini_close(t_mini *mini, int state)
 	shlvl = soprintf_get(mini->solib, \
 	"%d", ft_atoi(get_envpl_var(mini, "SHLVL")) - 1);
 	set_envpl_var(mini, "SHLVL=", shlvl);
-    rl_clear_history();
+	rl_clear_history();
 	if (state)
 		exit(mini->solib->close(mini->solib, state));
 	exit(mini->solib->close(mini->solib, state));
@@ -64,18 +64,15 @@ t_mini	*minit(t_solib *solib)
 	mini = (t_mini *)solib->malloc(solib, sizeof(t_mini));
 	if (!mini)
 		solib->close(solib, EXIT_FAILURE);
-	mini->loop = 1;
-	mini->starting = 0;
-	mini->history = NULL;
-	mini->history_pos = 0;
 	mini->solib = solib;
 	mini->libft = solib->libft;
 	mini->print = solib->print;
-	mini->env = solib->env;
 	mini->malloc = mini_malloc;
 	mini->free = mini_free;
 	mini->close = mini_close_update;
+	mini->env = solib->env;
 	if (copy_envp_to_list(mini))
 		solib->close(solib, EXIT_FAILURE);
-	return (mini);
+	return (mini->loop = 1, mini->starting = 0, mini->history = NULL,
+		mini->history_pos = 0, mini);
 }

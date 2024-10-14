@@ -24,17 +24,22 @@ char	*skipc(char **s, char c)
 	return (*s);
 }
 
-char	*changec(char *s, char c, char to)
+char	*changec(char *s, char *c, char *to)
 {
 	int	i;
+	int	j;
 
 	if (!s || !*s)
 		return (NULL);
 	i = -1;
 	while (s[++i])
 	{
-		if (s[i] == c)
-			s[i] = to;
+		j = -1;
+		while (c[++j])
+		{
+			if (c[j] == s[i])
+				s[i] = to[j % ft_strlen(to)];
+		}
 	}
 	return (s);
 }
@@ -59,21 +64,10 @@ char	*add_c_end(t_solib *solib, char **str, char c)
 	ft_strlcpy(new_str, *str, len + 1);
 	new_str[len] = c;
 	new_str[len + 1] = '\0';
-    if (*str)
-	    free(*str);
+	if (*str)
+		free(*str);
 	*str = new_str;
 	return (new_str);
-}
-
-int	check_echo_option(char *s, char c)
-{
-	while (*s && *s != ' ')
-	{
-		if (*s != c)
-			return (0);
-		s++;
-	}
-	return (1);
 }
 
 char	*display_prompt(t_mini *mini)
@@ -83,10 +77,11 @@ char	*display_prompt(t_mini *mini)
 
 	pwd = getcwd(NULL, 0);
 	prompt = soprintf_get(mini->solib,
-		"%s %C-if#57219e#292929( %s %C-b#696969() %C-b#0000ff(%s) )%C#292929() ",
-		get_envpl_var(mini, "SHLVL"),
-		pwd,
-		get_envpl_var(mini, "USER"));
+			"%s %C-i#57219e#292929( %s %C-b#696969() \
+%C-b#0000ff(%s) )%C#292929() ",
+			get_envpl_var(mini, "SHLVL"),
+			pwd,
+			get_envpl_var(mini, "USER"));
 	free(pwd);
 	return (prompt);
 }

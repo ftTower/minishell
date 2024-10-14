@@ -111,7 +111,7 @@ bool	t_char_list_cat_var(t_mini *mini, t_char **list)
 				t_char_del_pos(mini, list, current->pos);
 				current = current->next;
 				t_char_del_pos(mini, list, current->pos);
-				str_signal = soprintf_get(NULL, "%d", g_signal);
+				str_signal = soprintf_get(NULL, "%d", get_g_signal());
 				insert_var_content(mini, list, buf_index, str_signal);
 				free(str_signal);
 			}

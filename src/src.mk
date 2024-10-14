@@ -20,7 +20,7 @@ SRC_DIR		=	$(CURDIR)/src
 
 LIB_HEADER	=	$(addprefix $(SRC_DIR)/, minishell.h)
 SRC_HEADER	=	types.h all.h
-SRC_FILES	=	minishell.c
+SRC_FILES	=	minishell.c signals.c
 
 DIR			+= $(MINI_PARSING_DIR)
 DIR			+= $(GEARS_DIR)

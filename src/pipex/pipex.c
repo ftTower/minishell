@@ -33,8 +33,8 @@ void	read_line_fd(int fd, char **doc, char **line, char *limiter)
 				break ;
 		}
 		count += 1;
-		if (!ft_strncmp(*line , limiter, ft_strlen(limiter)))
-			break;
+		if (!ft_strncmp(*line, limiter, ft_strlen(limiter)))
+			break ;
 		ft_strmcat(NULL, doc, *line);
 	}
 	free(buf);
@@ -87,17 +87,14 @@ int	heredoc(char *path_in, char *path_out, int *in, int *out)
 	return (0);
 }
 
-
 int	pipex(t_mini *mini, char *infile, char **commands, char *outfile)
 {
 	int	fdin;
 	int	fdout;
 
 	fdin = 0;
-	
 	fdout = 0;
 	if (heredoc(infile, outfile, &fdin, &fdout))
 		return (perror("Open"), 1);
 	return (strs_exec(mini, fdin, commands, fdout));
-	return 0;
 }

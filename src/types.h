@@ -32,8 +32,6 @@
 typedef struct s_mini			t_mini;
 typedef struct s_mini_param		t_mini_param;
 
-extern volatile sig_atomic_t	g_signal;
-
 typedef enum e_color
 {
 	ORANGE,
@@ -178,5 +176,8 @@ typedef struct s_mini
 	int			(*free)(t_mini *mini, void *ptr);
 	int			(*close)(t_mini *mini, int state);
 }	t_mini;
+
+sig_atomic_t	get_g_signal(void);
+void			set_g_signal(sig_atomic_t value);
 
 #endif

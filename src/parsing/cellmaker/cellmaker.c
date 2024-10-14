@@ -28,34 +28,35 @@ bool	cell_pipe_maker(t_mini *mini, t_pipe *pipe, char **pipe_words,
 	return (false);
 }
 
-void	char_bool_quotes_switcher(char c ,bool *single, bool *double_)
+void	char_bool_quotes_switcher(char c, bool *single, bool *double_)
 {
-		if (c == '"')
-		{
-			if (!*double_)
-				*double_ = true;
-			else
-				*double_ = false;
-		}
-		else if (c == (char)39)
-		{
-			if (!*single)
-				*single = true;
-			else
-				*single = false;
-		}
+	if (c == '"')
+	{
+		if (!*double_)
+			*double_ = true;
+		else
+			*double_ = false;
+	}
+	else if (c == (char)39)
+	{
+		if (!*single)
+			*single = true;
+		else
+			*single = false;
+	}
 }
 
-void	handle_negative_char_in_quotes( char *line, char space_replace, char pipe_replace)
+void	handle_negative_char_in_quotes( char *line, char space_replace,
+			char pipe_replace)
 {
-	ssize_t index;
-	bool double_quotes;
-	bool single_quotes;
+	ssize_t	index;
+	bool	double_quotes;
+	bool	single_quotes;
 
 	double_quotes = false;
 	single_quotes = false;
 	index = -1;
-	while(line[++index])
+	while (line[++index])
 	{
 		char_bool_quotes_switcher(line[index], &single_quotes, &double_quotes);
 		if ((double_quotes || single_quotes) && line[index] == ' ')
@@ -71,7 +72,7 @@ bool	cell_maker(t_mini *mini, t_cell *cell, char *raw_line)
 	char	**lines;
 
 	// 1. Manipule une copie de raw_line pour éviter de corrompre l'originale.
-	char *transformed_line = strdup(raw_line);
+	char *transformed_line = mini->libft->strdup(NULL, raw_line);
 	if (!transformed_line)
 		return ( true);
 
