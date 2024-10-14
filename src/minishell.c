@@ -58,6 +58,7 @@ void	mini_line_handler(t_mini *mini, char *line)
 {
 	if (!line || !*line)
 		return ;
+    add_history(line);
 	mini_parsing(mini, line);
 }
 
@@ -70,7 +71,6 @@ int	minishell(t_solib *solib)
 	signal(SIGINT, &handle_signals);
 	signal(SIGQUIT, &handle_signals);
 	g_signal = 0;
-	//pre_parsing(mini);
 	shlvl = soprintf_get(solib, "%d", (int)ft_atoi(get_envpl_var(mini, "SHLVL"))
 			+ 1);
 	replace_envpl_var(mini, "SHLVL=", shlvl);
