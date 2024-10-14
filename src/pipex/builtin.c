@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 20:22:15 by marvin            #+#    #+#             */
-/*   Updated: 2024/10/14 22:24:35 by marvin           ###   ########.fr       */
+/*   Updated: 2024/10/14 22:53:35 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,21 +50,21 @@ int	hub_builtin(t_mini *mini, char *cmd, int pipefd[2])
 		return (cmd += 4, close_pipe(pipefd), set_exit_status(cmd),
 			mini->close(mini, get_g_signal()), 1);
 	if (!ft_strncmp("echo -", cmd, 6) && check_echo_option(cmd + 6, 'n'))
-		return (cmd += 6, changec(cmd, "\x01\x02", " |"),
+		return (cmd += 6, changec(cmd, "\x01\x02\x03\x04", " |<>"),
 			putstrfd(skipc(&cmd, 'n'), pipefd[1]), close_pipe(pipefd), 1);
 	if (!ft_strncmp("cd", cmd, 2))
 		return (cmd += 2, is_raw_path(mini,
-				changec(cmd, "\x01\x02", " |")), close_pipe(pipefd), 1);
+				changec(cmd, "\x01\x02\x03\x04", " |<>")), close_pipe(pipefd), 1);
 	if (!ft_strncmp("pwd", cmd, 3))
 		return (pwd = getcwd(NULL, 0), putstrfd(pwd, pipefd[1]), free(pwd),
 			putstrfd("\n", pipefd[1]), close_pipe(pipefd), 1);
 	if (!ft_strncmp("export", cmd, 6))
 		return (cmd += 7,
-			handle_export(mini, changec(cmd, "\x01\x02", " |"), pipefd[1]),
+			handle_export(mini, changec(cmd, "\x01\x02\x03\x04", " |<>"), pipefd[1]),
 			close_pipe(pipefd), 1);
 	if (!ft_strncmp("unset", cmd, 5))
 		return (cmd += 6,
-			del_var_envpl(mini, changec(cmd, "\x01\x02", " |")),
+			del_var_envpl(mini, changec(cmd, "\x01\x02\x03\x04", " |<>")),
 			close_pipe(pipefd), 1);
 	if (!ft_strncmp("env\0", cmd, 4))
 		return (print_envpl(pipefd[1], mini), close_pipe(pipefd), 1);

@@ -46,8 +46,7 @@ void	char_bool_quotes_switcher(char c, bool *single, bool *double_)
 	}
 }
 
-void	handle_negative_char_in_quotes( char *line, char space_replace,
-			char pipe_replace)
+void	handle_negative_char_in_quotes( char *line)
 {
 	ssize_t	index;
 	bool	double_quotes;
@@ -60,9 +59,13 @@ void	handle_negative_char_in_quotes( char *line, char space_replace,
 	{
 		char_bool_quotes_switcher(line[index], &single_quotes, &double_quotes);
 		if ((double_quotes || single_quotes) && line[index] == ' ')
-			line[index] = space_replace;
+			line[index] = '\x01';
 		else if ((double_quotes || single_quotes) && line[index] == '|')
-			line[index] = pipe_replace;
+			line[index] = '\x02';
+		else if ((double_quotes || single_quotes) && line[index] == '<')
+			line[index] = '\x03';
+		else if ((double_quotes || single_quotes) && line[index] == '>')
+			line[index] = '\x04';
 	}
 }
 
@@ -77,7 +80,7 @@ bool	cell_maker(t_mini *mini, t_cell *cell, char *raw_line)
 		return ( true);
 
 	// 2. Remplace les espaces et pipes dans les guillemets
-	handle_negative_char_in_quotes(transformed_line, '\x01', '\x02'); // remplace les espaces et pipes dans les quotes
+	handle_negative_char_in_quotes(transformed_line); // remplace les espaces et pipes dans les quotes
 
 	// 3. Vérifie la validité de la ligne après transformation
 	if (!transformed_line || !*transformed_line || cells_empty_char(transformed_line, '|'))

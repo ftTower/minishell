@@ -58,7 +58,7 @@ void	mini_line_handler(t_mini *mini, char *line)
 		return (free(line), soprintf("exit\n"),
 			(void)mini->close(mini, get_g_signal()));
 	if (!*line)
-		return ;
+		return (free(line));
 	add_history(line);
 	mini_parsing(mini, line);
 	free(line);
