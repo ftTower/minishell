@@ -32,7 +32,7 @@ char	**format_cmds(t_mini *mini, char *str)
 	argv = ft_split(mini->solib, str, ' ');
 	i = -1;
 	while (argv[++i])
-		changec(argv[i], "\x01\x02", " |");
+		changec(argv[i], "\x01\x02\x03\x04", " |<>");
 	return (argv);
 }
 

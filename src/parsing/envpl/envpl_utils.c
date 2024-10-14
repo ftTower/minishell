@@ -66,8 +66,9 @@ bool	copy_envp_to_list(t_mini *mini)
 
 	index = -1;
 	mini->envpl = NULL;
-	if (!mini->env->envp)
-		return (true);
+	if (!mini->env->envp || !*mini->env->envp)
+		return (add_var_envpl(mini, "SHLVL=0"), add_var_envpl(mini, "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"), \
+				add_var_envpl(mini, "USER=DEFAULT") ,false);
 	while (mini->env->envp[++index])
 		add_var_envpl(mini, mini->env->envp[index]);
 	return (false);

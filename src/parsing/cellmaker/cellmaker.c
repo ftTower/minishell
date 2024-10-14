@@ -46,7 +46,7 @@ void	char_bool_quotes_switcher(char c, bool *single, bool *double_)
 	}
 }
 
-void	handle_negative_char_in_quotes( char *line)
+void	handle_negative_char_in_quotes(char *line, bool false_it)
 {
 	ssize_t	index;
 	bool	double_quotes;
@@ -58,14 +58,22 @@ void	handle_negative_char_in_quotes( char *line)
 	while (line[++index])
 	{
 		char_bool_quotes_switcher(line[index], &single_quotes, &double_quotes);
-		if ((double_quotes || single_quotes) && line[index] == ' ')
+		if ((double_quotes || single_quotes) && line[index] == ' ' && false_it)
 			line[index] = '\x01';
-		else if ((double_quotes || single_quotes) && line[index] == '|')
+		else if ((double_quotes || single_quotes) && line[index] == '\x01' && !false_it)
+			line[index] = ' ';
+		else if ((double_quotes || single_quotes) && line[index] == '|' && false_it)
 			line[index] = '\x02';
-		else if ((double_quotes || single_quotes) && line[index] == '<')
+		else if ((double_quotes || single_quotes) && line[index] == '\x02' && !false_it)
+			line[index] = '|';
+		else if ((double_quotes || single_quotes) && line[index] == '<' && false_it)
 			line[index] = '\x03';
-		else if ((double_quotes || single_quotes) && line[index] == '>')
+		else if ((double_quotes || single_quotes) && line[index] == '\x03' && !false_it)
+			line[index] = '<';
+		else if ((double_quotes || single_quotes) && line[index] == '>' && false_it)
 			line[index] = '\x04';
+			else if ((double_quotes || single_quotes) && line[index] == '\x04' && false_it)
+			line[index] = '>';
 	}
 }
 
@@ -80,7 +88,7 @@ bool	cell_maker(t_mini *mini, t_cell *cell, char *raw_line)
 		return ( true);
 
 	// 2. Remplace les espaces et pipes dans les guillemets
-	handle_negative_char_in_quotes(transformed_line); // remplace les espaces et pipes dans les quotes
+	handle_negative_char_in_quotes(transformed_line, true); // remplace les espaces et pipes dans les quotes
 
 	// 3. Vérifie la validité de la ligne après transformation
 	if (!transformed_line || !*transformed_line || cells_empty_char(transformed_line, '|'))
@@ -111,7 +119,7 @@ bool	cell_maker(t_mini *mini, t_cell *cell, char *raw_line)
 	while (lines[++size])
 	{
 		// 6. Remplace les caractères temporaires \x01 et \x02 par ' ' et '|' dans chaque sous-ligne
-		// handle_negative_char_in_quotes(lines[size], ' ', '|');
+		handle_negative_char_in_quotes(transformed_line, false);
 
 		// 7. Split chaque sous-ligne sur les espaces
 		if (cell_pipe_maker(mini, &cell->pipes[size],
