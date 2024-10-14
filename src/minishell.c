@@ -57,9 +57,10 @@ static void	handle_signals(int code)
 void	mini_line_handler(t_mini *mini, char *line)
 {
 	if (!line || !*line)
-		return ;
+		return (free(line), soprintf("exit\n"), (void)mini->close(mini, g_signal));
     add_history(line);
 	mini_parsing(mini, line);
+    free(line);
 }
 
 int	minishell(t_solib *solib)
