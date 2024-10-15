@@ -38,6 +38,10 @@ char	**format_cmds(t_mini *mini, char *str)
 
 void	close_pipe(int pipefd[2])
 {
-	close(pipefd[0]);
-	close(pipefd[1]);
+	if (!pipefd)
+		return ;
+	if (pipefd[0])	
+		close(pipefd[0]);
+	if (pipefd[1])
+		close(pipefd[1]);
 }

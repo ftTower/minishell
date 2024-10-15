@@ -26,7 +26,7 @@ int	exec_fork_child(t_mini *mini, int pipefd[2], int filefd[2], char *command)
 {
 	int	ret;
 
-	if (hub_builtin(mini, command, pipefd))
+	if (hub_builtin(mini, command, pipefd, filefd))
 		return (close_pipe(filefd),
 			mini->solib->close(mini->solib, EXIT_SUCCESS));
 	dup2(pipefd[0], 0);
@@ -77,7 +77,7 @@ int	strs_cmds(t_mini *mini, char **commands, int pipefd[2], int filefd[2])
 		if (WIFSIGNALED(status))
 			set_g_signal(WTERMSIG(status) + 128);
 	}
-	return (close_pipe(pipefd), status);
+	return (close_pipe(pipefd), close_pipe(filefd), status);
 }
 
 int	strs_exec(t_mini *mini, int fdin, char **commands, int fdout)
@@ -89,10 +89,12 @@ int	strs_exec(t_mini *mini, int fdin, char **commands, int fdout)
 		return (0);
 	filefd[1] = fdout;
 	filefd[0] = fdin;
-	if (!commands[1] && hub_builtin(mini, *commands, filefd))
+	pipefd[1] = 0;
+	pipefd[0] = 0;
+	if (!commands[1] && hub_builtin(mini, *commands, filefd, NULL))
 		return (0);
 	if (pipe(pipefd) == -1)
-		mini->solib->close(mini->solib, EXIT_FAILURE);
+		return (close_pipe(pipefd), close_pipe(filefd), mini->solib->close(mini->solib, EXIT_FAILURE));
 	pipe_swap(pipefd, filefd);
 	return (strs_cmds(mini, commands, pipefd, filefd));
 }
