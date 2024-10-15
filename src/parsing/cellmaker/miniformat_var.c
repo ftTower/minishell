@@ -95,10 +95,11 @@ t_char **list, t_char *current, char *str_signal)
 	if (current->next && current->next->c == '?')
 	{
 		current = current->next;
-		t_char_del_pos(mini, list, current->pos - 1);
-		t_char_del_pos(mini, list, current->pos);
+		size_t pos = current->pos;
+		t_char_del_pos(mini, list, pos);
+		t_char_del_pos(mini, list, pos - 1);
 		str_signal = soprintf_get(NULL, "%d", get_g_signal());
-		insert_var_content(mini, list, current->pos - 1, str_signal);
+		insert_var_content(mini, list, pos - 1, str_signal);
 		free(str_signal);
 		return (true);
 	}

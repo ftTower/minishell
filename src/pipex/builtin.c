@@ -89,7 +89,7 @@ void	handle_export(t_mini *mini, char *cmd, int fd)
 		varlue = ft_substr(NULL,
 				exs[i], get_c(exs[i], '=') + 1, ft_strlen(exs[i]));
 		varname = ft_substr(NULL, exs[i], 0, get_c(exs[i], '='));
-		set_envpl_var(mini, add_c_end(mini->solib, &varname, '='), varlue);
+		set_envpl_var(mini, add_c_end(NULL, &varname, '='), varlue);
 		free(varname);
 		free(varlue);
 	}

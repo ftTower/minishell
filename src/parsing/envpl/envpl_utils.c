@@ -17,14 +17,15 @@ void	del_var_envpl(t_mini *mini, char *var_name_to_del)
 	t_envpl	*current;
 	t_envpl	*tmp;
 
+	printf("[%s]\n", var_name_to_del);
 	if (!var_name_to_del)
 		return ;
 	current = mini->envpl;
-	if (mini->libft->strncmp(current->next->var, var_name_to_del,
+	if (!mini->libft->strncmp(current->next->var, var_name_to_del,
 			var_name_size(current->next->var) - 1)
 		&& var_name_size(current->next->var)
 		- 1 == mini->libft->strlen(var_name_to_del))
-		return (mini->envpl = mini->envpl->next, (void)0);
+		return (mini->envpl = mini->envpl->next,printf("no del\n"), (void)0);
 	while (current->next)
 	{
 		if (!mini->libft->strncmp(current->next->var, var_name_to_del,
@@ -32,9 +33,10 @@ void	del_var_envpl(t_mini *mini, char *var_name_to_del)
 			&& var_name_size(current->next->var)
 			- 1 == mini->libft->strlen(var_name_to_del))
 			return (tmp = current->next, current->next = tmp->next,
-				mini->free(mini, tmp), (void)0);
+				mini->free(mini, tmp), printf("del var\n"),(void)0);
 		current = current->next;
 	}
+	printf("no del\n");
 }
 
 bool	add_var_envpl(t_mini *mini, char *var)

@@ -28,27 +28,27 @@ bool	cell_pipe_maker(t_mini *mini, t_pipe *pipe, char **pipe_words,
 	return (false);
 }
 
-void	patern_negative_char(char current, bool double_quotes, \
+void	patern_negative_char(char *current, bool double_quotes, \
 bool single_quotes, bool false_it)
 {
 	if (double_quotes || single_quotes)
 	{
-		if (current == ' ' && false_it)
-			current = '\x01';
-		else if (current == '\x01' && !false_it)
-			current = ' ';
-		else if (current == '|' && false_it)
-			current = '\x02';
-		else if (current == '\x02' && !false_it)
-			current = '|';
-		else if (current == '<' && false_it)
-			current = '\x03';
-		else if (current == '\x03' && !false_it)
-			current = '<';
-		else if (current == '>' && false_it)
-			current = '\x04';
-		else if (current == '\x04' && false_it)
-			current = '>';
+		if (*current == ' ' && false_it)
+			*current = '\x01';
+		else if (*current == '\x01' && !false_it)
+			*current = ' ';
+		else if (*current == '|' && false_it)
+			*current = '\x02';
+		else if (*current == '\x02' && !false_it)
+			*current = '|';
+		else if (*current == '<' && false_it)
+			*current = '\x03';
+		else if (*current == '\x03' && !false_it)
+			*current = '<';
+		else if (*current == '>' && false_it)
+			*current = '\x04';
+		else if (*current == '\x04' && false_it)
+			*current = '>';
 	}
 }
 
@@ -64,7 +64,7 @@ void	handle_negative_char_in_quotes(char *line, bool false_it)
 	while (line[++index])
 	{
 		char_bool_quotes_switcher(line[index], &single_quotes, &double_quotes);
-		patern_negative_char(line[index], \
+		patern_negative_char(&line[index], \
 		double_quotes, single_quotes, false_it);
 	}
 }
@@ -74,6 +74,7 @@ char	**cell_split(t_mini *mini, char *line_dup)
 	char	**ret;
 
 	handle_negative_char_in_quotes(line_dup, true);
+	printf("%s\n", line_dup);
 	if (!line_dup || !*line_dup || \
 	cells_empty_char(line_dup, '|'))
 		return (handle_error(mini, line_dup, \
