@@ -17,7 +17,9 @@
 
 int	check_echo_option(char *s, char c)
 {
-	while (*s && *s != ' ')
+	if (!s)
+		return (0);
+	while (s && *s && *s != ' ')
 	{
 		if (*s != c)
 			return (0);
@@ -31,7 +33,7 @@ int	set_exit_status(char *str)
 	int	i;
 
 	if (!str)
-		return (set_g_signal(0), 0);
+		return (get_g_signal());
 	i = -1;
 	while (str[++i])
 	{
@@ -62,7 +64,7 @@ int	hub_builtin(t_mini *mini, char *cmd, int pipefd[2])
 		return (cmd += 7,
 			handle_export(mini, changec(cmd, "\x01\x02\x03\x04", " |<>"), pipefd[1]),
 			close_pipe(pipefd), 1);
-	if (!ft_strncmp("unset", cmd, 5))
+	if (!ft_strncmp("unset ", cmd, 6))
 		return (cmd += 6,
 			del_var_envpl(mini, changec(cmd, "\x01\x02\x03\x04", " |<>")),
 			close_pipe(pipefd), 1);
@@ -78,7 +80,7 @@ void	handle_export(t_mini *mini, char *cmd, int fd)
 	char	*varlue;
 	int		i;	
 
-	if (!*cmd)
+	if (!cmd || !*cmd)
 		return (print_envpl(fd, mini));
 	exs = ft_split(mini->solib, cmd, ' ');
 	i = -1;
