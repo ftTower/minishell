@@ -40,7 +40,7 @@ void	close_pipe(int pipefd[2])
 {
 	if (!pipefd)
 		return ;
-	if (pipefd[0])	
+	if (pipefd[0])
 		close(pipefd[0]);
 	if (pipefd[1])
 		close(pipefd[1]);

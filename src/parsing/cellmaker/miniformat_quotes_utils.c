@@ -65,7 +65,8 @@ bool	unclosed_quotes(t_mini *mini, t_char **list)
 	{
 		if (current->c == '"' && current->type_quotes != TYPEQUOTES_TO_KEEP)
 			count_double++;
-		else if (current->c == (char)39 && current->type_quotes != TYPEQUOTES_TO_KEEP)
+		else if (current->c == (char)39
+			&& current->type_quotes != TYPEQUOTES_TO_KEEP)
 			count_single++;
 		current = current->next;
 	}

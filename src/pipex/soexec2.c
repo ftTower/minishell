@@ -94,7 +94,8 @@ int	strs_exec(t_mini *mini, int fdin, char **commands, int fdout)
 	if (!commands[1] && hub_builtin(mini, *commands, filefd, NULL))
 		return (0);
 	if (pipe(pipefd) == -1)
-		return (close_pipe(pipefd), close_pipe(filefd), mini->solib->close(mini->solib, EXIT_FAILURE));
+		return (close_pipe(pipefd), close_pipe(filefd),
+			mini->solib->close(mini->solib, EXIT_FAILURE));
 	pipe_swap(pipefd, filefd);
 	return (strs_cmds(mini, commands, pipefd, filefd));
 }

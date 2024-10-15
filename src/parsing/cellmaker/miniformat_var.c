@@ -92,10 +92,12 @@ void	insert_var_content(t_mini *mini, t_char **list, size_t pos,
 bool	t_char_replace_signal(t_mini *mini, \
 t_char **list, t_char *current, char *str_signal)
 {
+	size_t	pos;
+
 	if (current->next && current->next->c == '?')
 	{
 		current = current->next;
-		size_t pos = current->pos;
+		pos = current->pos;
 		t_char_del_pos(mini, list, pos);
 		t_char_del_pos(mini, list, pos - 1);
 		str_signal = soprintf_get(NULL, "%d", get_g_signal());

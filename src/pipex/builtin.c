@@ -44,33 +44,43 @@ int	set_exit_status(char *str)
 	return (0);
 }
 
-int	hub_builtin(t_mini *mini, char *cmd, int pipefd[2], int filefd[2])
+int	hub_builtint2(t_mini *mini, char *cmd, int pipefd[2], int filefd[2])
 {
 	char	*pwd;
 
-	if (!ft_strncmp("exit", cmd, 4))
-		return (cmd += 4, close_pipe(pipefd), close_pipe(filefd), set_exit_status(cmd),
-			mini->close(mini, get_g_signal()), 1);
-	if (!ft_strncmp("echo -", cmd, 6) && check_echo_option(cmd + 6, 'n'))
-		return (cmd += 6, changec(cmd, "\x01\x02\x03\x04", " |<>"),
-			putstrfd(skipc(&cmd, 'n'), pipefd[1]), close_pipe(pipefd), close_pipe(filefd),1);
-	if (!ft_strncmp("cd", cmd, 2))
-		return (cmd += 2, is_raw_path(mini,
-				changec(cmd, "\x01\x02\x03\x04", " |<>")), close_pipe(pipefd), close_pipe(filefd), 1);
 	if (!ft_strncmp("pwd", cmd, 3))
-		return (pwd = getcwd(NULL, 0), putstrfd(pwd, pipefd[1]), free(pwd),
-			putstrfd("\n", pipefd[1]), close_pipe(pipefd), close_pipe(filefd), 1);
+		return (pwd = getcwd(NULL, 0), putstrfd(pwd, pipefd[1]),
+			free(pwd), putstrfd("\n", pipefd[1]),
+			close_pipe(pipefd), close_pipe(filefd), 1);
 	if (!ft_strncmp("export", cmd, 6))
 		return (cmd += 7,
-			handle_export(mini, changec(cmd, "\x01\x02\x03\x04", " |<>"), pipefd[1]),
+			handle_export(mini,
+				changec(cmd, "\x01\x02\x03\x04", " |<>"), pipefd[1]),
 			close_pipe(pipefd), close_pipe(filefd), 1);
 	if (!ft_strncmp("unset ", cmd, 6))
 		return (cmd += 6,
 			del_var_envpl(mini, changec(cmd, "\x01\x02\x03\x04", " |<>")),
 			close_pipe(pipefd), close_pipe(filefd), 1);
 	if (!ft_strncmp("env\0", cmd, 4))
-		return (print_envpl(pipefd[1], mini), close_pipe(pipefd), close_pipe(filefd),1);
+		return (print_envpl(pipefd[1], mini),
+			close_pipe(pipefd), close_pipe(filefd), 1);
 	return (0);
+}
+
+int	hub_builtin(t_mini *mini, char *cmd, int pipefd[2], int filefd[2])
+{
+	if (!ft_strncmp("exit", cmd, 4))
+		return (cmd += 4, close_pipe(pipefd), close_pipe(filefd),
+			set_exit_status(cmd), mini->close(mini, get_g_signal()), 1);
+	if (!ft_strncmp("echo -", cmd, 6) && check_echo_option(cmd + 6, 'n'))
+		return (cmd += 6, changec(cmd, "\x01\x02\x03\x04", " |<>"),
+			putstrfd(skipc(&cmd, 'n'), pipefd[1]),
+			close_pipe(pipefd), close_pipe(filefd), 1);
+	if (!ft_strncmp("cd", cmd, 2))
+		return (cmd += 2, is_raw_path(mini,
+				changec(cmd, "\x01\x02\x03\x04", " |<>")),
+			close_pipe(pipefd), close_pipe(filefd), 1);
+	return (hub_builtint2(mini, cmd, pipefd, filefd));
 }
 
 void	handle_export(t_mini *mini, char *cmd, int fd)
