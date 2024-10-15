@@ -86,10 +86,10 @@ void	handle_in_quotes(t_mini *mini, t_char **list)
 
 bool	t_char_list_format_quotes(t_mini *mini, t_char **list)
 {
+	t_char_identify_typequote(*list);
 	if (unclosed_quotes(mini, list))
 		return (true);
 	t_char_set_pos(*list);
-	t_char_identify_typequote(*list);
 	handle_in_quotes(mini, list);
 	t_char_del_quotes(mini, list);
 	return (false);

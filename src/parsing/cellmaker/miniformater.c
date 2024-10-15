@@ -43,7 +43,7 @@ bool	mini_formater(t_mini *mini, t_pipe *pipe, char **pipe_words)
 	if (strr_to_t_char_list(mini, &pipe->raw_words, pipe_words)
 		|| redirect_unspacer(mini, &pipe->raw_words) || invalid_redirect(mini,
 			&pipe->raw_words) || t_char_list_format_quotes(mini,
-			&pipe->raw_words) || t_char_list_cat_var(mini, &pipe->raw_words))
+			&pipe->raw_words))
 		return (true);
-	return (false);
+	return (t_char_list_cat_var(mini, &pipe->raw_words), false);
 }

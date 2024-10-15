@@ -37,7 +37,7 @@ void	handle_in_quotes(t_mini *mini, t_char **list);
 bool	t_char_list_format_quotes(t_mini *mini, t_char **list);
 //?miniformat var
 bool	is_alpha(char compare);
-bool	t_char_list_cat_var(t_mini *mini, t_char **list);
+void	t_char_list_cat_var(t_mini *mini, t_char **list);
 //? miniformater
 bool	redirect_unspacer(t_mini *mini, t_char **dst);
 bool	mini_formater(t_mini *mini, t_pipe *pipe, char **pipe_words);
@@ -145,5 +145,6 @@ bool	char_add_back(t_mini *mini, t_word *word, char c);
 bool	char_t_char_add_back(t_mini *mini, t_char **list, char c);
 void	print_t_type(t_mini *mini, t_type type);
 void	print_t_word_list_double_quotes(t_mini *mini, t_char *word);
+void	char_bool_quotes_switcher(char c, bool *single, bool *double_);
 
 #endif

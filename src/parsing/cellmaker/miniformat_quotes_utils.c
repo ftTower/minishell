@@ -63,7 +63,7 @@ bool	unclosed_quotes(t_mini *mini, t_char **list)
 	current = *list;
 	while (current)
 	{
-		if (current->c == '"')
+		if (current->c == '"' && current->c)
 			count_double++;
 		else if (current->c == (char)39)
 			count_single++;

@@ -47,6 +47,10 @@ bool	invalid_redirect(t_mini *mini, t_char **list)
 	current = (*list);
 	while (current)
 	{
+		if ((current->c == '<' && current->next->c == '>') || \
+		(current->c == '>' && current->next->c == '<'))
+			return (handle_error(mini, t_char_list_to_str(mini, *list),
+					ERROR_INVALID_REDIRECT), true);
 		if (current && current->next && current->next->next
 			&& (current->c == '<' || current->c == '>')
 			&& (current->next->c == '<' || current->next->c == '>')

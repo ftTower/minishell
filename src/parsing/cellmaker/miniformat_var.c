@@ -89,13 +89,30 @@ void	insert_var_content(t_mini *mini, t_char **list, size_t pos,
 	}
 }
 
-bool	t_char_list_cat_var(t_mini *mini, t_char **list)
+bool	t_char_replace_signal(t_mini *mini, \
+t_char **list, t_char *current, char *str_signal)
+{
+	if (current->next && current->next->c == '?')
+	{
+		current = current->next;
+		t_char_del_pos(mini, list, current->pos - 1);
+		t_char_del_pos(mini, list, current->pos);
+		str_signal = soprintf_get(NULL, "%d", get_g_signal());
+		insert_var_content(mini, list, current->pos - 1, str_signal);
+		free(str_signal);
+		return (true);
+	}
+	return (false);
+}
+
+void	t_char_list_cat_var(t_mini *mini, t_char **list)
 {
 	t_char	*current;
 	char	*buf_content;
 	size_t	buf_index;
 	char	*str_signal;
 
+	str_signal = NULL;
 	current = *list;
 	while (current)
 	{
@@ -106,16 +123,7 @@ bool	t_char_list_cat_var(t_mini *mini, t_char **list)
 			&& current->type_quotes != TYPEQUOTES_TO_KEEP)
 		{
 			buf_index = current->pos;
-			if (current->next && current->next->c == '?')
-			{
-				current = current->next;
-				t_char_del_pos(mini, list, current->pos - 1);
-				t_char_del_pos(mini, list, current->pos);
-				str_signal = soprintf_get(NULL, "%d", get_g_signal());
-				insert_var_content(mini, list, buf_index, str_signal);
-				free(str_signal);
-			}
-			else
+			if (!t_char_replace_signal(mini, list, current, str_signal))
 			{
 				buf_content = get_name_var(mini, list, buf_index);
 				insert_var_content(mini, list, buf_index, buf_content);
@@ -124,5 +132,4 @@ bool	t_char_list_cat_var(t_mini *mini, t_char **list)
 		}
 		current = current->next;
 	}
-	return (false);
 }

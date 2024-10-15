@@ -69,7 +69,7 @@ void	handle_error(t_mini *mini, char *input, t_error_code code)
 	else if (code == ERROR_TYPE_NO_CMD)
 		print_char_error(mini, input, "", "found no command");
 	else if (code == ERROR_TYPE_DIRECTORY)
-		print_char_error(mini, input, "./", " a directory");
+		print_char_error(mini, input, "./", "found a directory");
 	else if (code == ERROR_TYPE_UNCLOSED_QUOTES)
 		print_char_error(mini, input, "'", "found unclosed quotes");
 }

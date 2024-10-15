@@ -28,21 +28,27 @@ bool	cell_pipe_maker(t_mini *mini, t_pipe *pipe, char **pipe_words,
 	return (false);
 }
 
-void	char_bool_quotes_switcher(char c, bool *single, bool *double_)
+void	patern_negative_char(char current, bool double_quotes, \
+bool single_quotes, bool false_it)
 {
-	if (c == '"')
+	if (double_quotes || single_quotes)
 	{
-		if (!*double_)
-			*double_ = true;
-		else
-			*double_ = false;
-	}
-	else if (c == (char)39)
-	{
-		if (!*single)
-			*single = true;
-		else
-			*single = false;
+		if (current == ' ' && false_it)
+			current = '\x01';
+		else if (current == '\x01' && !false_it)
+			current = ' ';
+		else if (current == '|' && false_it)
+			current = '\x02';
+		else if (current == '\x02' && !false_it)
+			current = '|';
+		else if (current == '<' && false_it)
+			current = '\x03';
+		else if (current == '\x03' && !false_it)
+			current = '<';
+		else if (current == '>' && false_it)
+			current = '\x04';
+		else if (current == '\x04' && false_it)
+			current = '>';
 	}
 }
 
@@ -58,80 +64,46 @@ void	handle_negative_char_in_quotes(char *line, bool false_it)
 	while (line[++index])
 	{
 		char_bool_quotes_switcher(line[index], &single_quotes, &double_quotes);
-		if ((double_quotes || single_quotes) && line[index] == ' ' && false_it)
-			line[index] = '\x01';
-		else if ((double_quotes || single_quotes) && line[index] == '\x01' && !false_it)
-			line[index] = ' ';
-		else if ((double_quotes || single_quotes) && line[index] == '|' && false_it)
-			line[index] = '\x02';
-		else if ((double_quotes || single_quotes) && line[index] == '\x02' && !false_it)
-			line[index] = '|';
-		else if ((double_quotes || single_quotes) && line[index] == '<' && false_it)
-			line[index] = '\x03';
-		else if ((double_quotes || single_quotes) && line[index] == '\x03' && !false_it)
-			line[index] = '<';
-		else if ((double_quotes || single_quotes) && line[index] == '>' && false_it)
-			line[index] = '\x04';
-			else if ((double_quotes || single_quotes) && line[index] == '\x04' && false_it)
-			line[index] = '>';
+		patern_negative_char(line[index], \
+		double_quotes, single_quotes, false_it);
 	}
+}
+
+char	**cell_split(t_mini *mini, char *line_dup)
+{
+	char	**ret;
+
+	handle_negative_char_in_quotes(line_dup, true);
+	if (!line_dup || !*line_dup || \
+	cells_empty_char(line_dup, '|'))
+		return (handle_error(mini, line_dup, \
+		ERROR_EMPTY_PIPE), free(line_dup), NULL);
+	ret = mini->libft->split(mini->solib, line_dup, '|');
+	return (ret);
 }
 
 bool	cell_maker(t_mini *mini, t_cell *cell, char *raw_line)
 {
 	ssize_t	size;
 	char	**lines;
+	char	*transformed_line;
 
-	// 1. Manipule une copie de raw_line pour éviter de corrompre l'originale.
-	char *transformed_line = mini->libft->strdup(NULL, raw_line);
-	if (!transformed_line)
-		return ( true);
-
-	// 2. Remplace les espaces et pipes dans les guillemets
-	handle_negative_char_in_quotes(transformed_line, true); // remplace les espaces et pipes dans les quotes
-
-	// 3. Vérifie la validité de la ligne après transformation
-	if (!transformed_line || !*transformed_line || cells_empty_char(transformed_line, '|'))
-	{
-		free(transformed_line);
-		return (handle_error(mini, raw_line, ERROR_EMPTY_PIPE), true);
-	}
-
-	// 4. Split la ligne transformée
-	lines = mini->libft->split(mini->solib, transformed_line, '|'); // split sur les pipes
+	transformed_line = mini->libft->strdup(NULL, raw_line);
+	lines = cell_split(mini, raw_line);
 	if (strtlen(lines, &size))
-	{
-		free(transformed_line);
-		return (true);
-	}
-	
+		return (free(transformed_line), true);
 	cell->nb_pipes = size;
 	cell->final_line = NULL;
 	cell->pipes = mini->malloc(mini, sizeof(t_pipe) * size);
 	if (!cell->pipes)
-	{
-		free(transformed_line);
-		return (true);
-	}
-
-	// 5. Pour chaque ligne, traite-la correctement et restaure les caractères remplacés.
+		return (free(transformed_line), true);
 	size = -1;
 	while (lines[++size])
 	{
-		// 6. Remplace les caractères temporaires \x01 et \x02 par ' ' et '|' dans chaque sous-ligne
 		handle_negative_char_in_quotes(transformed_line, false);
-
-		// 7. Split chaque sous-ligne sur les espaces
 		if (cell_pipe_maker(mini, &cell->pipes[size],
 				mini->libft->split(mini->solib, lines[size], ' '), size))
-		{
-			free(transformed_line);
-			return (true);
-		}
+			return (free(transformed_line), true);
 	}
-
-	// Libère la mémoire allouée pour la ligne transformée
-	free(transformed_line);
-	return (false);
+	return (free(transformed_line), false);
 }
-

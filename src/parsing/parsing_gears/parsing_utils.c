@@ -15,6 +15,24 @@
 
 #include <minishell/all.h>
 
+void	char_bool_quotes_switcher(char c, bool *single, bool *double_)
+{
+	if (c == '"')
+	{
+		if (!*double_)
+			*double_ = true;
+		else
+			*double_ = false;
+	}
+	else if (c == (char)39)
+	{
+		if (!*single)
+			*single = true;
+		else
+			*single = false;
+	}
+}
+
 char	*get_str(t_mini *mini, char c)
 {
 	char	*ret;

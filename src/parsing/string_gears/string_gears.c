@@ -65,28 +65,37 @@ char	*t_word_to_str(t_mini *mini, t_word *word)
 	return (ret[index] = '\0', ret);
 }
 
-char	*t_word_list_to_str(t_mini *mini, t_word *word)
+ssize_t	t_word_list_len(t_word *words)
+{
+	ssize_t	ret;
+	t_char	*current_char;
+
+	ret = 0;
+	while (words)
+	{
+		current_char = words->c;
+		while (current_char)
+		{
+			++ret;
+			current_char = current_char->next;
+		}
+		words = words->next;
+	}
+	return (ret);
+}
+
+char	*t_word_list_to_str(t_mini *mini, t_word *words)
 {
 	char	*ret;
 	t_word	*current_word;
 	t_char	*current_char;
 	ssize_t	index;
 
-	index = 0;
-	current_word = word;
-	while (current_word)
-	{
-		current_char = current_word->c;
-		while (current_char)
-		{
-			++index;
-			current_char = current_char->next;
-		}
-		current_word = current_word->next;
-	}
+	current_word = words;
+	index = t_word_list_len(words);
 	ret = mini->malloc(mini, sizeof(char) * (index + 1));
 	index = 0;
-	current_word = word;
+	current_word = words;
 	while (current_word)
 	{
 		current_char = current_word->c;
