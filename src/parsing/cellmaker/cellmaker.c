@@ -74,7 +74,6 @@ char	**cell_split(t_mini *mini, char *line_dup)
 	char	**ret;
 
 	handle_negative_char_in_quotes(line_dup, true);
-	printf("%s\n", line_dup);
 	if (!line_dup || !*line_dup || \
 	cells_empty_char(line_dup, '|'))
 		return (handle_error(mini, line_dup, \
