@@ -100,7 +100,7 @@ t_char **list, t_char *current, char *str_signal)
 		pos = current->pos;
 		t_char_del_pos(mini, list, pos);
 		t_char_del_pos(mini, list, pos - 1);
-		str_signal = soprintf_get(NULL, "%d", get_g_signal());
+		str_signal = mini->solib->libft->itoa(mini->solib, get_g_signal());
 		insert_var_content(mini, list, pos - 1, str_signal);
 		free(str_signal);
 		return (true);

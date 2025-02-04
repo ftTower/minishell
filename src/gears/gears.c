@@ -30,8 +30,7 @@ int	mini_close(t_mini *mini, int state)
 	rl_clear_history();
 	if (!mini)
 		exit(state);
-	shlvl = soprintf_get(mini->solib, \
-	"%d", ft_atoi(get_envpl_var(mini, "SHLVL")) - 1);
+	shlvl =  mini->solib->libft->itoa(mini->solib, ft_atoi(get_envpl_var(mini, "SHLVL")) - 1);
 	set_envpl_var(mini, "SHLVL=", shlvl);
 	if (state)
 		exit(mini->solib->close(mini->solib, state));

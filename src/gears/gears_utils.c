@@ -72,16 +72,18 @@ char	*add_c_end(t_solib *solib, char **str, char c)
 
 char	*display_prompt(t_mini *mini)
 {
-	char	*pwd;
+	//char	*pwd;
 	char	*prompt;
 
-	pwd = getcwd(NULL, 0);
-	prompt = soprintf_get(mini->solib,
-			"%s %C-i#57219e#292929( %s %C-b#696969() \
-%C-b#0000ff(%s) )%C#292929() ",
-			get_envpl_var(mini, "SHLVL"),
-			pwd,
-			get_envpl_var(mini, "USER"));
-	free(pwd);
+	//pwd = getcwd(NULL, 0);
+	prompt = "> ";
+//	prompt = soprintf_get(mini->solib,
+//			"%s %C-i#57219e#292929( %s %C-b#696969() 
+//%C-b#0000ff(%s) )%C#292929() ",
+//			get_envpl_var(mini, "SHLVL"),
+//			pwd,
+//			get_envpl_var(mini, "USER"));
+	//free(pwd);
+	(void)mini;
 	return (prompt);
 }

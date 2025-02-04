@@ -72,14 +72,12 @@ int	minishell(t_solib *solib)
 	mini = minit(solib);
 	signal(SIGINT, &handle_signals);
 	signal(SIGQUIT, &handle_signals);
-	shlvl = soprintf_get(solib, "%d", (int)ft_atoi(get_envpl_var(mini, "SHLVL"))
-			+ 1);
+	shlvl = solib->libft->itoa(solib, ft_atoi(get_envpl_var(mini, "SHLVL")) + 1);
 	replace_envpl_var(mini, "SHLVL=", shlvl);
 	while (mini->loop)
 		mini_line_handler(mini, readline(display_prompt(mini)));
 	rl_clear_history();
-	shlvl = soprintf_get(solib, "%d", ft_atoi(get_envpl_var(mini, "SHLVL"))
-			- 1);
+	shlvl = solib->libft->itoa(solib, ft_atoi(get_envpl_var(mini, "SHLVL")) - 1);
 	replace_envpl_var(mini, "SHLVL=", shlvl);
 	return (mini->close(mini, EXIT_SUCCESS));
 }
