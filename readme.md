@@ -1,10 +1,12 @@
 # Minishell  
 _As beautiful as a shell_  
 
-![prompt](https://github.com/ftTower/ftTower/blob/main/assets/minishell/prompt.png)
+![header](https://github.com/ftTower/ftTower/blob/main/assets/minishell/shell_lvl.png)
 
 ## Summary  
 This project involves creating a simple shell, your very own little Bash. Through this project, you will gain extensive knowledge about processes and file descriptors.  
+
+![prompt](https://github.com/ftTower/ftTower/blob/main/assets/minishell/prompt.png)
 
 
 ## Table of Contents  
