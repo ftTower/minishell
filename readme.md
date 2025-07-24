@@ -11,7 +11,6 @@ This project involves creating a simple shell, your very own little Bash. Throug
 1. [Introduction](#introduction)  
 2. [Common Instructions](#common-instructions)  
 3. [Mandatory Part](#mandatory-part)  
-5. [Submission and Peer-Evaluation](#submission-and-peer-evaluation)  
 
 ---
 
@@ -67,12 +66,5 @@ Your shell must:
 > **Note:** The `readline()` function may cause memory leaks, but your own code must not.  
 
 ---
-
-## Chapter V: Submission and Peer-Evaluation  
-- Submit your work in the assigned Git repository.  
-- Ensure all file names are correct.  
-- Only the repository content will be evaluated during the defense.  
-
----  
 
 Good luck with your Minishell project!  
